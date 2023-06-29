@@ -58,6 +58,10 @@ const Auth = () => {
                 <h3 style={{textAlign: "center"}}>Введите email.</h3>
                 {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
                 <MyInput
+                    style={{
+                        marginBottom: "8px",
+                        marginTop: "8px"
+                    }}
                     onChange={e => emailHandler(e)}
                     value={email}
                     onBlur={e => blurHandler(e)}
@@ -67,9 +71,13 @@ const Auth = () => {
                 />
             </div>
             <div>
-                <h3 style={{textAlign: "center"}}>Введите пароль.</h3>
+                <h3 style={{textAlign: "center",}}>Введите пароль.</h3>
                 {(passwordDirty && passwordError) && <div style={{color: "red"}}>{passwordError}</div>}
                 <MyInput
+                    style={{
+                        marginBottom: "8px",
+                        marginTop: "8px"
+                    }}
                     onChange={e => passwordHandler(e)}
                     value={password}
                     onBlur={e => blurHandler(e)}
@@ -78,18 +86,39 @@ const Auth = () => {
                     placeholder='Введите ваш пароль...'
                 />
             </div>
-            <hr/>
-            <div style={{display: "flex", justifyContent: "space-between", position: 'relative'}}>
-
-                <MyButton>Регистрация</MyButton>
-                
-                <MyButton
-                    style={{}}
-                    disabled={!formValid}
-                >
-                    Войти
-                </MyButton>
+            <div style={{textAlign: "end"}}>
+                <input type="checkbox" id="rememberme" name="rememberUser" checked/>
+                <label htmlFor="rememberme">Запомнить меня</label>
             </div>
+            <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
+
+                    <MyButton
+                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                        disabled={!formValid}
+                    >
+                        Войти на сайт
+                    </MyButton>
+
+            </div>
+
+            <hr style={{marginBottom: "12px"}} />
+
+                <div style={{display: "flex", justifyContent: "space-between"}}><MyButton
+                    style={{height: "40px", outline: "none !important", border: "0 !important"}}
+                >
+                    Забыли email или пароль?
+                </MyButton>
+
+
+                <MyButton
+                    style={{width: "140px", height: "40px"}}
+                >
+                    Регистрация
+                </MyButton>
+                </div>
+            <footer style={{
+                position: "absolute", left: "0", bottom: "0", width: "100%", height: "15px", textAlign:"center"
+            }}><a href={"https://www.linkedin.com/in/сергей-волков-89531b207/"}>Serhii Volkov</a> & <a href={"https://www.linkedin.com/in/алексей-волков-6448761b5/"}>Oleksii Volkov</a></footer>
         </form>
     );
 };
