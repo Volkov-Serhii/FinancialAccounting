@@ -3,7 +3,7 @@ import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
 
-const Auth = () => {
+const Registration = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)
@@ -24,7 +24,6 @@ const Auth = () => {
             case 'email':
                 setEmailDirty(true)
                 break
-
             case 'password':
                 setPasswordDirty(true)
                 break
@@ -55,8 +54,39 @@ const Auth = () => {
 
     return (
         <form>
+            <h1 style={{textAlign: "center", paddingTop: "26px", paddingBottom: "26px"}}>Регистрация</h1>
             <div>
-                <h1 style={{textAlign: "center"}}>Вход</h1>
+                <div style={{display: "flex", justifyContent: "space-between"}}>
+                <h3 style={{textAlign: "left"}}>Введите имя.</h3>
+                <h3 style={{textAlign: "right"}}>Введите фамилию.</h3>
+                </div>
+                <div style={{display: "flex"}}>
+
+                <MyInput
+                    style={{
+                        marginBottom: "8px",
+                        marginTop: "8px",
+                        marginRight: "16px",
+                    }}
+                    name="fistName"
+                    type="text"
+                    placeholder='Введите ваше имя...'
+                />
+
+                <MyInput
+                    style={{
+                        marginBottom: "8px",
+                        marginTop: "8px",
+                        marginLeft: "16px",
+                    }}
+                    name="secondName"
+                    type="text"
+                    placeholder='Введите вашу фамилию...'
+                />
+                </div>
+            </div>
+
+            <div>
                 <h3 style={{textAlign: "center"}}>Введите email.</h3>
                 {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
                 <MyInput
@@ -88,39 +118,46 @@ const Auth = () => {
                     placeholder='Введите ваш пароль...'
                 />
             </div>
-            <div style={{textAlign: "end"}}>
-                <input type="checkbox" id="rememberme" name="rememberUser" checked/>
-                <label htmlFor="rememberme">Запомнить меня</label>
+
+            <div>
+                <h3 style={{textAlign: "center",}}>Повторите пароль.</h3>
+                <MyInput
+                    style={{
+                        marginBottom: "8px",
+                        marginTop: "8px"
+                    }}
+                    name="reppassword"
+                    type="password"
+                    placeholder='Повторите ваш пароль...'
+                />
             </div>
+
             <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
 
-                    <MyButton
-                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
-                        disabled={!formValid}
-                    >
-                        Войти на сайт
-                    </MyButton>
+                <MyButton
+                    style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                    disabled={!formValid}
+                >
+                    Зарегистрироваться
+                </MyButton>
 
             </div>
 
             <hr style={{marginBottom: "12px"}} />
 
-                <div style={{display: "flex", justifyContent: "space-between"}}><MyButton
-                    style={{height: "40px", outline: "none !important", border: "0 !important"}}
-                >
-                    Забыли email или пароль?
-                </MyButton>
+            <div>
+                <h3 style={{textAlign: "right"}}>Уже есть аккаунт?</h3>
+            </div>
+            <div style={{textAlign: "right"}}><MyButton
+                style={{ height: "40px", outline: "none !important", border: "0 !important"}}
+            >
+                Войдите!
+            </MyButton>
 
-
-                <MyButton
-                    style={{width: "140px", height: "40px"}}
-                >
-                    Регистрация
-                </MyButton>
-                </div>
+            </div>
             <MyFooter />
         </form>
     );
 };
 
-export default Auth;
+export default Registration;
