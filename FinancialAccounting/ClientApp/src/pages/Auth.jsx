@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
+import {login} from "../http/userAPI";
 
 const Auth = () => {
     const [email, setEmail] = useState('')
@@ -51,6 +52,12 @@ const Auth = () => {
         } else {
             setPasswordError('')
         }
+    }
+
+    const loginClick = async () => {
+
+        const response = await login();
+
     }
 
     return (

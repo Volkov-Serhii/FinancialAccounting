@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
+import {registration} from "../http/userAPI";
 
 const Registration = () => {
     const [email, setEmail] = useState('')
@@ -11,22 +12,66 @@ const Registration = () => {
     const [emailError, setEmailError] = useState('Email не может быть пустым')
     const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
     const [formValid, setFormValid] = useState(false)
+    const [repasword, setRepassword] = useState('')
+    const [repasswordDirty, setRepasswordDirty] = useState(false)
+    const [repasswordError, setRepasswordError] = useState('Пароли должны совпадать!')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [firstNameDirty, setFirstNameDirty] = useState(false)
+    const [lastNameDirty, setLastNameDirty] = useState(false)
+    const [firstNameError, setFirstNameError] = useState('Поле должно быть заполнено!')
+    const [lastNameError, setLastNameError] = useState('Поле должно быть заполнено!')
+
 
     useEffect(() => {
-        if (emailError || passwordError) {
+        if (emailError || passwordError || repasswordError || firstNameError || lastNameError) {
             setFormValid(false)
         } else {
             setFormValid(true)
         }
-    }, [emailError, passwordError])
+    }, [emailError, passwordError, repasswordError, firstNameError, lastNameError])
+
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
                 setEmailDirty(true)
                 break
+
             case 'password':
                 setPasswordDirty(true)
                 break
+
+            case  'repassword':
+                setRepasswordDirty(true)
+                break
+
+            case 'firstName':
+                setFirstNameDirty(true)
+                break
+
+            case 'lastName':
+                setLastNameDirty(true)
+                break
+        }
+    }
+
+    const firstNameHandler = (e) => {
+        setFirstName(e.target.value)
+
+        if(e.target.value.length < 1) {
+            setFirstNameError('Поле должно быть заполнено!')
+        } else{
+            setFirstNameError('')
+        }
+    }
+
+    const lastNameHandler = (e) => {
+        setLastName(e.target.value)
+
+        if(e.target.value.length < 1) {
+            setLastNameError('Поле должно быть заполнено!')
+        } else {
+            setLastNameError('')
         }
     }
 
@@ -42,6 +87,7 @@ const Registration = () => {
 
     const passwordHandler = (e) => {
         setPassword(e.target.value)
+        passwordsIsMatching(e.target.value);
         if (e.target.value.length < 3 || e.target.value.length > 20) {
             setPasswordError('Пароль должен быть больше 3х и меньше 20 символов!')
             if (!e.target.value.length) {
@@ -52,13 +98,40 @@ const Registration = () => {
         }
     }
 
+    const passwordsIsMatching = (password) => {
+        if(password !== repasword){
+            setRepasswordError('Пароли должны совпадать!')
+        } else {
+            setRepasswordError('')
+        }
+    }
+
+    const repasswordHandler = (e) => {
+        setRepassword(e.target.value);
+        if(e.target.value !== password){
+            setRepasswordError('Пароли должны совпадать!')
+        } else {
+            setRepasswordError('')
+        }
+    }
+
+    const regClick = async () => {
+        console.log('registered')
+       // const response = await registration(email, password, firstName, lastName);
+
+    }
+
     return (
         <form>
             <h1 style={{textAlign: "center", paddingTop: "26px", paddingBottom: "26px"}}>Регистрация</h1>
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                <h3 style={{textAlign: "left"}}>Введите имя.</h3>
-                <h3 style={{textAlign: "right"}}>Введите фамилию.</h3>
+                    <h3 style={{textAlign: "left", paddingBottom: '8px'}}>Введите имя.</h3>
+                    <h3 style={{textAlign: "right", paddingBottom: '8px'}}>Введите фамилию.</h3>
+                </div>
+                <div style={{display: "flex", justifyContent: "space-between"}}>
+                    {(firstNameDirty && firstNameError) && <div style={{color: "red"}}>{firstNameError}</div>}
+                    {(lastNameDirty && lastNameError) && <div style={{color: "red"}}>{lastNameError}</div>}
                 </div>
                 <div style={{display: "flex"}}>
 
@@ -68,7 +141,10 @@ const Registration = () => {
                         marginTop: "8px",
                         marginRight: "16px",
                     }}
-                    name="fistName"
+                    onChange={e => firstNameHandler(e)}
+                    value={firstName}
+                    onBlur={e => blurHandler(e)}
+                    name="firstName"
                     type="text"
                     placeholder='Введите ваше имя...'
                 />
@@ -79,7 +155,10 @@ const Registration = () => {
                         marginTop: "8px",
                         marginLeft: "16px",
                     }}
-                    name="secondName"
+                    onChange={e => lastNameHandler(e)}
+                    value={lastName}
+                    onBlur={e => blurHandler(e)}
+                    name="lastName"
                     type="text"
                     placeholder='Введите вашу фамилию...'
                 />
@@ -94,6 +173,7 @@ const Registration = () => {
                         marginBottom: "8px",
                         marginTop: "8px"
                     }}
+                    //ФРОНТЕНД ЭТО ДЛЯ УМСТВЕННО ОТСТАЛЫХ!
                     onChange={e => emailHandler(e)}
                     value={email}
                     onBlur={e => blurHandler(e)}
@@ -121,12 +201,16 @@ const Registration = () => {
 
             <div>
                 <h3 style={{textAlign: "center",}}>Повторите пароль.</h3>
+                {(repasswordDirty && repasswordError) && <div style={{color: "red"}}>{repasswordError}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
                         marginTop: "8px"
                     }}
-                    name="reppassword"
+                    onChange={e => repasswordHandler(e)}
+                    value={repasword}
+                    onBlur={e => blurHandler(e)}
+                    name="repassword"
                     type="password"
                     placeholder='Повторите ваш пароль...'
                 />
@@ -137,10 +221,11 @@ const Registration = () => {
                 <MyButton
                     style={{width: "220px", height: "60px", marginBottom: "12px"}}
                     disabled={!formValid}
+                    onClick={regClick}
                 >
+
                     Зарегистрироваться
                 </MyButton>
-
             </div>
 
             <hr style={{marginBottom: "12px"}} />

@@ -8,7 +8,7 @@ namespace FinancialAccounting.Models
         public FinancialAccountingContext(DbContextOptions<FinancialAccountingContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
 
         }
 
