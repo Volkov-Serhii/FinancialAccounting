@@ -56,7 +56,7 @@ const Auth = () => {
 
     const loginClick = async () => {
 
-        const response = await login();
+        const response = await login(email, password);
 
     }
 

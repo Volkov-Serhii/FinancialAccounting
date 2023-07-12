@@ -3,6 +3,7 @@ import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
 import {registration} from "../http/userAPI";
+import axios from "axios";
 
 const Registration = () => {
     const [email, setEmail] = useState('')
@@ -31,6 +32,25 @@ const Registration = () => {
         }
     }, [emailError, passwordError, repasswordError, firstNameError, lastNameError])
 
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                await axios.post('https://localhost:7065/Account/Register', {
+                    Email: email,
+                    FirstName: firstName,
+                    LastName: lastName,
+                })
+                    .then((resp) => {
+                        console.log(resp)
+                    })
+            } catch (err) {
+                console.log("error", err);
+                alert("error");
+            }
+
+        };
+        fetch();
+    }, []);
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
@@ -116,8 +136,8 @@ const Registration = () => {
     }
 
     const regClick = async () => {
-        console.log('registered')
-       // const response = await registration(email, password, firstName, lastName);
+
+       const response = await registration(email, password, firstName, lastName);
 
     }
 
@@ -222,6 +242,7 @@ const Registration = () => {
                     style={{width: "220px", height: "60px", marginBottom: "12px"}}
                     disabled={!formValid}
                     onClick={regClick}
+                    
                 >
 
                     Зарегистрироваться
