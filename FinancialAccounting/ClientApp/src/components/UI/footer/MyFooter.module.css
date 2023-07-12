@@ -1,0 +1,10 @@
+.myFooter {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 15px;
+    text-align: center;
+    padding-bottom: 20px;
+    background-color: hsla(180,100%,25%, 0.5);
+}

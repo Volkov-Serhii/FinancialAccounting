@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
+import MyFooter from "../components/UI/footer/MyFooter";
+import {login} from "../http/userAPI";
 
 const Auth = () => {
     const [email, setEmail] = useState('')
@@ -23,6 +25,7 @@ const Auth = () => {
             case 'email':
                 setEmailDirty(true)
                 break
+
             case 'password':
                 setPasswordDirty(true)
                 break
@@ -49,6 +52,12 @@ const Auth = () => {
         } else {
             setPasswordError('')
         }
+    }
+
+    const loginClick = async () => {
+
+        const response = await login(email, password);
+
     }
 
     return (
@@ -116,9 +125,7 @@ const Auth = () => {
                     Регистрация
                 </MyButton>
                 </div>
-            <footer style={{
-                position: "absolute", left: "0", bottom: "0", width: "100%", height: "15px", textAlign:"center"
-            }}><a href={"https://www.linkedin.com/in/сергей-волков-89531b207/"}>Serhii Volkov</a> & <a href={"https://www.linkedin.com/in/алексей-волков-6448761b5/"}>Oleksii Volkov</a></footer>
+            <MyFooter />
         </form>
     );
 };
