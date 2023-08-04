@@ -3,10 +3,11 @@ import './styles/App.css';
 import Auth from "./pages/Auth";
 import Registration from "./pages/Registration";
 
+
 function App() {
     return (
         <div className={"App"}>
-        <Registration/>
+            <Auth/>
         </div>
     );
 }

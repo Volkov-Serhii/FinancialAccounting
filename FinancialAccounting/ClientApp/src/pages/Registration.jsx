@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
-import {registration} from "../http/userAPI";
+import {goToLoginPage, registration} from "../http/userAPI";
 import axios from "axios";
 
 const Registration = () => {
@@ -140,6 +140,9 @@ const Registration = () => {
        const response = await registration(email, password, firstName, lastName);
 
     }
+    const loginPageClick = async() => {
+        const response = await goToLoginPage(email, password, firstName, lastName);
+    }
 
     return (
         <form>
@@ -150,8 +153,8 @@ const Registration = () => {
                     <h3 style={{textAlign: "right", paddingBottom: '8px'}}>Введите фамилию.</h3>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                    {(firstNameDirty && firstNameError) && <div style={{color: "red"}}>{firstNameError}</div>}
-                    {(lastNameDirty && lastNameError) && <div style={{color: "red"}}>{lastNameError}</div>}
+                    {(firstNameDirty && firstNameError) && <div style={{color: "red", marginRight: "auto"}}>{firstNameError}</div>}
+                    {(lastNameDirty && lastNameError) && <div style={{color: "red", marginLeft: "auto"}}>{lastNameError}</div>}
                 </div>
                 <div style={{display: "flex"}}>
 
@@ -256,6 +259,7 @@ const Registration = () => {
             </div>
             <div style={{textAlign: "right"}}><MyButton
                 style={{ height: "40px", outline: "none !important", border: "0 !important"}}
+                onClick={loginPageClick}
             >
                 Войдите!
             </MyButton>

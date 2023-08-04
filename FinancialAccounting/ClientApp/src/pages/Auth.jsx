@@ -65,7 +65,8 @@ const Auth = () => {
             <div>
                 <h1 style={{textAlign: "center"}}>Вход</h1>
                 <h3 style={{textAlign: "center"}}>Введите email.</h3>
-                {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
+                {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{emailError}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -81,7 +82,8 @@ const Auth = () => {
             </div>
             <div>
                 <h3 style={{textAlign: "center",}}>Введите пароль.</h3>
-                {(passwordDirty && passwordError) && <div style={{color: "red"}}>{passwordError}</div>}
+                {(passwordDirty && passwordError) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{passwordError}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
