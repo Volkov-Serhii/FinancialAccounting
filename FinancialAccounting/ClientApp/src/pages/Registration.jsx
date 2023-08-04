@@ -4,6 +4,8 @@ import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
 import {goToLoginPage, registration} from "../http/userAPI";
 import axios from "axios";
+import {LOGIN_ROUTE} from "../utils/consts";
+import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
     const [email, setEmail] = useState('')
@@ -23,6 +25,7 @@ const Registration = () => {
     const [firstNameError, setFirstNameError] = useState('Поле должно быть заполнено!')
     const [lastNameError, setLastNameError] = useState('Поле должно быть заполнено!')
 
+    const history = useNavigate()
 
     useEffect(() => {
         if (emailError || passwordError || repasswordError || firstNameError || lastNameError) {
@@ -259,7 +262,8 @@ const Registration = () => {
             </div>
             <div style={{textAlign: "right"}}><MyButton
                 style={{ height: "40px", outline: "none !important", border: "0 !important"}}
-                onClick={loginPageClick}
+                onClick={() => history(LOGIN_ROUTE)}
+
             >
                 Войдите!
             </MyButton>

@@ -3,6 +3,8 @@ import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
 import {login} from "../http/userAPI";
+import {REGISTRATION_ROUTE} from "../utils/consts";
+import {useNavigate} from "react-router-dom";
 
 const Auth = () => {
     const [email, setEmail] = useState('')
@@ -12,6 +14,9 @@ const Auth = () => {
     const [emailError, setEmailError] = useState('Email не может быть пустым')
     const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
     const [formValid, setFormValid] = useState(false)
+    const [checked, setChecked] = useState(true);
+
+    const history = useNavigate()
 
     useEffect(() => {
         if (emailError || passwordError) {
@@ -40,6 +45,10 @@ const Auth = () => {
         } else {
             setEmailError('')
         }
+    }
+
+    function handleChange() {
+        setChecked(!checked); // инвертируем стейт
     }
 
     const passwordHandler = (e) => {
@@ -98,7 +107,7 @@ const Auth = () => {
                 />
             </div>
             <div style={{textAlign: "end"}}>
-                <input type="checkbox" id="rememberme" name="rememberUser" checked/>
+                <input type="checkbox" id="rememberme" name="rememberUser" checked={checked} onChange={handleChange}/>
                 <label htmlFor="rememberme">Запомнить меня</label>
             </div>
             <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
@@ -123,6 +132,7 @@ const Auth = () => {
 
                 <MyButton
                     style={{width: "140px", height: "40px"}}
+                    onClick={() => history(REGISTRATION_ROUTE)}
                 >
                     Регистрация
                 </MyButton>
