@@ -3,6 +3,8 @@ import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
 import {login} from "../http/userAPI";
+import {REGISTRATION_ROUTE} from "../utils/consts";
+import {useNavigate} from "react-router-dom";
 
 const Auth = () => {
     const [email, setEmail] = useState('')
@@ -12,6 +14,9 @@ const Auth = () => {
     const [emailError, setEmailError] = useState('Email не может быть пустым')
     const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
     const [formValid, setFormValid] = useState(false)
+    const [checked, setChecked] = useState(true);
+
+    const history = useNavigate()
 
     useEffect(() => {
         if (emailError || passwordError) {
@@ -42,6 +47,10 @@ const Auth = () => {
         }
     }
 
+    function handleChange() {
+        setChecked(!checked); // инвертируем стейт
+    }
+
     const passwordHandler = (e) => {
         setPassword(e.target.value)
         if (e.target.value.length < 3 || e.target.value.length > 20) {
@@ -65,7 +74,8 @@ const Auth = () => {
             <div>
                 <h1 style={{textAlign: "center"}}>Вход</h1>
                 <h3 style={{textAlign: "center"}}>Введите email.</h3>
-                {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
+                {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{emailError}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -81,7 +91,8 @@ const Auth = () => {
             </div>
             <div>
                 <h3 style={{textAlign: "center",}}>Введите пароль.</h3>
-                {(passwordDirty && passwordError) && <div style={{color: "red"}}>{passwordError}</div>}
+                {(passwordDirty && passwordError) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{passwordError}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -96,7 +107,7 @@ const Auth = () => {
                 />
             </div>
             <div style={{textAlign: "end"}}>
-                <input type="checkbox" id="rememberme" name="rememberUser" checked/>
+                <input type="checkbox" id="rememberme" name="rememberUser" checked={checked} onChange={handleChange}/>
                 <label htmlFor="rememberme">Запомнить меня</label>
             </div>
             <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
@@ -121,6 +132,7 @@ const Auth = () => {
 
                 <MyButton
                     style={{width: "140px", height: "40px"}}
+                    onClick={() => history(REGISTRATION_ROUTE)}
                 >
                     Регистрация
                 </MyButton>
