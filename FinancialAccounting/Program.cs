@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Setting of CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>

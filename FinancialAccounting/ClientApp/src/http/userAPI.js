@@ -9,7 +9,7 @@ export const registration = async (email, password, firstName, lastName) => {
         const fetch = async () => {
             try {
                 //https://localhost:44395/
-                await axios.post('https://localhost:7065/api/values', {
+                await axios.post('https://localhost:7065/api/Account/Register', {
                     firstName: 'John',
                     lastName: 'Doe',
                     email: 'johndoe@example.com',

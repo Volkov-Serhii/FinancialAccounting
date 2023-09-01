@@ -35,32 +35,32 @@ const Registration = () => {
         }
     }, [emailError, passwordError, repasswordError, firstNameError, lastNameError])
 
-    useEffect(() => {
-        const model ={
-            // Email: email,
-            // FirstName: firstName,
-            // LastName: lastName,
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'johndoe@example.com',
-            password: 'Secretpassword8*',
-            PasswordConfirm: "Secretpassword8*"
+    // useEffect(() => {
+    //     const model ={
+    //         // Email: email,
+    //         // FirstName: firstName,
+    //         // LastName: lastName,
+    //         firstName: 'John',
+    //         lastName: 'Doe',
+    //         email: 'johndoe@example.com',
+    //         password: 'Secretpassword8*',
+    //         PasswordConfirm: "Secretpassword8*"
 
-        }
-        const fetch = async () => {
-            try {
-                await axios.post('https://localhost:7065/api/values', model)
-                    .then((resp) => {
-                        console.log(resp)
-                    })
-            } catch (err) {
-                console.log("error", err);
-                alert("error");
-            }
+    //     }
+    //     const fetch = async () => {
+    //         try {
+    //             await axios.post('https://localhost:7065/api/values', model)
+    //                 .then((resp) => {
+    //                     console.log(resp)
+    //                 })
+    //         } catch (err) {
+    //             console.log("error", err);
+    //             alert("error");
+    //         }
 
-        };
-        fetch();
-    }, []);
+    //     };
+    //     fetch();
+    // }, []);
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
