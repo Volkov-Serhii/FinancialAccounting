@@ -1,5 +1,7 @@
 using FinancialAccounting.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,12 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddControllersWithViews();
 
+//интеграция React приложения 
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "ClientApp/build"; // Путь к React приложению
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +45,33 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors();
+
+//интеграция React приложения
+app.UseSpaStaticFiles();
+app.Map("/app", builder =>
+{
+    builder.UseSpa(spa =>
+    {
+        spa.Options.SourcePath = "ClientApp"; // Путь к React приложению
+
+        if (app.Environment.IsDevelopment())
+        {
+            spa.UseReactDevelopmentServer(npmScript: "start"); // Запустить React Development Server в режиме разработки
+        }
+    });
+});
+//app.MapWhen(context => !context.Request.Path.StartsWithSegments("/api"), builder =>
+//{
+//    builder.UseSpa(spa =>
+//    {
+//        spa.Options.SourcePath = "ClientApp"; // Путь к исходникам React приложения
+
+//        if (app.Environment.IsDevelopment())
+//        {
+//            spa.UseReactDevelopmentServer(npmScript: "start");
+//        }
+//    });
+//});
 
 app.MapControllerRoute(
     name: "default",
