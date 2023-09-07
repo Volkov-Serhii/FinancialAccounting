@@ -5,14 +5,18 @@ import axios from "axios";
 export const registration = async (email, password, firstName, lastName) => {
     console.log("success")
 
- /*
+ 
         const fetch = async () => {
             try {
-                await axios.post('https://localhost:7065/Account/Register', {
+                //https://localhost:44395/
+                //https://localhost:7065
+                await axios.post('/api/Account/Register', {
                     firstName: 'John',
                     lastName: 'Doe',
                     email: 'johndoe@example.com',
-                    password: 'secretpassword'
+                    password: 'Secretpassword8*',
+                    PasswordConfirm: "Secretpassword8*"
+
                 })
                     .then((resp) => {
                         console.log(resp)
@@ -23,7 +27,7 @@ export const registration = async (email, password, firstName, lastName) => {
             }
 
         };
-        fetch();*/
+        fetch();
         
     /*const {data} = await $host.post('api/user/registration', {email, password})
     localStorage.setItem('token', data.token)

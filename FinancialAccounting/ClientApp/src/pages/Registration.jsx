@@ -35,25 +35,32 @@ const Registration = () => {
         }
     }, [emailError, passwordError, repasswordError, firstNameError, lastNameError])
 
-    useEffect(() => {
-        const fetch = async () => {
-            try {
-                await axios.post('https://localhost:7065/Account/Register', {
-                    Email: email,
-                    FirstName: firstName,
-                    LastName: lastName,
-                })
-                    .then((resp) => {
-                        console.log(resp)
-                    })
-            } catch (err) {
-                console.log("error", err);
-                alert("error");
-            }
+    // useEffect(() => {
+    //     const model ={
+    //         // Email: email,
+    //         // FirstName: firstName,
+    //         // LastName: lastName,
+    //         firstName: 'John',
+    //         lastName: 'Doe',
+    //         email: 'johndoe@example.com',
+    //         password: 'Secretpassword8*',
+    //         PasswordConfirm: "Secretpassword8*"
 
-        };
-        fetch();
-    }, []);
+    //     }
+    //     const fetch = async () => {
+    //         try {
+    //             await axios.post('https://localhost:7065/api/values', model)
+    //                 .then((resp) => {
+    //                     console.log(resp)
+    //                 })
+    //         } catch (err) {
+    //             console.log("error", err);
+    //             alert("error");
+    //         }
+
+    //     };
+    //     fetch();
+    // }, []);
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
