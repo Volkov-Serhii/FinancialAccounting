@@ -1,0 +1,20 @@
+{
+    "auth":{
+        "entrance": "Entrance",
+        "email": "Enter your email.",
+        "enter_email": "Enter your email...",
+        "password": "Enter password.",
+        "enter_password":"Enter your password...",
+        "rememberme": "Remember me",
+        "enter": "Sign in",
+        "forgot_email_password":"Forgot your email or password?",
+        "registration": "Registration",
+        "email_cannot_be_empty": "Email cannot be empty",
+        "password_cannot_be_empty": "Password cannot be empty",
+        "incorrect_email": "Incorrect email!",
+        "password_length": "The password must be more than 3 and less than 20 characters!"
+    },
+    "registration":{
+        
+    }
+}

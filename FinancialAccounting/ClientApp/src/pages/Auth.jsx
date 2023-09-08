@@ -5,14 +5,20 @@ import MyFooter from "../components/UI/footer/MyFooter";
 import {login} from "../http/userAPI";
 import {REGISTRATION_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
+import { withTranslation } from 'react-i18next';
 
-const Auth = () => {
+
+const Auth = (props) => {
+    const { t } = props;
+    const email_cannot_be_empty = t('auth.email_cannot_be_empty')
+    const password_cannot_be_empty = t('auth.password_cannot_be_empty')
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)
     const [passwordDirty, setPasswordDirty] = useState(false)
-    const [emailError, setEmailError] = useState('Email не может быть пустым')
-    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
+    const [emailError, setEmailError] = useState(email_cannot_be_empty)
+    const [passwordError, setPasswordError] = useState(password_cannot_be_empty)
     const [formValid, setFormValid] = useState(false)
     const [checked, setChecked] = useState(true);
 
@@ -41,7 +47,7 @@ const Auth = () => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError('Некорректный email!')
+            setEmailError(t('auth.incorrect_email'))
         } else {
             setEmailError('')
         }
@@ -54,9 +60,9 @@ const Auth = () => {
     const passwordHandler = (e) => {
         setPassword(e.target.value)
         if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setPasswordError('Пароль должен быть больше 3х и меньше 20 символов!')
+            setPasswordError(t('auth.password_length'))
             if (!e.target.value.length) {
-                setPasswordError('Пароль не может быть пустым')
+                setPasswordError(password_cannot_be_empty)
             }
         } else {
             setPasswordError('')
@@ -72,8 +78,8 @@ const Auth = () => {
     return (
         <form>
             <div>
-                <h1 style={{textAlign: "center"}}>Вход</h1>
-                <h3 style={{textAlign: "center"}}>Введите email.</h3>
+                <h1 style={{textAlign: "center"}}>{t('auth.entrance')}</h1>
+                <h3 style={{textAlign: "center"}}>{t('auth.email')}</h3>
                 {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
                     marginTop: "8px"}}>{emailError}</div>}
                 <MyInput
@@ -86,11 +92,11 @@ const Auth = () => {
                     onBlur={e => blurHandler(e)}
                     name="email"
                     type="email"
-                    placeholder='Введите ваш email...'
+                    placeholder={t('auth.enter_email')}
                 />
             </div>
             <div>
-                <h3 style={{textAlign: "center",}}>Введите пароль.</h3>
+                <h3 style={{textAlign: "center",}}>{t('auth.password')}</h3>
                 {(passwordDirty && passwordError) && <div style={{color: "red", textAlign: "center",
                     marginTop: "8px"}}>{passwordError}</div>}
                 <MyInput
@@ -103,12 +109,12 @@ const Auth = () => {
                     onBlur={e => blurHandler(e)}
                     name="password"
                     type="password"
-                    placeholder='Введите ваш пароль...'
+                    placeholder={t('auth.enter_password')}
                 />
             </div>
             <div style={{textAlign: "end"}}>
                 <input type="checkbox" id="rememberme" name="rememberUser" checked={checked} onChange={handleChange}/>
-                <label htmlFor="rememberme">Запомнить меня</label>
+                <label htmlFor="rememberme">{t('auth.rememberme')}</label>
             </div>
             <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
 
@@ -116,7 +122,7 @@ const Auth = () => {
                         style={{width: "220px", height: "60px", marginBottom: "12px"}}
                         disabled={!formValid}
                     >
-                        Войти на сайт
+                        {t('auth.enter')}
                     </MyButton>
 
             </div>
@@ -126,7 +132,7 @@ const Auth = () => {
                 <div style={{display: "flex", justifyContent: "space-between"}}><MyButton
                     style={{height: "40px", outline: "none !important", border: "0 !important"}}
                 >
-                    Забыли email или пароль?
+                    {t('auth.forgot_email_password')}
                 </MyButton>
 
 
@@ -134,7 +140,7 @@ const Auth = () => {
                     style={{width: "140px", height: "40px"}}
                     onClick={() => history(REGISTRATION_ROUTE)}
                 >
-                    Регистрация
+                    {t('auth.registration')}
                 </MyButton>
                 </div>
             <MyFooter />
@@ -142,4 +148,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default withTranslation()(Auth);

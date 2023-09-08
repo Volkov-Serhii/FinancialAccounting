@@ -7,7 +7,9 @@ import axios from "axios";
 import {LOGIN_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 
-const Registration = () => {
+const Registration = (props) => {
+    const { t } = props;
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)

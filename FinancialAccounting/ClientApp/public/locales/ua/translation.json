@@ -1,0 +1,20 @@
+{
+    "auth":{
+        "entrance": "Вхід",
+        "email": "Введіть email.",
+        "enter_email": "Введіть ваш email...",
+        "password": "Введіть пароль.",
+        "enter_password":"Введіть Ваш пароль...",
+        "rememberme": "Запам'ятати мене",
+        "enter": "Ввійти на сайт",
+        "forgot_email_password":"Забули email чи пароль?",
+        "registration": "Реєстрація",
+        "email_cannot_be_empty": "Email не може бути порожнім",
+        "password_cannot_be_empty": "Пароль не може бути порожнім",
+        "incorrect_email": "Некоректний email!",
+        "password_length": "Пароль має бути більше 3х та менше 20 символів!"
+    },
+    "registration":{
+        
+    }
+}
