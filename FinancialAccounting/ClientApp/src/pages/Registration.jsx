@@ -6,24 +6,27 @@ import {goToLoginPage, registration} from "../http/userAPI";
 import axios from "axios";
 import {LOGIN_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
+import { withTranslation } from 'react-i18next';
 
-const Registration = () => {
+const Registration = (props) => {
+    const { t } = props;
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)
     const [passwordDirty, setPasswordDirty] = useState(false)
-    const [emailError, setEmailError] = useState('Email не может быть пустым')
-    const [passwordError, setPasswordError] = useState('Пароль не может быть пустым')
+    const [emailError, setEmailError] = useState(t('general.email_cannot_be_empty'))
+    const [passwordError, setPasswordError] = useState(t('general.password_cannot_be_empty'))
     const [formValid, setFormValid] = useState(false)
     const [repasword, setRepassword] = useState('')
     const [repasswordDirty, setRepasswordDirty] = useState(false)
-    const [repasswordError, setRepasswordError] = useState('Пароли должны совпадать!')
+    const [repasswordError, setRepasswordError] = useState(t('registration.passwords_match'))
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [firstNameDirty, setFirstNameDirty] = useState(false)
     const [lastNameDirty, setLastNameDirty] = useState(false)
-    const [firstNameError, setFirstNameError] = useState('Поле должно быть заполнено!')
-    const [lastNameError, setLastNameError] = useState('Поле должно быть заполнено!')
+    const [firstNameError, setFirstNameError] = useState(t('registration.field_filled'))
+    const [lastNameError, setLastNameError] = useState(t('registration.field_filled'))
 
     const history = useNavigate()
 
@@ -35,32 +38,6 @@ const Registration = () => {
         }
     }, [emailError, passwordError, repasswordError, firstNameError, lastNameError])
 
-    // useEffect(() => {
-    //     const model ={
-    //         // Email: email,
-    //         // FirstName: firstName,
-    //         // LastName: lastName,
-    //         firstName: 'John',
-    //         lastName: 'Doe',
-    //         email: 'johndoe@example.com',
-    //         password: 'Secretpassword8*',
-    //         PasswordConfirm: "Secretpassword8*"
-
-    //     }
-    //     const fetch = async () => {
-    //         try {
-    //             await axios.post('https://localhost:7065/api/values', model)
-    //                 .then((resp) => {
-    //                     console.log(resp)
-    //                 })
-    //         } catch (err) {
-    //             console.log("error", err);
-    //             alert("error");
-    //         }
-
-    //     };
-    //     fetch();
-    // }, []);
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
@@ -89,7 +66,7 @@ const Registration = () => {
         setFirstName(e.target.value)
 
         if(e.target.value.length < 1) {
-            setFirstNameError('Поле должно быть заполнено!')
+            setFirstNameError(t('registration.field_filled'))
         } else{
             setFirstNameError('')
         }
@@ -99,7 +76,7 @@ const Registration = () => {
         setLastName(e.target.value)
 
         if(e.target.value.length < 1) {
-            setLastNameError('Поле должно быть заполнено!')
+            setLastNameError(t('registration.field_filled'))
         } else {
             setLastNameError('')
         }
@@ -109,7 +86,7 @@ const Registration = () => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError('Некорректный email!')
+            setEmailError(t('general.incorrect_email'))
         } else {
             setEmailError('')
         }
@@ -119,9 +96,9 @@ const Registration = () => {
         setPassword(e.target.value)
         passwordsIsMatching(e.target.value);
         if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setPasswordError('Пароль должен быть больше 3х и меньше 20 символов!')
+            setPasswordError(t('general.password_length'))
             if (!e.target.value.length) {
-                setPasswordError('Пароль не может быть пустым')
+                setPasswordError(t('general.password_cannot_be_empty'))
             }
         } else {
             setPasswordError('')
@@ -130,7 +107,7 @@ const Registration = () => {
 
     const passwordsIsMatching = (password) => {
         if(password !== repasword){
-            setRepasswordError('Пароли должны совпадать!')
+            setRepasswordError(t('registration.passwords_match'))
         } else {
             setRepasswordError('')
         }
@@ -139,7 +116,7 @@ const Registration = () => {
     const repasswordHandler = (e) => {
         setRepassword(e.target.value);
         if(e.target.value !== password){
-            setRepasswordError('Пароли должны совпадать!')
+            setRepasswordError(t('registration.passwords_match'))
         } else {
             setRepasswordError('')
         }
@@ -156,11 +133,11 @@ const Registration = () => {
 
     return (
         <form>
-            <h1 style={{textAlign: "center", paddingTop: "26px", paddingBottom: "26px"}}>Регистрация</h1>
+            <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <h3 style={{textAlign: "left", paddingBottom: '8px'}}>Введите имя.</h3>
-                    <h3 style={{textAlign: "right", paddingBottom: '8px'}}>Введите фамилию.</h3>
+                    <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
+                    <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('registration.last_name')}</h3>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     {(firstNameDirty && firstNameError) && <div style={{color: "red", marginRight: "auto"}}>{firstNameError}</div>}
@@ -179,7 +156,7 @@ const Registration = () => {
                     onBlur={e => blurHandler(e)}
                     name="firstName"
                     type="text"
-                    placeholder='Введите ваше имя...'
+                    placeholder={t('registration.enter_name')}
                 />
 
                 <MyInput
@@ -193,13 +170,13 @@ const Registration = () => {
                     onBlur={e => blurHandler(e)}
                     name="lastName"
                     type="text"
-                    placeholder='Введите вашу фамилию...'
+                    placeholder={t('registration.enter_last_name')}
                 />
                 </div>
             </div>
 
             <div>
-                <h3 style={{textAlign: "center"}}>Введите email.</h3>
+                <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
                 {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
                 <MyInput
                     style={{
@@ -212,11 +189,11 @@ const Registration = () => {
                     onBlur={e => blurHandler(e)}
                     name="email"
                     type="email"
-                    placeholder='Введите ваш email...'
+                    placeholder={t('general.enter_email')}
                 />
             </div>
             <div>
-                <h3 style={{textAlign: "center",}}>Введите пароль.</h3>
+                <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
                 {(passwordDirty && passwordError) && <div style={{color: "red"}}>{passwordError}</div>}
                 <MyInput
                     style={{
@@ -228,12 +205,12 @@ const Registration = () => {
                     onBlur={e => blurHandler(e)}
                     name="password"
                     type="password"
-                    placeholder='Введите ваш пароль...'
+                    placeholder={t('general.enter_password')}
                 />
             </div>
 
             <div>
-                <h3 style={{textAlign: "center",}}>Повторите пароль.</h3>
+                <h3 style={{textAlign: "center",}}>{t('registration.repeat_password')}</h3>
                 {(repasswordDirty && repasswordError) && <div style={{color: "red"}}>{repasswordError}</div>}
                 <MyInput
                     style={{
@@ -245,7 +222,7 @@ const Registration = () => {
                     onBlur={e => blurHandler(e)}
                     name="repassword"
                     type="password"
-                    placeholder='Повторите ваш пароль...'
+                    placeholder={t('registration.enter_repeat_password')}
                 />
             </div>
 
@@ -258,21 +235,21 @@ const Registration = () => {
                     
                 >
 
-                    Зарегистрироваться
+                    {t('registration.register')}
                 </MyButton>
             </div>
 
             <hr style={{marginBottom: "12px"}} />
 
             <div>
-                <h3 style={{textAlign: "right"}}>Уже есть аккаунт?</h3>
+                <h3 style={{textAlign: "right"}}>{t('registration.have_account')}</h3>
             </div>
             <div style={{textAlign: "right"}}><MyButton
                 style={{ height: "40px", outline: "none !important", border: "0 !important"}}
                 onClick={() => history(LOGIN_ROUTE)}
 
             >
-                Войдите!
+                {t('registration.sign_in')}
             </MyButton>
 
             </div>
@@ -281,4 +258,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default withTranslation()(Registration);

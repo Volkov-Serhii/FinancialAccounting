@@ -5,7 +5,9 @@ import Registration from "./pages/Registration";
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import {Spinner} from "reactstrap";
-
+import { Suspense } from 'react';
+import { useTranslation} from 'react-i18next';
+import MyHeader from "../src/components/UI/header/MyHeader";
 
 function App() {
 /*
@@ -15,13 +17,24 @@ function App() {
         return <Spinner animation = {"grow"}/>
     }
 */
+
+const { t, i18n } = useTranslation();
     return (
+        <div>
         <div className={"App"}>
-        <BrowserRouter>
-            <AppRouter/>
-        </BrowserRouter>
+            <MyHeader/>
+            <BrowserRouter>
+                <AppRouter/>
+            </BrowserRouter>
+        </div>
         </div>
     );
 }
 
-export default App;
+export default function WrappedApp(){
+    return (
+      <Suspense fallback="...loading">
+        <App />
+      </Suspense>
+    )
+  };

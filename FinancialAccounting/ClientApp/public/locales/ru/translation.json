@@ -1,0 +1,35 @@
+{
+    "general":{
+        "registration": "Регистрация",
+        "enter_email": "Введите ваш email...",
+        "enter_password":"Введите ваш пароль...",
+        "email": "Введите email.",
+        "password": "Введите пароль.",
+        "email_cannot_be_empty": "Email не может быть пустым",
+        "password_cannot_be_empty": "Пароль не может быть пустым",
+        "incorrect_email": "Некорректный email!",
+        "password_length": "Пароль должен быть больше 3х и меньше 20 символов!"
+    },
+    "header": {
+        "select_language": "Выберите язык:"
+    },
+    "auth":{
+        "entrance": "Вход",
+        "rememberme": "Запомнить меня",
+        "enter": "Войти на сайт",
+        "forgot_email_password":"Забыли email или пароль?"
+    },
+    "registration":{
+        "name": "Введите имя.",
+        "last_name": "Введите фамилию.",
+        "enter_name": "Введите ваше имя...",
+        "enter_last_name": "Введите вашу фамилию...",
+        "repeat_password": "Повторите пароль.",
+        "enter_repeat_password": "Повторите ваш пароль...",
+        "register": "Зарегистрироваться",
+        "have_account": "Уже есть аккаунт?",
+        "sign_in": "Войдите!",
+        "passwords_match" : "Пароли должны совпадать!",
+        "field_filled": "Поле должно быть заполнено!"
+    }
+}
