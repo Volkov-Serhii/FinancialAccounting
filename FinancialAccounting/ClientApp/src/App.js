@@ -7,6 +7,7 @@ import AppRouter from "./components/AppRouter";
 import {Spinner} from "reactstrap";
 import { Suspense } from 'react';
 import { useTranslation} from 'react-i18next';
+import MyHeader from "../src/components/UI/header/MyHeader";
 
 function App() {
 /*
@@ -16,28 +17,16 @@ function App() {
         return <Spinner animation = {"grow"}/>
     }
 */
-const locales = {
-    en: { title: 'English' },
-    ua: { title: 'Українська' },
-    ru: { title: 'Русский'}
-  };
 
 const { t, i18n } = useTranslation();
     return (
+        <div>
         <div className={"App"}>
-            <select onChange={(e) => i18n.changeLanguage(e.target.value)}>
-                {Object.keys(locales).map((locale) => (
-                    <option  
-                    key={locale} 
-                    value={locale} 
-                    style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
-                            {locales[locale].title}
-                    </option >
-                ))}
-            </select >
+            <MyHeader/>
             <BrowserRouter>
                 <AppRouter/>
             </BrowserRouter>
+        </div>
         </div>
     );
 }

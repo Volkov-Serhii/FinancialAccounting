@@ -10,8 +10,8 @@ import { withTranslation } from 'react-i18next';
 
 const Auth = (props) => {
     const { t } = props;
-    const email_cannot_be_empty = t('auth.email_cannot_be_empty')
-    const password_cannot_be_empty = t('auth.password_cannot_be_empty')
+    const email_cannot_be_empty = t('general.email_cannot_be_empty')
+    const password_cannot_be_empty = t('general.password_cannot_be_empty')
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -47,7 +47,7 @@ const Auth = (props) => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError(t('auth.incorrect_email'))
+            setEmailError(t('general.incorrect_email'))
         } else {
             setEmailError('')
         }
@@ -60,7 +60,7 @@ const Auth = (props) => {
     const passwordHandler = (e) => {
         setPassword(e.target.value)
         if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setPasswordError(t('auth.password_length'))
+            setPasswordError(t('general.password_length'))
             if (!e.target.value.length) {
                 setPasswordError(password_cannot_be_empty)
             }
@@ -78,8 +78,8 @@ const Auth = (props) => {
     return (
         <form>
             <div>
-                <h1 style={{textAlign: "center"}}>{t('auth.entrance')}</h1>
-                <h3 style={{textAlign: "center"}}>{t('auth.email')}</h3>
+                <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+                <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
                 {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
                     marginTop: "8px"}}>{emailError}</div>}
                 <MyInput
@@ -92,11 +92,11 @@ const Auth = (props) => {
                     onBlur={e => blurHandler(e)}
                     name="email"
                     type="email"
-                    placeholder={t('auth.enter_email')}
+                    placeholder={t('general.enter_email')}
                 />
             </div>
             <div>
-                <h3 style={{textAlign: "center",}}>{t('auth.password')}</h3>
+                <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
                 {(passwordDirty && passwordError) && <div style={{color: "red", textAlign: "center",
                     marginTop: "8px"}}>{passwordError}</div>}
                 <MyInput
@@ -109,7 +109,7 @@ const Auth = (props) => {
                     onBlur={e => blurHandler(e)}
                     name="password"
                     type="password"
-                    placeholder={t('auth.enter_password')}
+                    placeholder={t('general.enter_password')}
                 />
             </div>
             <div style={{textAlign: "end"}}>
@@ -140,7 +140,7 @@ const Auth = (props) => {
                     style={{width: "140px", height: "40px"}}
                     onClick={() => history(REGISTRATION_ROUTE)}
                 >
-                    {t('auth.registration')}
+                    {t('general.registration')}
                 </MyButton>
                 </div>
             <MyFooter />
