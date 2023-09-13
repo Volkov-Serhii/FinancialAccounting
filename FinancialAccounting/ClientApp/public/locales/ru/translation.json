@@ -8,7 +8,7 @@
         "email_cannot_be_empty": "Email не может быть пустым",
         "password_cannot_be_empty": "Пароль не может быть пустым",
         "incorrect_email": "Некорректный email!",
-        "password_length": "Пароль должен быть больше 3х и меньше 20 символов!"
+        "password_length": "Пароль должен быть больше 6и и меньше 20и символов!"
     },
     "header": {
         "select_language": "Выберите язык:"
