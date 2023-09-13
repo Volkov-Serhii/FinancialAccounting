@@ -124,7 +124,7 @@ const Registration = (props) => {
 
     const regClick = async () => {
 
-       const response = await registration(email, password, firstName, lastName);
+       const response = await registration(email, password, repasword, firstName, lastName);
 
     }
     const loginPageClick = async() => {

@@ -2,20 +2,23 @@ import {$authHost, $host} from "./index";
 import jwt_decode from "jwt-decode"
 import axios from "axios";
 
-export const registration = async (email, password, firstName, lastName) => {
+export const registration = async (email, password, repasword, firstName, lastName) => {
     console.log("success")
-
- 
         const fetch = async () => {
             try {
                 //https://localhost:44395/
                 //https://localhost:7065
                 await axios.post('/api/Account/Register', {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'johndoe@example.com',
-                    password: 'Secretpassword8*',
-                    PasswordConfirm: "Secretpassword8*"
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    PasswordConfirm: repasword
+                    // firstName: 'John',
+                    // lastName: 'Doe',
+                    // email: 'johndoe@example.com',
+                    // password: 'Secretpassword8*',
+                    // PasswordConfirm: "Secretpassword8*"
 
                 })
                     .then((resp) => {
@@ -37,10 +40,28 @@ export const goToLoginPage = async() => {
 
 }
 
-export const login = async (email, password) => {
-    const {data} = await $host.post('api/user/login', {email, password})
-    localStorage.setItem('token', data.token)
-    return jwt_decode(data.token)
+export const login = async (email, password, checked) => {
+    // const {data} = await $host.post('api/user/login', {email, password})
+    const fetch = async () => {
+        try {
+            await axios.post('/api/Account/Login', {
+                email: email,
+                password: password,
+                RememberMe: checked,
+                ReturnUrl: ""
+            })
+                .then((resp) => {
+                    console.log(resp)
+                })
+        } catch (err) {
+            console.log("error", err);
+            alert("error");
+        }
+
+    };
+    fetch();
+    // localStorage.setItem('token', data.token)
+    // return jwt_decode(data.token)
 
 }
 
