@@ -71,7 +71,7 @@ const Auth = (props) => {
 
     const loginClick = async () => {
 
-        const response = await login(email, password);
+        const response = await login(email, password, checked);
 
     }
 
@@ -121,6 +121,7 @@ const Auth = (props) => {
                     <MyButton
                         style={{width: "220px", height: "60px", marginBottom: "12px"}}
                         disabled={!formValid}
+                        onClick={loginClick}
                     >
                         {t('auth.enter')}
                     </MyButton>
