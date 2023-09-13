@@ -9,6 +9,7 @@ import { withTranslation } from 'react-i18next';
 
 
 const Auth = (props) => {
+
     const { t } = props;
     const email_cannot_be_empty = t('general.email_cannot_be_empty')
     const password_cannot_be_empty = t('general.password_cannot_be_empty')

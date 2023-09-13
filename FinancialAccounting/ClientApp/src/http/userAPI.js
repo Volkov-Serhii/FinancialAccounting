@@ -13,7 +13,7 @@ export const registration = async (email, password, firstName, lastName) => {
                 await axios.post('/api/Account/Register', {
                     firstName: 'John',
                     lastName: 'Doe',
-                    email: 'johndoe@example.com',
+                    email: 'johndoe1@example.com',
                     password: 'Secretpassword8*',
                     PasswordConfirm: "Secretpassword8*"
 
@@ -22,7 +22,7 @@ export const registration = async (email, password, firstName, lastName) => {
                         console.log(resp)
                     })
             } catch (err) {
-                console.log("error", err);
+                console.log(err.resp.data);
                 alert("error");
             }
 
