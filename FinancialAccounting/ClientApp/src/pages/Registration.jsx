@@ -133,7 +133,7 @@ const Registration = (props) => {
 
     return (
         <form>
-            <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+            <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
@@ -253,7 +253,7 @@ const Registration = (props) => {
             </MyButton>
 
             </div>
-            <MyFooter />
+
         </form>
     );
 };

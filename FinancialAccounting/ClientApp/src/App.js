@@ -8,6 +8,7 @@ import {Spinner} from "reactstrap";
 import { Suspense } from 'react';
 import { useTranslation} from 'react-i18next';
 import MyHeader from "../src/components/UI/header/MyHeader";
+import MyFooter from "./components/UI/footer/MyFooter";
 
 function App() {
 /*
@@ -22,9 +23,11 @@ const { t, i18n } = useTranslation();
     return (
         <div>
         <div className={"App"}>
-            <MyHeader/>
+
             <BrowserRouter>
+                <MyHeader/>
                 <AppRouter/>
+                <MyFooter/>
             </BrowserRouter>
         </div>
         </div>

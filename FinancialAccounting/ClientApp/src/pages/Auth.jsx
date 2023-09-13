@@ -79,7 +79,7 @@ const Auth = (props) => {
     return (
         <form>
             <div>
-                <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+                <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
                 <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
                 {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
                     marginTop: "8px"}}>{emailError}</div>}
@@ -145,7 +145,7 @@ const Auth = (props) => {
                     {t('general.registration')}
                 </MyButton>
                 </div>
-            <MyFooter />
+
         </form>
     );
 };

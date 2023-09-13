@@ -1,19 +1,33 @@
 /* Reset some default styles */
-body, ul {
-  margin: 0;
-  padding: 0;
+body {
+  margin: 0px;
+  padding: 0px;
 }
 
+ul {
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    font-size: 18px;
+    margin: 0px;
+    margin-left: 64px;
+    margin-right: 0px;
+    padding: 0px;
+}
 /* Style the header */
 header {
-    position: sticky;
     background-color:  hsla(180,100%,25%, 0.5);
     /* color: #fff; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0; /* Уберите горизонтальный отступ для растяжения на всю ширину */
+    padding: 0; /* Уберите горизонтальный отступ для растяжения на всю ширину */
+    margin-bottom: 4px;
     width: 100%; /* Занимайте всю доступную ширину */
+    height: 82px;
     position: absolute;
     z-index: 100;
     left: 0;
@@ -21,19 +35,20 @@ header {
 
 /* Style the logo */
 .logo img {
-  margin-left: 100%;
-  height: 50px;
+  margin-left: 0px;
+  height: 86px;
   width: auto;
 }
 
 /* Style the navigation menu */
 nav ul {
-  list-style: none;
-  display: flex;
+    margin-left: 136px;
+    list-style: none;
+    display: flex;
 }
 
 nav ul li {
-  margin-right: 10px;
+  margin-right: 0px;
 }
 
 nav ul li:last-child {
@@ -47,16 +62,17 @@ nav a {
 
 /* Style the language switcher */
 .language_switcher {
-  margin-right: 10%;
-  display: flex;
-  align-items: center;
+    font-size: 18px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
 }
 
 .language-switcher label {
-  margin-right: 10px;
+  margin-right: 12px;
   color: #fff;
 }
 
 .language-switcher select {
-  padding: 5px;
+    margin-right: 12px;
 }
