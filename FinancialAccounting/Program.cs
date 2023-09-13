@@ -25,7 +25,15 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<FinancialAccountingContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    // Configuring Password Settings
+    options.Password.RequiredLength = 6;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireDigit = true;
+    options.Password.RequireNonAlphanumeric = false;
+})
     .AddEntityFrameworkStores<FinancialAccountingContext>();
 
 builder.Services.AddControllersWithViews();
