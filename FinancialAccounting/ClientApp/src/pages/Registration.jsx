@@ -86,7 +86,7 @@ const Registration = (props) => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError(t('general.incorrect_email'))
+            setEmailError(t('emailIncorrectError'))
         } else {
             setEmailError('')
         }
@@ -95,10 +95,10 @@ const Registration = (props) => {
     const passwordHandler = (e) => {
         setPassword(e.target.value)
         passwordsIsMatching(e.target.value);
-        if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setPasswordError(t('general.password_length'))
+        if (e.target.value.length < 6 || e.target.value.length > 20) {
+            setPasswordError(('passIsTooShort'))
             if (!e.target.value.length) {
-                setPasswordError(t('general.password_cannot_be_empty'))
+                setPasswordError(t('passIsEmpty'))
             }
         } else {
             setPasswordError('')
@@ -133,15 +133,15 @@ const Registration = (props) => {
 
     return (
         <form>
-            <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+            <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
                     <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('registration.last_name')}</h3>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                    {(firstNameDirty && firstNameError) && <div style={{color: "red", marginRight: "auto"}}>{firstNameError}</div>}
-                    {(lastNameDirty && lastNameError) && <div style={{color: "red", marginLeft: "auto"}}>{lastNameError}</div>}
+                    {(firstNameDirty && firstNameError) && <div style={{color: "red", marginRight: "auto"}}>{t('registration.field_filled')}</div>}
+                    {(lastNameDirty && lastNameError) && <div style={{color: "red", marginLeft: "auto"}}>{t('registration.field_filled')}</div>}
                 </div>
                 <div style={{display: "flex"}}>
 
@@ -177,7 +177,11 @@ const Registration = (props) => {
 
             <div>
                 <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
-                {(emailDirty && emailError) && <div style={{color: "red"}}>{emailError}</div>}
+                <div style={ (emailDirty) ? (emailError === "emailIncorrectError") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"} : {display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.incorrect_email')}</div>
+
+                <div style={ (email==="") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"}  : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -194,7 +198,11 @@ const Registration = (props) => {
             </div>
             <div>
                 <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
-                {(passwordDirty && passwordError) && <div style={{color: "red"}}>{passwordError}</div>}
+                {(passwordDirty && passwordError === "passIsTooShort") && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{t('general.password_length')}</div>}
+
+                {(passwordDirty && passwordError === "passIsEmpty") && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{t('general.password_cannot_be_empty')}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -211,7 +219,8 @@ const Registration = (props) => {
 
             <div>
                 <h3 style={{textAlign: "center",}}>{t('registration.repeat_password')}</h3>
-                {(repasswordDirty && repasswordError) && <div style={{color: "red"}}>{repasswordError}</div>}
+                {(repasswordDirty && repasswordError) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{t('registration.passwords_match')}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -253,7 +262,7 @@ const Registration = (props) => {
             </MyButton>
 
             </div>
-            <MyFooter />
+
         </form>
     );
 };

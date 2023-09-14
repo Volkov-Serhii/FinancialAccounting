@@ -6,9 +6,11 @@ import {login} from "../http/userAPI";
 import {REGISTRATION_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 import { withTranslation } from 'react-i18next';
+import i18n from "../i18n";
 
 
 const Auth = (props) => {
+
     const { t } = props;
     const email_cannot_be_empty = t('general.email_cannot_be_empty')
     const password_cannot_be_empty = t('general.password_cannot_be_empty')
@@ -23,7 +25,7 @@ const Auth = (props) => {
     const [checked, setChecked] = useState(true);
 
     const history = useNavigate()
-
+    //i18n.language
     useEffect(() => {
         if (emailError || passwordError) {
             setFormValid(false)
@@ -31,6 +33,7 @@ const Auth = (props) => {
             setFormValid(true)
         }
     }, [emailError, passwordError])
+
     const blurHandler = (e) => {
         switch (e.target.name) {
             case 'email':
@@ -47,7 +50,9 @@ const Auth = (props) => {
         setEmail(e.target.value)
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
-            setEmailError(t('general.incorrect_email'))
+            setEmailError("emailIncorrectError")
+        } else if (!e.target.value.length) {
+            setEmailError('emailIsEmpty')
         } else {
             setEmailError('')
         }
@@ -59,10 +64,10 @@ const Auth = (props) => {
 
     const passwordHandler = (e) => {
         setPassword(e.target.value)
-        if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setPasswordError(t('general.password_length'))
+        if (e.target.value.length < 6 || e.target.value.length > 20) {
+            setPasswordError('passIsTooShort')
             if (!e.target.value.length) {
-                setPasswordError(password_cannot_be_empty)
+                setPasswordError('passIsEmpty')
             }
         } else {
             setPasswordError('')
@@ -78,11 +83,16 @@ const Auth = (props) => {
     return (
         <form>
             <div>
-                <h1 style={{textAlign: "center", paddingTop: "80px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
-                <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
-                {(emailDirty && emailError) && <div style={{color: "red", textAlign: "center",
-                    marginTop: "8px"}}>{emailError}</div>}
+                <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+
+                <div style={ (emailDirty) ? (emailError === "emailIncorrectError") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"} : {display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.incorrect_email')}</div>
+
+                <div style={ (email==="") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"}  : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
+
                 <MyInput
+
                     style={{
                         marginBottom: "8px",
                         marginTop: "8px"
@@ -97,8 +107,11 @@ const Auth = (props) => {
             </div>
             <div>
                 <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
-                {(passwordDirty && passwordError) && <div style={{color: "red", textAlign: "center",
-                    marginTop: "8px"}}>{passwordError}</div>}
+                {(passwordDirty && passwordError === "passIsTooShort") && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{t('general.password_length')}</div>}
+
+                {(passwordDirty && passwordError === "passIsEmpty") && <div style={{color: "red", textAlign: "center",
+                    marginTop: "8px"}}>{t('general.password_cannot_be_empty')}</div>}
                 <MyInput
                     style={{
                         marginBottom: "8px",
@@ -144,7 +157,7 @@ const Auth = (props) => {
                     {t('general.registration')}
                 </MyButton>
                 </div>
-            <MyFooter />
+
         </form>
     );
 };
