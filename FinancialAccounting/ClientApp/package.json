@@ -10,6 +10,7 @@
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
     "jquery": "^3.6.0",
+    "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "merge": "^2.1.1",
     "mobx-react-lite": "^3.4.3",

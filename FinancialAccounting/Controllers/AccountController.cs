@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using FinancialAccounting.Services;
 
 namespace FinancialAccounting.Controllers
 {
@@ -67,7 +68,9 @@ namespace FinancialAccounting.Controllers
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, model.Password);
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (user != null && passwordCheck && result.Succeeded) {
-                    return Ok(new { user = user });
+                    JWTService jwt = new JWTService();
+                    string token = jwt.CreateJWT(user);
+                    return Ok(new { user = user , token = token });
                 }
                 else
                 {
@@ -88,7 +91,34 @@ namespace FinancialAccounting.Controllers
         {
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
-            return StatusCode(201);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetUserEmail")]
+        public async Task<IActionResult> GetUserEmail(string token)
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+                //var jwtHeader = Request.Headers["AuthenticationToken"].ToString();
+                if (token != null)
+                {
+                    //var token = token.Split(' ')[1];
+                    JWTService jwt = new JWTService();
+                    var userId = jwt.ReadIdFromToken(token);
+                    var userInfo = await _userManager.FindByIdAsync(userId);
+                    var userEmail = userInfo.Email;
+                    return Ok(userEmail);
+                }
+                else
+                {
+                    return new StatusCodeResult(401);
+                }
+            //}
+            //else
+            //{
+            //    return new StatusCodeResult(409);
+            //}
         }
     }
 }

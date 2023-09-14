@@ -87,6 +87,9 @@ const Registration = (props) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
             setEmailError(t('emailIncorrectError'))
+            if (!e.target.value.length) {
+                setEmailError('emailIsEmpty')
+            } 
         } else {
             setEmailError('')
         }
@@ -180,8 +183,8 @@ const Registration = (props) => {
                 <div style={ (emailDirty) ? (emailError === "emailIncorrectError") ? {color: "red", textAlign: "center",
                     marginTop: "8px"} : {display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.incorrect_email')}</div>
 
-                <div style={ (email==="") ? {color: "red", textAlign: "center",
-                    marginTop: "8px"}  : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
+                <div style={ (emailDirty) ? (emailError === "emailIsEmpty") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"} :{display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
                 <MyInput
                     style={{
                         marginBottom: "8px",

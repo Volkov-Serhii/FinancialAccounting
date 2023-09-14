@@ -51,9 +51,10 @@ const Auth = (props) => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if (!re.test(String(e.target.value).toLowerCase())) {
             setEmailError("emailIncorrectError")
-        } else if (!e.target.value.length) {
+            if (!e.target.value.length) {
             setEmailError('emailIsEmpty')
-        } else {
+        } 
+    }else {
             setEmailError('')
         }
     }
@@ -84,12 +85,13 @@ const Auth = (props) => {
         <form>
             <div>
                 <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+                <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
 
                 <div style={ (emailDirty) ? (emailError === "emailIncorrectError") ? {color: "red", textAlign: "center",
                     marginTop: "8px"} : {display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.incorrect_email')}</div>
 
-                <div style={ (email==="") ? {color: "red", textAlign: "center",
-                    marginTop: "8px"}  : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
+                <div style={ (emailDirty) ? (emailError === "emailIsEmpty") ? {color: "red", textAlign: "center",
+                    marginTop: "8px"} :{display: "none", color: "red", textAlign: "center", marginTop: "8px"} : {display: "none"} }>{t('general.email_cannot_be_empty')}</div>
 
                 <MyInput
 
