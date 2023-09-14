@@ -42,24 +42,30 @@ export const goToLoginPage = async() => {
 
 export const login = async (email, password, checked) => {
     // const {data} = await $host.post('api/user/login', {email, password})
+    var user;
     const fetch = async () => {
         try {
-            await axios.post('/api/Account/Login', {
+            const response = await axios.post('/api/Account/Login', {
                 email: email,
                 password: password,
                 RememberMe: checked,
-                ReturnUrl: ""
+                //ReturnUrl: ""
             })
-                .then((resp) => {
-                    console.log(resp)
-                })
+            .then(async(response2) => {
+                // alert(JSON.stringify(response));
+                user = response2.status;
+                console.log(user);
+            })
+            return response.data;
         } catch (err) {
             console.log("error", err);
-            alert("error");
         }
 
     };
-    fetch();
+    const response1 = fetch();
+    user = response1
+    console.log(user)
+    return user;
     // localStorage.setItem('token', data.token)
     // return jwt_decode(data.token)
 

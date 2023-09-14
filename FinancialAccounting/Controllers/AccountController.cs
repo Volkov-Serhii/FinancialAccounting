@@ -3,6 +3,7 @@ using FinancialAccounting.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace FinancialAccounting.Controllers
 {
@@ -54,31 +55,28 @@ namespace FinancialAccounting.Controllers
         // POST api/<AccountController>/Login
         [HttpPost]
         [Route("Login")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) /*&& Url.IsLocalUrl(model.ReturnUrl)*/)
-                    {
-                        return StatusCode(201);
-                    }
-                    else
-                    {
-                        return StatusCode(400);
-                    }
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, model.Password);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (user != null && passwordCheck && result.Succeeded) {
+                    return Ok(new { user = user });
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    return new StatusCodeResult(401);
                 }
             }
-            return BadRequest("Invalid data.");
+            else{
+                return new StatusCodeResult(409);
+            }
         }
 
 

@@ -8,13 +8,8 @@ namespace FinancialAccounting.Models
         public FinancialAccountingContext(DbContextOptions<FinancialAccountingContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
 
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //}
     }
 }
