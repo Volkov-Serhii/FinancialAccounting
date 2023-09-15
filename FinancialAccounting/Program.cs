@@ -67,7 +67,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //whether the lifetime will be validated
             ValidateLifetime = true,
             // setting the security key
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySecurityKey")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LeshaISeregaSpat’Lozgat’siaTozhe")),
             // security key validation
             ValidateIssuerSigningKey = true,
         };
@@ -75,6 +75,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<JWTService>();
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

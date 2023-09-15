@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using FinancialAccounting.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinancialAccounting.Controllers
 {
@@ -96,6 +97,7 @@ namespace FinancialAccounting.Controllers
 
         [HttpGet]
         [Route("GetUserEmail")]
+        [Authorize]
         public async Task<IActionResult> GetUserEmail(string token)
         {
             //if (User.Identity.IsAuthenticated)

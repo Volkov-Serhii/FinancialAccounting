@@ -6,9 +6,12 @@ import {logout,GetUserEmail} from "../../../http/userAPI";
 import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
 import axios from "axios";
+import {LOGIN_ROUTE} from "../../../utils/consts";
+import {useNavigate} from "react-router-dom";
 
 const MyHeader = () => {
-  const [userLogin, setUserLogin] = useState('')
+  const [userLogin, setUserLogin] = useState('');
+  const [isAuthenticated,setIsAuthenticated] = useState(false);
   
   const locales = {
     en: { title: 'English' },
@@ -16,6 +19,8 @@ const MyHeader = () => {
     ru: { title: 'Русский'}
   };
   const { t, i18n } = useTranslation();
+  const history = useNavigate()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,8 +33,9 @@ const MyHeader = () => {
               }
           })
           .then((response) => {
-              console.log(response.data)
-              setUserLogin(response.data)
+              console.log(response.data);
+              setUserLogin(response.data);
+              setIsAuthenticated(true);
           })
         }catch (err) {
           console.log("error", err);
@@ -37,6 +43,7 @@ const MyHeader = () => {
         // const userEmail = await UserEmail(Cookies.get("AuthenticationToken"));
         // setUserLogin(userEmail);
       } else {
+        setIsAuthenticated(false);
         setUserLogin("");
       }
     };
@@ -82,14 +89,23 @@ const MyHeader = () => {
             </select >
         </div>
         <div>{userLogin}</div>
-        <form>
-          <MyButton
-                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
-                        onClick={logoutClick}
-                    >
-                        Выход
-          </MyButton>
-        </form>  
+        {(isAuthenticated) ? (
+          <form>
+            <MyButton
+                          style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                          onClick={logoutClick}
+                      >
+                          {t("header.exit")}
+            </MyButton>
+          </form>
+        ):(
+            <MyButton
+            style={{width: "220px", height: "60px", marginBottom: "12px"}}
+            onClick={() => history(LOGIN_ROUTE)}>
+                {t('header.login')}
+            </MyButton>
+        )
+      }
     </header>
    
     );

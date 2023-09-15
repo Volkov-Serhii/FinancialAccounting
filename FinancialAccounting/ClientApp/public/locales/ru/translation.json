@@ -11,7 +11,9 @@
         "password_length": "Пароль должен быть больше 6и и меньше 20и символов!"
     },
     "header": {
-        "select_language": "Выберите язык:"
+        "select_language": "Выберите язык:",
+        "exit": "Выход",
+        "login": "Войти в аккаунт"
     },
     "auth":{
         "entrance": "Вход",
