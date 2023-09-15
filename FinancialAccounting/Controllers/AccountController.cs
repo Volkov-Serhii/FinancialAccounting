@@ -3,6 +3,9 @@ using FinancialAccounting.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using FinancialAccounting.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinancialAccounting.Controllers
 {
@@ -54,31 +57,30 @@ namespace FinancialAccounting.Controllers
         // POST api/<AccountController>/Login
         [HttpPost]
         [Route("Login")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) /*&& Url.IsLocalUrl(model.ReturnUrl)*/)
-                    {
-                        return StatusCode(201);
-                    }
-                    else
-                    {
-                        return StatusCode(400);
-                    }
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, model.Password);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (user != null && passwordCheck && result.Succeeded) {
+                    JWTService jwt = new JWTService();
+                    string token = jwt.CreateJWT(user);
+                    return Ok(new { user = user , token = token });
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    return new StatusCodeResult(401);
                 }
             }
-            return BadRequest("Invalid data.");
+            else{
+                return new StatusCodeResult(409);
+            }
         }
 
 
@@ -90,7 +92,35 @@ namespace FinancialAccounting.Controllers
         {
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
-            return StatusCode(201);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetUserEmail")]
+        [Authorize]
+        public async Task<IActionResult> GetUserEmail(string token)
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+                //var jwtHeader = Request.Headers["AuthenticationToken"].ToString();
+                if (token != null)
+                {
+                    //var token = token.Split(' ')[1];
+                    JWTService jwt = new JWTService();
+                    var userId = jwt.ReadIdFromToken(token);
+                    var userInfo = await _userManager.FindByIdAsync(userId);
+                    var userEmail = userInfo.Email;
+                    return Ok(userEmail);
+                }
+                else
+                {
+                    return new StatusCodeResult(401);
+                }
+            //}
+            //else
+            //{
+            //    return new StatusCodeResult(409);
+            //}
         }
     }
 }

@@ -1,15 +1,66 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from "./MyHeader.module.css";
 import { useTranslation} from 'react-i18next';
 import Logo from '../../../images/Logo.jpg';
+import {logout,GetUserEmail} from "../../../http/userAPI";
+import MyButton from "../button/MyButton";
+import Cookies from 'js-cookie';
+import axios from "axios";
+import {LOGIN_ROUTE} from "../../../utils/consts";
+import {useNavigate} from "react-router-dom";
 
 const MyHeader = () => {
+  const [userLogin, setUserLogin] = useState('');
+  const [isAuthenticated,setIsAuthenticated] = useState(false);
+  
   const locales = {
     en: { title: 'English' },
     ua: { title: 'Українська' },
     ru: { title: 'Русский'}
   };
   const { t, i18n } = useTranslation();
+  const history = useNavigate()
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (Cookies.get("AuthenticationToken")) {
+        try {
+          await axios.get('/api/Account/GetUserEmail',    
+          {
+              params: {
+                  token: Cookies.get("AuthenticationToken")
+              }
+          })
+          .then((response) => {
+              console.log(response.data);
+              setUserLogin(response.data);
+              setIsAuthenticated(true);
+          })
+        }catch (err) {
+          console.log("error", err);
+        }
+        // const userEmail = await UserEmail(Cookies.get("AuthenticationToken"));
+        // setUserLogin(userEmail);
+      } else {
+        setIsAuthenticated(false);
+        setUserLogin("");
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  // const UserEmail = async(token) =>{
+  //   const userEmail = await GetUserEmail(token);
+  //   return userEmail;
+  // }
+
+  const logoutClick = async () => {
+
+    const response = await logout();
+
+  }
 
     return (
       <header>
@@ -37,6 +88,24 @@ const MyHeader = () => {
                 ))}
             </select >
         </div>
+        <div>{userLogin}</div>
+        {(isAuthenticated) ? (
+          <form>
+            <MyButton
+                          style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                          onClick={logoutClick}
+                      >
+                          {t("header.exit")}
+            </MyButton>
+          </form>
+        ):(
+            <MyButton
+            style={{width: "220px", height: "60px", marginBottom: "12px"}}
+            onClick={() => history(LOGIN_ROUTE)}>
+                {t('header.login')}
+            </MyButton>
+        )
+      }
     </header>
    
     );

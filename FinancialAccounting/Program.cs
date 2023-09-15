@@ -1,9 +1,14 @@
 using FinancialAccounting.Models;
+using FinancialAccounting.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +49,35 @@ builder.Services.AddControllersWithViews();
 //    configuration.RootPath = "ClientApp/build"; // Ïóòü ê React ïğèëîæåíèş
 //});
 
+//JWT
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            // specifies whether the publisher will be validated when validating the token
+            ValidateIssuer = true,
+            // string representing the publisher
+            ValidIssuer = "MyServer",
+            //whether the token consumer will be validated
+            ValidateAudience = true,
+            // óñòàíîâêà ïîòğåáèòåëÿ òîêåíà
+            ValidAudience = "MyClient",
+            //whether the lifetime will be validated
+            ValidateLifetime = true,
+            // setting the security key
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LeshaISeregaSpat’Lozgat’siaTozhe")),
+            // security key validation
+            ValidateIssuerSigningKey = true,
+        };
+    });
+builder.Services.AddScoped<JWTService>();
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

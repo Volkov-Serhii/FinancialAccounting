@@ -11,7 +11,9 @@
         "password_length": "The password must be more than 6 and less than 20 characters!"
     },
     "header": {
-        "select_language": "Select Language:"
+        "select_language": "Select Language:",
+        "exit": "Exit",
+        "login": "Login to account"
     },
     "auth":{
         "entrance": "Entrance",
