@@ -21,12 +21,26 @@ const MyHeader = () => {
   const { t, i18n } = useTranslation();
   const history = useNavigate()
 
+const axiosInstance = axios.create({
+  // baseURL: 'https://localhost:7065',
+});
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+      config.headers.Authorization = `Bearer ${Cookies.get("AuthenticationToken")}`;
+      return config;
+  },
+  (error) => {
+      return Promise.reject(error);
+  }
+);
+
 
   useEffect(() => {
     const fetchData = async () => {
       if (Cookies.get("AuthenticationToken")) {
         try {
-          await axios.get('/api/Account/GetUserEmail',    
+          await axiosInstance.get('/api/Account/GetUserEmail',    
           {
               params: {
                   token: Cookies.get("AuthenticationToken")
