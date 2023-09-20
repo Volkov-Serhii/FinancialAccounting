@@ -26,7 +26,7 @@ const MyHeader = () => {
     const fetchData = async () => {
       if (Cookies.get("AuthenticationToken")) {
         try {
-          await axios.get('/api/Account/GetUserEmail',    
+          await axios.get('/api/Account/GetUserEmail',
           {
               params: {
                   token: Cookies.get("AuthenticationToken")
@@ -48,7 +48,7 @@ const MyHeader = () => {
       }
     };
   
-    fetchData();
+    fetchData()
   }, []);
 
   // const UserEmail = async(token) =>{
@@ -57,9 +57,8 @@ const MyHeader = () => {
   // }
 
   const logoutClick = async () => {
-
-    const response = await logout();
-
+      const response = await logout();
+      window.location.reload();
   }
 
     return (
@@ -90,14 +89,14 @@ const MyHeader = () => {
         </div>
         <div>{userLogin}</div>
         {(isAuthenticated) ? (
-          <form>
+          <div>
             <MyButton
                           style={{width: "220px", height: "60px", marginBottom: "12px"}}
                           onClick={logoutClick}
                       >
                           {t("header.exit")}
             </MyButton>
-          </form>
+          </div>
         ):(
             <MyButton
             style={{width: "220px", height: "60px", marginBottom: "12px"}}

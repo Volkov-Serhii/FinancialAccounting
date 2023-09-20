@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
-import MyFooter from "../components/UI/footer/MyFooter";
-import {goToLoginPage, registration} from "../http/userAPI";
-import axios from "axios";
+import {registration} from "../http/userAPI";
 import {LOGIN_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 import { withTranslation } from 'react-i18next';
@@ -128,14 +126,12 @@ const Registration = (props) => {
     const regClick = async () => {
 
        const response = await registration(email, password, repasword, firstName, lastName);
+        window.location.reload();
 
-    }
-    const loginPageClick = async() => {
-        const response = await goToLoginPage(email, password, firstName, lastName);
     }
 
     return (
-        <form>
+        <div>
             <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
@@ -266,7 +262,7 @@ const Registration = (props) => {
 
             </div>
 
-        </form>
+        </div>
     );
 };
 

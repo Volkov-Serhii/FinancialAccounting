@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import MyFooter from "../components/UI/footer/MyFooter";
-import {login} from "../http/userAPI";
+import {login, registration} from "../http/userAPI";
 import {REGISTRATION_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 import { withTranslation } from 'react-i18next';
 import i18n from "../i18n";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 
 const Auth = (props) => {
@@ -75,14 +77,14 @@ const Auth = (props) => {
         }
     }
 
-    const loginClick = async () => {
-
+    const loginClick =  async () => {
         const response = await login(email, password, checked);
-
+        window.location.reload();
     }
 
     return (
-        <form>
+       // <form>
+        <div>
             <div>
                 <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
                 <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
@@ -128,7 +130,7 @@ const Auth = (props) => {
                 />
             </div>
             <div style={{textAlign: "end"}}>
-                <input type="checkbox" id="rememberme" name="rememberUser" checked={checked} onChange={handleChange}/>
+                <input type="checkbox" id="rememberme" name="rememberMe" checked={checked} onChange={handleChange}/>
                 <label htmlFor="rememberme">{t('auth.rememberme')}</label>
             </div>
             <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
@@ -159,8 +161,8 @@ const Auth = (props) => {
                     {t('general.registration')}
                 </MyButton>
                 </div>
-
-        </form>
+        </div>
+       //</form>
     );
 };
 
