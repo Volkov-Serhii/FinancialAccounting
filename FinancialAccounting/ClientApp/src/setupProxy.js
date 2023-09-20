@@ -11,7 +11,7 @@ const context =  [
 
 module.exports = function(app) {
   const appProxy = createProxyMiddleware(context, {
-    proxyTimeout: 10000,
+    proxyTimeout: 10000000,
     target: target,
     secure: false,
     headers: {

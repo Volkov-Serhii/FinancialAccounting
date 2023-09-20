@@ -63,22 +63,23 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(404);
             }
-            if (!User.Identity.IsAuthenticated)
-            {
+            if (!User.Identity.IsAuthenticated) {
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, model.Password);
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (user != null && passwordCheck && result.Succeeded) {
+                if (user != null && passwordCheck && result.Succeeded)
+                {
                     JWTService jwt = new JWTService();
                     string token = jwt.CreateJWT(user);
-                    return Ok(new { user = user , token = token });
+                    return Ok(new { /*user = user,*/ token = token });
                 }
                 else
                 {
                     return new StatusCodeResult(401);
                 }
             }
-            else{
+            else
+            {
                 return new StatusCodeResult(409);
             }
         }
@@ -97,7 +98,7 @@ namespace FinancialAccounting.Controllers
 
         [HttpGet]
         [Route("GetUserEmail")]
-        [Authorize]
+    //    [Authorize]
         public async Task<IActionResult> GetUserEmail(string token)
         {
             //if (User.Identity.IsAuthenticated)
