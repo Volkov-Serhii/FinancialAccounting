@@ -10,7 +10,7 @@ export const registration = async (email, password, repasword, firstName, lastNa
             password: password,
             PasswordConfirm: repasword
         }).then((resp) => {
-            console.log(resp)
+            Cookies.set('AuthenticationToken', resp.data.token)
         })
     } catch (err) {
         console.log("error", err);
@@ -39,7 +39,6 @@ export const logout = async () => {
 }
 
 export const GetUserEmail = async(token) =>{
-    // const fetch = async () => {
         try {
             await axios.get('/api/Account/GetUserEmail',    
             {
