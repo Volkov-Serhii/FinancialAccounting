@@ -27,30 +27,27 @@ namespace FinancialAccounting.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName };
-                // добавляем пользователя
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    // установка куки
-                    await _signInManager.SignInAsync(user, false);
-                    return StatusCode(201);
-
-                    //return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+                return new StatusCodeResult(404);
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+            }
+            User user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+            // добавляем пользователя
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                // установка куки
+                await _signInManager.SignInAsync(user, false);
+                JWTService jwt = new JWTService();
+                string token = jwt.CreateJWT(user);
+                return Ok(new { token = token });
             }
             return BadRequest("Invalid data.");
 
-            //return View(model);
         }
 
 
@@ -71,7 +68,7 @@ namespace FinancialAccounting.Controllers
                 {
                     JWTService jwt = new JWTService();
                     string token = jwt.CreateJWT(user);
-                    return Ok(new { /*user = user,*/ token = token });
+                    return Ok(new { token = token });
                 }
                 else
                 {
@@ -98,7 +95,7 @@ namespace FinancialAccounting.Controllers
 
         [HttpGet]
         [Route("GetUserEmail")]
-    //    [Authorize]
+        [Authorize]
         public async Task<IActionResult> GetUserEmail(string token)
         {
             //if (User.Identity.IsAuthenticated)

@@ -5,9 +5,9 @@ import Logo from '../../../images/Logo.jpg';
 import {logout,GetUserEmail} from "../../../http/userAPI";
 import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
-import axios from "axios";
 import {LOGIN_ROUTE} from "../../../utils/consts";
 import {useNavigate} from "react-router-dom";
+import {axiosAuth} from "../../../http/axiosSettings";
 
 const MyHeader = () => {
   const [userLogin, setUserLogin] = useState('');
@@ -26,7 +26,7 @@ const MyHeader = () => {
     const fetchData = async () => {
       if (Cookies.get("AuthenticationToken")) {
         try {
-          await axios.get('/api/Account/GetUserEmail',
+          await axiosAuth.get('/api/Account/GetUserEmail',    
           {
               params: {
                   token: Cookies.get("AuthenticationToken")
@@ -48,7 +48,7 @@ const MyHeader = () => {
       }
     };
   
-    fetchData()
+    fetchData();
   }, []);
 
   // const UserEmail = async(token) =>{
@@ -57,8 +57,9 @@ const MyHeader = () => {
   // }
 
   const logoutClick = async () => {
-      const response = await logout();
-      window.location.reload();
+
+    const response = await logout();
+    window.location.reload();
   }
 
     return (
@@ -89,14 +90,12 @@ const MyHeader = () => {
         </div>
         <div>{userLogin}</div>
         {(isAuthenticated) ? (
-          <div>
             <MyButton
                           style={{width: "220px", height: "60px", marginBottom: "12px"}}
                           onClick={logoutClick}
                       >
                           {t("header.exit")}
             </MyButton>
-          </div>
         ):(
             <MyButton
             style={{width: "220px", height: "60px", marginBottom: "12px"}}

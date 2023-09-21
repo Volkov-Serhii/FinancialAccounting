@@ -13,15 +13,16 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 //Setting of CORS
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(builder =>
+//    {
+//        builder.AllowAnyOrigin()
+//               .AllowAnyMethod()
+//               .AllowAnyHeader();
+//    });
+//});
+
 // Add services to the container(SQLServer).
 //builder.Services.AddDbContext<FinancialAccountingContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -76,9 +77,6 @@ builder.Services.AddScoped<JWTService>();
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -90,7 +88,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors();
+//app.UseCors();
 
 //интеграция React приложения
 //app.UseSpaStaticFiles();
@@ -118,12 +116,14 @@ app.UseCors();
 //        }
 //    });
 //});
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
 
 //Add migrations
 using (var scope = app.Services.CreateScope())
