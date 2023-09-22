@@ -26,7 +26,11 @@ export const login = async (email, password, checked) => {
             password: password,
             RememberMe: checked,
         }).then(result => {
-            Cookies.set('AuthenticationToken', result.data.token);
+            if(checked){
+                Cookies.set('AuthenticationToken', result.data.token,{expires: 14})
+            }else{
+                Cookies.set('AuthenticationToken', result.data.token)
+            }
         });
         return 200;
     } catch (err) {
