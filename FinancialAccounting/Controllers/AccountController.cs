@@ -35,12 +35,12 @@ namespace FinancialAccounting.Controllers
             {
                 await _signInManager.SignOutAsync();
             }
+
             User user = new User { Email = model.Email, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName };
-            // добавляем пользователя
             var result = await _userManager.CreateAsync(user, model.Password);
+
             if (result.Succeeded)
             {
-                // установка куки
                 await _signInManager.SignInAsync(user, false);
                 JWTService jwt = new JWTService();
                 string token = jwt.CreateJWT(user);
@@ -60,6 +60,7 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(404);
             }
+
             if (!User.Identity.IsAuthenticated) {
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, model.Password);
@@ -74,6 +75,7 @@ namespace FinancialAccounting.Controllers
                 {
                     return new StatusCodeResult(401);
                 }
+
             }
             else
             {
@@ -85,10 +87,8 @@ namespace FinancialAccounting.Controllers
         // POST api/<AccountController>/Logout
         [HttpPost]
         [Route("Logout")]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return Ok();
         }
