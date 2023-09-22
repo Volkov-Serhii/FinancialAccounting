@@ -26,7 +26,7 @@ namespace FinancialAccounting.Services
                 issuer: "MyServer",
                 audience: "MyClient",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddDays(14),
                 signingCredentials: creds
             );
 

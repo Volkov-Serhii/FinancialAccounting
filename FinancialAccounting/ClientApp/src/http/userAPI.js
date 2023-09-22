@@ -23,7 +23,13 @@ export const login = async (email, password, checked) => {
             email: email,
             password: password,
             RememberMe: checked,
-        }).then(result => Cookies.set('AuthenticationToken', result.data.token));
+        }).then(result => {
+            if(checked){
+                Cookies.set('AuthenticationToken', result.data.token,{expires: 14})
+            }else{
+                Cookies.set('AuthenticationToken', result.data.token)
+            }
+        });
     } catch (err) {
         throw err;
     }
