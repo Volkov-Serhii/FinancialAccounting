@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
-import MyFooter from "../components/UI/footer/MyFooter";
-import {login, registration} from "../http/userAPI";
+import {login} from "../http/userAPI";
 import {REGISTRATION_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 import { withTranslation } from 'react-i18next';
-import i18n from "../i18n";
-import axios from "axios";
 import Cookies from "js-cookie";
 
 
@@ -25,6 +22,7 @@ const Auth = (props) => {
     const [passwordError, setPasswordError] = useState(password_cannot_be_empty)
     const [formValid, setFormValid] = useState(false)
     const [checked, setChecked] = useState(true);
+    const [statusCode, setStatusCode] = useState(200);
 
     const history = useNavigate()
     //i18n.language
@@ -35,6 +33,12 @@ const Auth = (props) => {
             setFormValid(true)
         }
     }, [emailError, passwordError])
+
+    useEffect(() => {
+            if (Cookies.get("AuthenticationToken")) {
+                setStatusCode(409)
+            }
+    }, []);
 
     const blurHandler = (e) => {
         switch (e.target.name) {
@@ -78,8 +82,15 @@ const Auth = (props) => {
     }
 
     const loginClick =  async () => {
+
         const response = await login(email, password, checked);
-        window.location.reload();
+
+        if(response === 200) {
+            window.location.reload();
+        } else {
+            setStatusCode(response);
+            return null;
+        }
     }
 
     return (
@@ -87,6 +98,13 @@ const Auth = (props) => {
         <div>
             <div>
                 <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+
+                {(statusCode === 401) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('general.statusCode401')}</div>}
+
+                {(statusCode === 409) && <div style={{color: "red", textAlign: "center",
+                    marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('general.statusCode409')}</div>}
+
                 <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
 
                 <div style={ (emailDirty) ? (emailError === "emailIncorrectError") ? {color: "red", textAlign: "center",

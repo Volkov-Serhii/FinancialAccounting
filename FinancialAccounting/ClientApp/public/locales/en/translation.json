@@ -8,7 +8,9 @@
         "email_cannot_be_empty": "Email cannot be empty",
         "password_cannot_be_empty": "Password cannot be empty",
         "incorrect_email": "Incorrect email!",
-        "password_length": "The password must be more than 6 and less than 20 characters!"
+        "password_length": "The password must be more than 6 and less than 20 characters!",
+        "statusCode401": "Login or password is incorrect",
+        "statusCode409": "The user is already authorized"
     },
     "header": {
         "select_language": "Select Language:",
@@ -32,6 +34,8 @@
         "have_account": "Already have an account?",
         "sign_in": "Sign in!",
         "passwords_match" : "Passwords must match!",
-        "field_filled": "The field must be filled in!"
+        "field_filled": "The field must be filled in!",
+        "statusCode404": "Data is incorrect",
+        "statusCode401": "This email is already used"
     }
 }

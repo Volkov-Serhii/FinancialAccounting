@@ -46,7 +46,7 @@ namespace FinancialAccounting.Controllers
                 string token = jwt.CreateJWT(user);
                 return Ok(new { token = token });
             }
-            return BadRequest("Invalid data.");
+            return new StatusCodeResult(401);
 
         }
 
