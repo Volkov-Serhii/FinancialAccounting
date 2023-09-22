@@ -1,22 +1,43 @@
-import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AppRoutes from './AppRoutes';
-import { Layout } from './components/Layout';
-import './custom.css';
+import React, {useState} from 'react';
+import './styles/App.css';
+import Auth from "./pages/Auth";
+import Registration from "./pages/Registration";
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./components/AppRouter";
+import {Spinner} from "reactstrap";
+import { Suspense } from 'react';
+import { useTranslation} from 'react-i18next';
+import MyHeader from "../src/components/UI/header/MyHeader";
+import MyFooter from "./components/UI/footer/MyFooter";
 
-export default class App extends Component {
-  static displayName = App.name;
+function App() {
+/*
+    const [loading, setLoading] = useState(true)
 
-  render() {
+    if(loading) {
+        return <Spinner animation = {"grow"}/>
+    }
+*/
+
+const { t, i18n } = useTranslation();
     return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
+        <div>
+        <div className={"App"}>
+
+            <BrowserRouter>
+                <MyHeader/>
+                <AppRouter/>
+                <MyFooter/>
+            </BrowserRouter>
+        </div>
+        </div>
     );
-  }
 }
+
+export default function WrappedApp(){
+    return (
+      <Suspense fallback="...loading">
+        <App />
+      </Suspense>
+    )
+  };

@@ -1,0 +1,41 @@
+{
+    "general":{
+        "registration": "Registration",
+        "enter_email": "Enter your email...",
+        "enter_password":"Enter your password...",
+        "email": "Enter your email.",
+        "password": "Enter password.",
+        "email_cannot_be_empty": "Email cannot be empty",
+        "password_cannot_be_empty": "Password cannot be empty",
+        "incorrect_email": "Incorrect email!",
+        "password_length": "The password must be more than 6 and less than 20 characters!",
+        "statusCode401": "Login or password is incorrect",
+        "statusCode409": "The user is already authorized"
+    },
+    "header": {
+        "select_language": "Select Language:",
+        "exit": "Exit",
+        "login": "Login to account"
+    },
+    "auth":{
+        "entrance": "Entrance",
+        "rememberme": "Remember me",
+        "enter": "Sign in",
+        "forgot_email_password":"Forgot your email or password?"
+    },
+    "registration":{
+        "name": "Enter your name.",
+        "last_name": "Enter your last name.",
+        "enter_name": "Enter your name...",
+        "enter_last_name": "Enter your last name...",
+        "repeat_password": "Repeat password.",
+        "enter_repeat_password": "Repeat your password...",
+        "register": "Register",
+        "have_account": "Already have an account?",
+        "sign_in": "Sign in!",
+        "passwords_match" : "Passwords must match!",
+        "field_filled": "The field must be filled in!",
+        "statusCode404": "Data is incorrect",
+        "statusCode401": "This email is already used"
+    }
+}

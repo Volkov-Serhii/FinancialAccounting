@@ -1,0 +1,78 @@
+/* Reset some default styles */
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    font-size: 18px;
+    margin: 0px;
+    margin-left: 64px;
+    margin-right: 0px;
+    padding: 0px;
+}
+/* Style the header */
+header {
+    background-color:  hsla(180,100%,25%, 0.5);
+    /* color: #fff; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0; /* Уберите горизонтальный отступ для растяжения на всю ширину */
+    margin-bottom: 4px;
+    width: 100%; /* Занимайте всю доступную ширину */
+    height: 82px;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+}
+
+/* Style the logo */
+.logo img {
+  margin-left: 0px;
+  height: 86px;
+  width: auto;
+}
+
+/* Style the navigation menu */
+nav ul {
+    margin-left: 136px;
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+  margin-right: 0px;
+}
+
+nav ul li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Style the language switcher */
+.language_switcher {
+    font-size: 18px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.language-switcher label {
+  margin-right: 12px;
+  color: #fff;
+}
+
+.language-switcher select {
+    margin-right: 12px;
+}

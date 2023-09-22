@@ -1,0 +1,41 @@
+{
+    "general":{
+        "registration": "Реєстрація",
+        "enter_email": "Введіть ваш email...",
+        "enter_password":"Введіть Ваш пароль...",
+        "email": "Введіть email.",
+        "password": "Введіть пароль.",
+        "email_cannot_be_empty": "Email не може бути порожнім",
+        "password_cannot_be_empty": "Пароль не може бути порожнім",
+        "incorrect_email": "Некоректний email!",
+        "password_length": "Пароль має бути більше 6и та менше 20и символів!",
+        "statusCode401": "Логін або пароль неправильні",
+        "statusCode409": "Корис тувач вже авторизований"
+    },
+    "header": {
+        "select_language": "Оберіть мову:",
+        "exit": "Вихід",
+        "login": "Увійти до облікового запису"
+    },
+    "auth":{
+        "entrance": "Вхід",
+        "rememberme": "Запам'ятати мене",
+        "enter": "Ввійти на сайт",
+        "forgot_email_password":"Забули email чи пароль?"
+    },
+    "registration":{
+        "name": "Введіть ім'я.",
+        "last_name": "Введіть прізвище.",
+        "enter_name": "Введіть ваше ім'я...",
+        "enter_last_name": "Введіть ваше прізвище...",
+        "repeat_password": "Повторіть пароль.",
+        "enter_repeat_password": "Повторіть пароль...",
+        "register": "Зареєструватись",
+        "have_account": "Вже є обліковий запис?",
+        "sign_in": "Увійдіть!",
+        "passwords_match" : "Паролі мають збігатися!",
+        "field_filled": "Поле має бути заповнено!",
+        "statusCode404": "Некоректні дані",
+        "statusCode401": "Email вже зайнятий"
+    }
+}
