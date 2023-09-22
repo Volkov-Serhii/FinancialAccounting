@@ -25,6 +25,7 @@ const Registration = (props) => {
     const [lastNameDirty, setLastNameDirty] = useState(false)
     const [firstNameError, setFirstNameError] = useState(t('registration.field_filled'))
     const [lastNameError, setLastNameError] = useState(t('registration.field_filled'))
+    const [statusCode, setStatusCode] = useState(200);
 
     const history = useNavigate()
 
@@ -126,13 +127,24 @@ const Registration = (props) => {
     const regClick = async () => {
 
        const response = await registration(email, password, repasword, firstName, lastName);
-        window.location.reload();
-
+        if(response === 200) {
+            window.location.reload();
+        } else {
+            setStatusCode(response);
+            return null;
+        }
     }
 
     return (
         <div>
             <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+
+            {(statusCode === 401) && <div style={{color: "red", textAlign: "center",
+                marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('registration.statusCode401')}</div>}
+
+            {(statusCode === 409) && <div style={{color: "red", textAlign: "center",
+                marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('registration.statusCode409')}</div>}
+
             <div>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>

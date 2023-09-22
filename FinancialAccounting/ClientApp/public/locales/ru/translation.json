@@ -8,7 +8,9 @@
         "email_cannot_be_empty": "Email не может быть пустым",
         "password_cannot_be_empty": "Пароль не может быть пустым",
         "incorrect_email": "Некорректный email!",
-        "password_length": "Пароль должен быть больше 6и и меньше 20и символов!"
+        "password_length": "Пароль должен быть больше 6и и меньше 20и символов!",
+        "statusCode401": "Логин и/или пароль некорректны",
+        "statusCode409": "Пользователь уже авторизован"
     },
     "header": {
         "select_language": "Выберите язык:",
@@ -32,6 +34,8 @@
         "have_account": "Уже есть аккаунт?",
         "sign_in": "Войдите!",
         "passwords_match" : "Пароли должны совпадать!",
-        "field_filled": "Поле должно быть заполнено!"
+        "field_filled": "Поле должно быть заполнено!",
+        "statusCode404": "Некорректные данные",
+        "statusCode401": "Email уже занят"
     }
 }

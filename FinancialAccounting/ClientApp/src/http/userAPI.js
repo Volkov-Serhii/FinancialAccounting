@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
+import {axiosAuth} from "./axiosSettings";
 
 export const registration = async (email, password, repasword, firstName, lastName) => {
     try {
@@ -12,8 +13,9 @@ export const registration = async (email, password, repasword, firstName, lastNa
         }).then((resp) => {
             Cookies.set('AuthenticationToken', resp.data.token)
         })
+        return 200;
     } catch (err) {
-        console.log("error", err);
+        return err.response.status
     }
 }
 
@@ -30,8 +32,9 @@ export const login = async (email, password, checked) => {
                 Cookies.set('AuthenticationToken', result.data.token)
             }
         });
+        return 200;
     } catch (err) {
-        throw err;
+           return err.response.status
     }
 }
 
@@ -45,8 +48,9 @@ export const logout = async () => {
 }
 
 export const GetUserEmail = async(token) =>{
+    let resultData = null
         try {
-            await axios.get('/api/Account/GetUserEmail',    
+            const response = await axiosAuth.get('/api/Account/GetUserEmail',
             {
                 params: {
                     token: token
@@ -54,10 +58,10 @@ export const GetUserEmail = async(token) =>{
             })
             .then((response) => {
                 console.log(response.data)
-                return response.data
+                resultData= response.data;
             })
+            return resultData
         } catch (err) {
             console.log("error", err);
         }
-
 }
