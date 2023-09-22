@@ -7,7 +7,6 @@ import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
 import {LOGIN_ROUTE} from "../../../utils/consts";
 import {useNavigate} from "react-router-dom";
-import {axiosAuth} from "../../../http/axiosSettings";
 
 const MyHeader = () => {
   const [userLogin, setUserLogin] = useState('');
@@ -25,36 +24,19 @@ const MyHeader = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (Cookies.get("AuthenticationToken")) {
-        try {
-          await axiosAuth.get('/api/Account/GetUserEmail',    
-          {
-              params: {
-                  token: Cookies.get("AuthenticationToken")
-              }
-          })
-          .then((response) => {
-              console.log(response.data);
-              setUserLogin(response.data);
-              setIsAuthenticated(true);
-          })
-        }catch (err) {
-          console.log("error", err);
-        }
-        // const userEmail = await UserEmail(Cookies.get("AuthenticationToken"));
-        // setUserLogin(userEmail);
+
+          const response = await GetUserEmail(Cookies.get("AuthenticationToken"))
+          setUserLogin(response);
+          setIsAuthenticated(true);
+
       } else {
         setIsAuthenticated(false);
         setUserLogin("");
       }
     };
-  
+
     fetchData();
   }, []);
-
-  // const UserEmail = async(token) =>{
-  //   const userEmail = await GetUserEmail(token);
-  //   return userEmail;
-  // }
 
   const logoutClick = async () => {
 

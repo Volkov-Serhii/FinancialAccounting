@@ -8,7 +8,9 @@
         "email_cannot_be_empty": "Email не може бути порожнім",
         "password_cannot_be_empty": "Пароль не може бути порожнім",
         "incorrect_email": "Некоректний email!",
-        "password_length": "Пароль має бути більше 6и та менше 20и символів!"
+        "password_length": "Пароль має бути більше 6и та менше 20и символів!",
+        "statusCode401": "Логін або пароль неправильні",
+        "statusCode409": "Корис тувач вже авторизований"
     },
     "header": {
         "select_language": "Оберіть мову:",
@@ -32,6 +34,8 @@
         "have_account": "Вже є обліковий запис?",
         "sign_in": "Увійдіть!",
         "passwords_match" : "Паролі мають збігатися!",
-        "field_filled": "Поле має бути заповнено!"
+        "field_filled": "Поле має бути заповнено!",
+        "statusCode404": "Некоректні дані",
+        "statusCode401": "Email вже зайнятий"
     }
 }
