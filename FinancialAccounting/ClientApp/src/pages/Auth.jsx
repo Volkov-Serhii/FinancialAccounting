@@ -95,9 +95,9 @@ const Auth = (props) => {
 
     return (
        // <form>
-        <div>
+        <div className={"page"}>
             <div>
-                <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+                <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
 
                 {(statusCode === 401) && <div style={{color: "red", textAlign: "center",
                     marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('general.statusCode401')}</div>}

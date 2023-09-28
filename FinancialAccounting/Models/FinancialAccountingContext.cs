@@ -11,5 +11,8 @@ namespace FinancialAccounting.Models
 
         }
 
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<BillChanges> BillChanges { get; set; }
+
     }
 }
