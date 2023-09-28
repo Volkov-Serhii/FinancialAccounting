@@ -136,8 +136,8 @@ const Registration = (props) => {
     }
 
     return (
-        <div>
-            <h1 style={{textAlign: "center", paddingTop: "96px", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+        <div className={"page"}>
+            <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
 
             {(statusCode === 401) && <div style={{color: "red", textAlign: "center",
                 marginTop: "0px", marginBottom: "8px", fontSize: "18px"}}>{t('registration.statusCode401')}</div>}

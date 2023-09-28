@@ -5,7 +5,7 @@ import Logo from '../../../images/Logo.jpg';
 import {logout,GetUserEmail} from "../../../http/userAPI";
 import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
-import {LOGIN_ROUTE} from "../../../utils/consts";
+import {LOGIN_ROUTE,HOME_ROUTE} from "../../../utils/consts";
 import {useNavigate} from "react-router-dom";
 
 const MyHeader = () => {
@@ -51,7 +51,7 @@ const MyHeader = () => {
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="/home">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Services</a></li>
                 <li><a href="#">Contact</a></li>
