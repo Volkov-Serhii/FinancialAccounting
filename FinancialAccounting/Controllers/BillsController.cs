@@ -84,5 +84,112 @@ namespace FinancialAccounting.Controllers
             db.SaveChanges();
             return Ok();
         }
+
+        [HttpPost]
+        [Route("CreateTransaction")]
+        [Authorize]
+        public IActionResult CreateTransaction(Transactions transaction)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("EditTransaction")]
+        [Authorize]
+        public IActionResult EditTransaction(Transactions transaction)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var trans = db.Transactions.FirstOrDefault(a => a.Id == transaction.Id);
+            if (trans != null)
+            {
+                trans.Amount = transaction.Amount;
+                trans.CategoryID = transaction.CategoryID;
+                trans.Discription = transaction.Discription;
+                trans.TransactionType = transaction.TransactionType;
+            }
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("CreateCategori")]
+        [Authorize]
+        public IActionResult CreateCategori(Categories categori)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var jwtHeader = Request.Headers["Authorization"].ToString();
+            var token = jwtHeader.Split(' ')[1];
+            JWTService jwt = new JWTService();
+            var userId = jwt.ReadIdFromToken(token);
+            categori.UserID = userId;
+            db.Categories.Add(categori);
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("EditCategori")]
+        [Authorize]
+        public IActionResult EditCategori(Categories categori)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var cat = db.Categories.FirstOrDefault(c  => c.Id == categori.Id);
+            if(cat == null)
+            {
+                cat.CategoryName = categori.CategoryName;
+            }
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("DeleteCategori")]
+        [Authorize]
+        public IActionResult DeleteCategori(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var cat = db.Categories.FirstOrDefault(c => c.Id == id);
+            db.Categories.Remove(cat);
+            db.SaveChanges();
+            return Ok();
+        }
     }
 }
