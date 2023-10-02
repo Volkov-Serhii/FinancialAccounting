@@ -3,6 +3,7 @@ using System;
 using FinancialAccounting.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinancialAccounting.Migrations
 {
     [DbContext(typeof(FinancialAccountingContext))]
-    partial class FinancialAccountingContextModelSnapshot : ModelSnapshot
+    [Migration("20230929182717_AddDbModel")]
+    partial class AddDbModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

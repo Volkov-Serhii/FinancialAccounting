@@ -7,7 +7,8 @@ namespace FinancialAccounting.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-        public ICollection<Bill> Bills { get; set; }
+        public ICollection<Accounts> Accounts { get; set; }
+        public ICollection<Categories> Categories { get; set; }
 
     }
 }
