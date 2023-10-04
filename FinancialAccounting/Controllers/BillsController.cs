@@ -140,22 +140,22 @@ namespace FinancialAccounting.Controllers
             if (bill.Interest != null)
             {
                 var interestbill = account.InterestAccounts;
-                /*if (interestbill != null)
-                {
-                    interestbill.Interest = bill.Interest;
-                    interestbill.InterestInterval = bill.InterestInterval;
-                    interestbill.InterestAccrualDate = bill.InterestAccrualDate;
-                }
-                else
-                {
-                    InterestAccount interestAccount = new InterestAccount()
-                    {
-                        Interest = (double)bill.Interest,
-                        InterestInterval = (int)bill.InterestInterval,
-                        InterestAccrualDate = (DateTime)bill.InterestAccrualDate
-                    };
-                    db.InterestAccounts.Add(interestAccount);
-                }*/
+                //if (interestbill != null)
+                //{
+                //    interestbill.Interest = bill.Interest;
+                //    interestbill.InterestInterval = bill.InterestInterval;
+                //    interestbill.InterestAccrualDate = bill.InterestAccrualDate;
+                //}
+                //else
+                //{
+                //    InterestAccount interestAccount = new InterestAccount()
+                //    {
+                //        Interest = (double)bill.Interest,
+                //        InterestInterval = (int)bill.InterestInterval,
+                //        InterestAccrualDate = (DateTime)bill.InterestAccrualDate
+                //    };
+                //    db.InterestAccounts.Add(interestAccount);
+                //}
             }
             db.SaveChanges();
             return Ok();
