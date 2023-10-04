@@ -65,3 +65,12 @@ export const GetUserEmail = async(token) =>{
             console.log("error", err);
         }
 }
+export const GetBills = async() => {
+    try {
+        const response = await axiosAuth.get('/api/Bills/GetBills')
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}

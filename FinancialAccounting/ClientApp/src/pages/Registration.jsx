@@ -126,8 +126,8 @@ const Registration = (props) => {
 
     const regClick = async () => {
 
-       const response = await registration(email, password, repasword, firstName, lastName);
-        if(response === 200) {
+        const response = await registration(email, password, repasword, firstName, lastName);
+        if (response === 200) {
             window.location.reload();
         } else {
             setStatusCode(response);
@@ -136,7 +136,7 @@ const Registration = (props) => {
     }
 
     return (
-        <div className={"page"}>
+        <div className={"page"} style={{width: "800px"}}>
             <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
 
             {(statusCode === 401) && <div style={{color: "red", textAlign: "center",

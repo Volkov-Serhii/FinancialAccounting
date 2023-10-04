@@ -95,7 +95,7 @@ const Auth = (props) => {
 
     return (
        // <form>
-        <div className={"page"}>
+        <div className={"page"} style={{width: "800px"}}>
             <div>
                 <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
 
