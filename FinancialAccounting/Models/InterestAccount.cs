@@ -7,6 +7,7 @@
         public double Interest { get; set; }
         public int InterestInterval { get; set; }
         public DateTime InterestAccrualDate { get; set; }
+
         public Accounts Accounts { get; set; }
 
     }

@@ -8,9 +8,10 @@ namespace FinancialAccounting.Models
         public string UserID { get; set; }
         public string AccountName { get; set; }
         public int AccountTypeId { get; set; }
-        public string Type { get; set; }
+        public bool isActiv { get; set; }
         public DateTime DateTime { get; set; }
         public long Balance { get; set; }
+
         public User User { get; set; }
         public AccountType AccountType { get; set; }
         public ICollection<Transactions> Transactions { get; set; }

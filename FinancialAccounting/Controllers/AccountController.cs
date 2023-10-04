@@ -98,8 +98,8 @@ namespace FinancialAccounting.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserEmail(string token)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
+            if (User.Identity.IsAuthenticated)
+            {
                 var jwtHeader = Request.Headers["Authorization"].ToString();
                 if (token != null)
                 {
@@ -114,11 +114,11 @@ namespace FinancialAccounting.Controllers
                 {
                     return new StatusCodeResult(401);
                 }
-            //}
-            //else
-            //{
-            //    return new StatusCodeResult(409);
-            //}
+            }
+            else
+            {
+                return new StatusCodeResult(409);
+            }
         }
     }
 }
