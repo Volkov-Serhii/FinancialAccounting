@@ -1,4 +1,5 @@
 ﻿using FinancialAccounting.Models;
+using FinancialAccounting.Models.NoDBModels;
 using FinancialAccounting.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,10 +33,52 @@ namespace FinancialAccounting.Controllers
             return Ok(bills);
         }
 
+        [HttpGet]
+        [Route("GetBillsType")]
+        [Authorize]
+        public IActionResult GetBillsType() {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var billsType = db.AccountTypes.ToList();
+            return Ok(billsType);
+        }
+
+        [HttpGet]
+        [Route("GetTransactions")]
+        [Authorize]
+        public IActionResult GetTransactions(long billId)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var billsType = db.Transactions.Where(t=> t.AccountID == billId).ToList();
+            return Ok(billsType);
+        }
+
+        [HttpGet]
+        [Route("GetCategories")]
+        [Authorize]
+        public IActionResult GetCategories()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var jwtHeader = Request.Headers["Authorization"].ToString();
+            var token = jwtHeader.Split(' ')[1];
+            JWTService jwt = new JWTService();
+            var userId = jwt.ReadIdFromToken(token);
+            var transactionCategories = db.Categories.Where(c => c.UserID == null && c.UserID == userId).ToList();
+            return Ok(transactionCategories);
+        }
+
         [HttpPost]
         [Route("CreateBill")]
         [Authorize]
-        public IActionResult CreateBill(Accounts bill)
+        public IActionResult CreateBill(CreateAccounts bill)
         {
             if (!ModelState.IsValid)
             {
@@ -49,8 +92,26 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
-            bill.UserID = userId;
-            db.Accounts.Add(bill);
+            Accounts account = new Accounts()
+            {
+                UserID = userId,
+                AccountName = bill.AccountName,
+                AccountTypeId = bill.AccountTypeId,
+                isActiv = bill.isActiv,
+                DateTime = DateTime.Today,
+                Balance = bill.Balance
+            };
+            db.Accounts.Add(account);
+            if(bill.Interest != null)
+            {
+                InterestAccount interestAccount = new InterestAccount()
+                {
+                    Interest = (double)bill.Interest,
+                    InterestInterval = (int)bill.InterestInterval,
+                    InterestAccrualDate = (DateTime)bill.InterestAccrualDate
+                };
+                db.InterestAccounts.Add(interestAccount);
+            }
             db.SaveChanges();
             return Ok();
         }
@@ -58,7 +119,7 @@ namespace FinancialAccounting.Controllers
         [HttpPost]
         [Route("EditBill")]
         [Authorize]
-        public IActionResult EditBill(Accounts bill)
+        public IActionResult EditBill(EditAccounts bill)
         {
             if (!ModelState.IsValid)
             {
@@ -68,19 +129,52 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
-            var jwtHeader = Request.Headers["Authorization"].ToString();
-            var token = jwtHeader.Split(' ')[1];
-            JWTService jwt = new JWTService();
-            var userId = jwt.ReadIdFromToken(token);
-            bill.UserID = userId;
-            var account = db.Accounts.FirstOrDefault(a => a.Id == bill.Id);
+            var account = db.Accounts.FirstOrDefault(a => a.Id == bill.Id).;
             if(account !=null) { 
                 account.AccountName = bill.AccountName;
-                account.AccountType = bill.AccountType;
                 account.AccountTypeId = bill.AccountTypeId;
-                account.InterestAccounts = bill.InterestAccounts;
+                account.isActiv = bill.isActiv;
                 account.Balance = bill.Balance;
             }
+            if (bill.Interest != null)
+            {
+                var interestbill = account.InterestAccounts;
+                if (interestbill != null)
+                {
+                    interestbill.Interest = bill.Interest;
+                    interestbill.InterestInterval = bill.InterestInterval;
+                    interestbill.InterestAccrualDate = bill.InterestAccrualDate;
+                }
+                else
+                {
+                    InterestAccount interestAccount = new InterestAccount()
+                    {
+                        Interest = (double)bill.Interest,
+                        InterestInterval = (int)bill.InterestInterval,
+                        InterestAccrualDate = (DateTime)bill.InterestAccrualDate
+                    };
+                    db.InterestAccounts.Add(interestAccount);
+                }
+            }
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("DeleteBill")]
+        [Authorize]
+        public IActionResult DeleteBill(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var bill = db.Accounts.FirstOrDefault(c => c.Id == id);
+            db.Accounts.Remove(bill);
             db.SaveChanges();
             return Ok();
         }
@@ -124,6 +218,25 @@ namespace FinancialAccounting.Controllers
                 trans.Discription = transaction.Discription;
                 trans.TransactionType = transaction.TransactionType;
             }
+            db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("DeleteTransaction")]
+        [Authorize]
+        public IActionResult DeleteTransaction(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new StatusCodeResult(404);
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var transaction = db.Transactions.FirstOrDefault(t => t.Id == id);
+            db.Transactions.Remove(transaction);
             db.SaveChanges();
             return Ok();
         }
