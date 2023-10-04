@@ -10,19 +10,12 @@
 }
 
 .App {
-    width: 800px;
+    width: 100%;
     font-family: 'Montserrat', sans-serif;
 }
 
-.post {
-    display: flex;
-    padding: 16px;
-    border: 2px solid teal;
-    margin-top: 16px;
-    justify-content: space-between;
-    align-items: center;
-}
 .page {
+
     text-align: center;
     padding-top: 96px;
     padding-bottom: 26px;

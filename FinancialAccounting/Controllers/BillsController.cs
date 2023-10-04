@@ -12,8 +12,9 @@ namespace FinancialAccounting.Controllers
     public class BillsController : ControllerBase
     {
         private FinancialAccountingContext db;
-        public BillsController() {
-            db = new FinancialAccountingContext();
+        public BillsController(FinancialAccountingContext db) {
+
+            this.db = db;
         }
 
         [HttpGet]
