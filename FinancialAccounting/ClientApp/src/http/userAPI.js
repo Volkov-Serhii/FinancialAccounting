@@ -74,9 +74,15 @@ export const GetBills = async() => {
         return err.response.status
     }
 }
-export const CreateBills = async() => {
+export const CreateBill = async(billName,billTypeId,isActiv,balance) => {
     try {
-        const response = await axiosAuth.get('/api/Bills/GetBills')
+        const response = await axiosAuth.post('/api/Bills/CreateBill',
+        {
+            AccountName: billName,
+            AccountTypeId: billTypeId,
+            isActiv: isActiv,
+            Balance: balance
+        })
         console.log("req api done " + response)
         return response;
     } catch (err) {

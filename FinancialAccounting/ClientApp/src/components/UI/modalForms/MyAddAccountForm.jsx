@@ -1,12 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MyInput from "../input/MyInput";
 import MyButton from "../button/MyButton";
 import {withTranslation} from "react-i18next";
 import classes from "../header/MyHeader.module.css";
+import {CreateBill} from "../../../http/userAPI";
 
 const MyAddAccountForm = (props) => {
-    const {t, setActive} = props;
+    
+    const[billName, setBillsName] = useState("");
+    const[billTypeId, setBillTypeId] = useState(1);
+    const[isActiv, setIsActiv] = useState(true);
+    const[balance, setBalance] = useState(0);
 
+    const {t, setActive,setIsReload} = props;
+
+    const nameHandler = (e) => {
+        setBillsName(e.target.value);
+    }
+    const billTypeIdHandler = (e) => {
+        setBillTypeId(e.target.value);
+    }
+    const isActivHandler = (e) => {
+        setIsActiv(e.target.value);
+    }
+    const balanceHandler = (e) => {
+        setBalance(e.target.value);
+    }
+
+    const CreateBillClick = async() => {
+        await CreateBill(billName,billTypeId,isActiv,balance);
+        setActive(false);
+        setIsReload(true);
+    }
 
     return (
         <div>
@@ -20,7 +45,7 @@ const MyAddAccountForm = (props) => {
                         marginBottom: "8px",
                         marginTop: "8px"
                     }}
-                    //onChange={e => emailHandler(e)}
+                    onChange={e => nameHandler(e)}
                     //value={email}
                     //onBlur={e => blurHandler(e)}
                     name="name"
@@ -39,17 +64,19 @@ const MyAddAccountForm = (props) => {
                 <div style={{display: "flex", justifyContent:"space-between"}}>
 
                     <div className="account_type_switcher">
-                        <select id="account-type-select" style={{width: "160px", height: "20px"}}>
-                            <option value="Bill">Bill</option>
-                            <option value="Deposit">Deposit</option>
+                        <select id="account-type-select" style={{width: "160px", height: "20px"}}
+                        onChange={(e) => billTypeIdHandler(e)}>
+                            <option value={1}>Bill</option>
+                            <option value={2}>Deposit</option>
                         </select >
                     </div>
 
 
                     <div className="account_active_switcher">
-                        <select id="account-active-select" style={{width: "160px", height: "20px"}}>
-                            <option value="Active">Active</option>
-                            <option value="Passive">Passive</option>
+                        <select id="account-active-select" style={{width: "160px", height: "20px"}}
+                        onChange={(e) => isActivHandler(e)}>
+                            <option value={true}>Active</option>
+                            <option value={false}>Passive</option>
                         </select >
                     </div>
                 </div>
@@ -63,7 +90,7 @@ const MyAddAccountForm = (props) => {
                         marginBottom: "8px",
                         marginTop: "8px"
                     }}
-                    //onChange={e => emailHandler(e)}
+                    onChange={e => balanceHandler(e)}
                     //value={email}
                     //onBlur={e => blurHandler(e)}
                     name="balance"
@@ -78,7 +105,7 @@ const MyAddAccountForm = (props) => {
                 <MyButton
                     style={{width: "220px", height: "60px", marginBottom: "12px"}}
                     //disabled={!formValid}
-                    //onClick={regClick}
+                    onClick={CreateBillClick}
 
                 >
 

@@ -5,13 +5,17 @@ import {GetBills} from "../http/userAPI";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
+import Cookies from 'js-cookie';
 
 const Home = (props) => {
     const [loading, setLoading] = useState(true)
     const [billsArray, setBillsArray] = useState([null])
     const [modalActive, setModalActive] = useState(false)
+    const [isReload, setIsReload] = useState(false);
 
-
+    if(isReload){
+        window.location.reload();
+    }
     useEffect(() => {
         const fetchData = async () => {
 
@@ -29,6 +33,14 @@ const Home = (props) => {
     if (loading) {
         return <div className={'page'}>Загрузка данных...</div>; // Показать индикатор загрузки, пока данные загружаются
     }
+    if (!Cookies.get("AuthenticationToken")) {
+        return (
+            <div className={'page'}>
+                Login please
+            </div>
+        )
+    }
+
     return (
         <div className={'page'}>
             Home
@@ -41,7 +53,7 @@ const Home = (props) => {
                     Add account
                 </MyButton>
                 <MyModal active={modalActive} setActive={setModalActive}>
-                    <MyAddAccountForm setActive={setModalActive}>
+                    <MyAddAccountForm setActive={setModalActive} setIsReload = {setIsReload}>
 
                     </MyAddAccountForm>
                 </MyModal>
