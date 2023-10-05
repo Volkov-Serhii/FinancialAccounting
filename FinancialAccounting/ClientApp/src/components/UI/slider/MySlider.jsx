@@ -12,7 +12,7 @@ const MySlider = (props) => {
             naturalSlideHeight={200}
             totalSlides={props.array.length}
         >
-            <Slider style={{textAlign: "center", border: "1px solid teal", backgroundColor: "hsla(180,100%,25%, 0.5)"}}>
+            <Slider style={{textAlign: "center", border: "1px solid teal", backgroundColor: "hsla(180,100%,25%, 0.5)", borderRadius: "12px"}}>
                 {props.array.map((item, index) => (
                     <Slide style={{display: "table-cell", verticalAlign: "middle"}} index={index} key={index}>
                         <div>
