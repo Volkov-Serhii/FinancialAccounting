@@ -74,3 +74,12 @@ export const GetBills = async() => {
         return err.response.status
     }
 }
+export const CreateBills = async() => {
+    try {
+        const response = await axiosAuth.get('/api/Bills/GetBills')
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}

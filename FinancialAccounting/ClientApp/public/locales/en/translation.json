@@ -37,5 +37,15 @@
         "field_filled": "The field must be filled in!",
         "statusCode404": "Data is incorrect",
         "statusCode401": "This email is already used"
+    },
+    "addAccount": {
+        "create": "Create an financial account",
+        "account_name": "Financial account name",
+        "name_input": "Enter an financial account name",
+        "account_type": "Enter an financial account type",
+        "balance": "Enter an financial account balance",
+        "isActive": "Is financial account an active?",
+        "create_account": "Create",
+        "cancel_creating": "Cancel"
     }
 }
