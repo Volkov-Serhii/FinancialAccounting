@@ -26,10 +26,6 @@ const Home = (props) => {
 
     const {t} = props;
 
-    const closeModal = () => {
-        setModalActive(false); // Функция для закрытия модального окна
-    }
-
     if (loading) {
         return <div className={'page'}>Загрузка данных...</div>; // Показать индикатор загрузки, пока данные загружаются
     }
@@ -45,7 +41,7 @@ const Home = (props) => {
                     Add account
                 </MyButton>
                 <MyModal active={modalActive} setActive={setModalActive}>
-                    <MyAddAccountForm setActive={closeModal}>
+                    <MyAddAccountForm setActive={setModalActive}>
 
                     </MyAddAccountForm>
                 </MyModal>
