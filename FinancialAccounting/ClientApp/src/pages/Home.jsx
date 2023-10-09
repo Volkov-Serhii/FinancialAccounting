@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {withTranslation} from 'react-i18next';
 import MySlider from "../components/UI/slider/MySlider";
-import {GetBills} from "../http/userAPI";
+import MyTransactionList from "../components/UI/transactionList/MyTransactionList";
+import {GetBills,GetAllTransactions} from "../http/userAPI";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
@@ -12,6 +13,7 @@ const Home = (props) => {
     const [billsArray, setBillsArray] = useState([null])
     const [modalActive, setModalActive] = useState(false)
     const [isReload, setIsReload] = useState(false);
+    const [transactionsArray, setTransactionsArray] = useState([]);
 
     if(isReload){
         window.location.reload();
@@ -19,9 +21,12 @@ const Home = (props) => {
     useEffect(() => {
         const fetchData = async () => {
 
-            const response = await GetBills()
-            console.log(response.data)
-            setBillsArray(response.data)
+            const response = await GetBills();
+            console.log(response.data);
+            const responseTrans = await GetAllTransactions();
+            console.log(responseTrans.data);
+            setBillsArray(response.data);
+            setTransactionsArray(responseTrans.data);
             setLoading(false);
         };
 
@@ -52,6 +57,7 @@ const Home = (props) => {
                 >
                     Add account
                 </MyButton>
+                <MyTransactionList array ={transactionsArray}/>
                 <MyModal active={modalActive} setActive={setModalActive}>
                     <MyAddAccountForm setActive={setModalActive} setIsReload = {setIsReload}>
 

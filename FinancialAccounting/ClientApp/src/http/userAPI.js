@@ -121,3 +121,12 @@ export const DeleteBill = async(id) => {
         return err.response.status
     }
 }
+
+export const GetAllTransactions = async() => {
+    try {
+        const response = await axiosAuth.get('/api/Bills/GetAllTransactions')
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
