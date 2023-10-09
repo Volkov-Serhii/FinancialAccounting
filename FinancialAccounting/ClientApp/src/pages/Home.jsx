@@ -7,6 +7,7 @@ import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
 import Cookies from 'js-cookie';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Home = (props) => {
     const [loading, setLoading] = useState(true)
@@ -15,7 +16,7 @@ const Home = (props) => {
     const [isReload, setIsReload] = useState(false);
     const [transactionsArray, setTransactionsArray] = useState([]);
 
-    if(isReload){
+    if (isReload) {
         window.location.reload();
     }
     useEffect(() => {
@@ -36,7 +37,14 @@ const Home = (props) => {
     const {t} = props;
 
     if (loading) {
-        return <div className={'page'}>Загрузка данных...</div>; // Показать индикатор загрузки, пока данные загружаются
+
+        return (
+            <div className={'page'} style={{justifyContent:"center", alignItems:"center", width: "100vw", height: "100vh"}}>
+                <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            </div>
+        ) // Показать индикатор загрузки, пока данные загружаются
     }
     if (!Cookies.get("AuthenticationToken")) {
         return (
@@ -59,7 +67,7 @@ const Home = (props) => {
                 </MyButton>
                 <MyTransactionList array ={transactionsArray}/>
                 <MyModal active={modalActive} setActive={setModalActive}>
-                    <MyAddAccountForm setActive={setModalActive} setIsReload = {setIsReload}>
+                    <MyAddAccountForm setActive={setModalActive} setIsReload={setIsReload}>
 
                     </MyAddAccountForm>
                 </MyModal>
