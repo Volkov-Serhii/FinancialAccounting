@@ -217,7 +217,7 @@ namespace FinancialAccounting.Controllers
                 trans.Amount = transaction.Amount;
                 trans.CategoryID = transaction.CategoryID;
                 trans.Discription = transaction.Discription;
-                trans.TransactionType = transaction.TransactionType;
+                //trans.TransactionType = transaction.TransactionType;
             }
             db.SaveChanges();
             return Ok();

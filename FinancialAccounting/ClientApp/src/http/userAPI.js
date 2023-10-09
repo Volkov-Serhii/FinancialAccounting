@@ -89,3 +89,35 @@ export const CreateBill = async(billName,billTypeId,isActiv,balance) => {
         return err.response.status
     }
 }
+
+export const EditBill = async(id,billName,billTypeId,isActiv,balance) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/EditBill',
+        {
+            id: id,
+            AccountName: billName,
+            AccountTypeId: billTypeId,
+            isActiv: isActiv,
+            Balance: balance
+        })
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const DeleteBill = async(id) => {
+    try {
+        const response = await axiosAuth.delete('/api/Bills/DeleteBill',
+        {   
+            params: {
+            id: id
+            }
+        })
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
