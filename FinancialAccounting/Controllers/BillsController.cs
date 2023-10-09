@@ -47,6 +47,27 @@ namespace FinancialAccounting.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllTransactions")]
+        [Authorize]
+        public IActionResult GetAllTransactions()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new StatusCodeResult(401);
+            }
+            var jwtHeader = Request.Headers["Authorization"].ToString();
+            var token = jwtHeader.Split(' ')[1];
+            JWTService jwt = new JWTService();
+            var userId = jwt.ReadIdFromToken(token);
+
+            var transactions = db.Accounts
+                .Where(a => a.UserID == userId)
+                .SelectMany(a => a.Transactions)
+                .ToList();
+            return Ok(transactions);
+        }
+
+        [HttpGet]
         [Route("GetTransactions")]
         [Authorize]
         public IActionResult GetTransactions(long billId)
@@ -55,8 +76,8 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
-            var billsType = db.Transactions.Where(t=> t.AccountID == billId).ToList();
-            return Ok(billsType);
+            var transactions = db.Transactions.Where(t=> t.AccountID == billId).ToList();
+            return Ok(transactions);
         }
 
         [HttpGet]
@@ -217,7 +238,7 @@ namespace FinancialAccounting.Controllers
                 trans.Amount = transaction.Amount;
                 trans.CategoryID = transaction.CategoryID;
                 trans.Discription = transaction.Discription;
-                trans.TransactionType = transaction.TransactionType;
+                //trans.TransactionType = transaction.TransactionType;
             }
             db.SaveChanges();
             return Ok();

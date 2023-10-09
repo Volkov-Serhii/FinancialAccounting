@@ -62,6 +62,7 @@ namespace FinancialAccounting.Models
             modelBuilder.Entity<Transactions>()
                 .HasOne(t => t.Categories)
                 .WithMany (c => c.Transactions)
+                .HasForeignKey(t => t.CategoryID)
                 .OnDelete (DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Categories>()
