@@ -130,3 +130,52 @@ export const GetAllTransactions = async() => {
         return err.response.status
     }
 }
+
+export const CreateTransaction = async(billId,isPositive,amount,categoryId,discription) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/CreateTransaction',
+        {
+            AccountID: billId,
+            isPositive: isPositive,
+            Amount: amount,
+            CategoryID: categoryId,
+            Discription: discription
+        })
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const EditTransaction = async(id,isPositive,amount,categoryId,discription) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/EditTransaction',
+        {
+            id: id,
+            isPositive: isPositive,
+            Amount: amount,
+            CategoryID: categoryId,
+            Discription: discription
+        })
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const DeleteTransaction = async(id) => {
+    try {
+        const response = await axiosAuth.delete('/api/Bills/DeleteTransaction',
+        {   
+            params: {
+            id: id
+            }
+        })
+        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}

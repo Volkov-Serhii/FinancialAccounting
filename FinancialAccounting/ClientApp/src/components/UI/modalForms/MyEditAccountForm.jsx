@@ -26,8 +26,8 @@ const MyEditAccountForm = (props) => {
     const billTypeIdHandler = (e) => {
         setBillTypeId(e.target.value);
     }
-    const isActivHandler = (e) => {
-        setIsActiv(e.target.value);
+    const isActivHandler = () => {
+        setIsActiv(!isactiv);
     }
     const balanceHandler = (e) => {
         setBalance(e.target.value);
@@ -79,11 +79,12 @@ const MyEditAccountForm = (props) => {
 
 
                     <div className="account_active_switcher">
-                        <select id="account-active-select" value={isactiv} style={{width: "160px", height: "20px"}}
+                        <input type="checkbox" id="account-active-select" name="isActiv" checked={isActiv} onChange={isActivHandler}/>
+                        {/* <select id="account-active-select" value={isactiv} style={{width: "160px", height: "20px"}}
                         onChange={(e) => isActivHandler(e)}>
                             <option value={true}>Active</option>
                             <option value={false}>Passive</option>
-                        </select >
+                        </select > */}
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import {GetBills,GetAllTransactions} from "../http/userAPI";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
+import MyAddTransactionForm from "../components/UI/modalForms/MyAddTransactionForm";
 import Cookies from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -13,6 +14,7 @@ const Home = (props) => {
     const [loading, setLoading] = useState(true)
     const [billsArray, setBillsArray] = useState([null])
     const [modalActive, setModalActive] = useState(false)
+    const [transactionModalActive, setTransactionModalActive] = useState(false);
     const [isReload, setIsReload] = useState(false);
     const [transactionsArray, setTransactionsArray] = useState([]);
 
@@ -56,7 +58,6 @@ const Home = (props) => {
 
     return (
         <div className={'page'}>
-            Home
             <div style={{width: "220px"}}>
                 <MySlider array={billsArray}/>
                 <MyButton
@@ -66,6 +67,17 @@ const Home = (props) => {
                     Add account
                 </MyButton>
                 <MyTransactionList array ={transactionsArray}/>
+                <MyButton
+                    style={{width: "140px", height: "60px"}}
+                    onClick={() => setTransactionModalActive(true)}
+                >
+                    Add transaction
+                </MyButton>
+                <MyModal active={transactionModalActive} setActive={setTransactionModalActive}>
+                    <MyAddTransactionForm setActive={setTransactionModalActive} setIsReload={setIsReload} billsArray = {billsArray}>
+
+                    </MyAddTransactionForm>
+                </MyModal>
                 <MyModal active={modalActive} setActive={setModalActive}>
                     <MyAddAccountForm setActive={setModalActive} setIsReload={setIsReload}>
 
