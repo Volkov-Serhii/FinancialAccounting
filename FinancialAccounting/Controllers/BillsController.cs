@@ -204,7 +204,7 @@ namespace FinancialAccounting.Controllers
         [HttpPost]
         [Route("CreateTransaction")]
         [Authorize]
-        public IActionResult CreateTransaction(Transactions transaction)
+        public IActionResult CreateTransaction([FromBody]CreateTransactions transaction)
         {
             if (!ModelState.IsValid)
             {
@@ -214,7 +214,16 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
-            db.Transactions.Add(transaction);
+            Transactions newTransaction = new Transactions()
+            {
+                AccountID = transaction.AccountID,
+                isPositive =transaction.isPositive,
+                Amount = transaction.Amount,
+                DateTime = DateTime.Now,
+                CategoryID = transaction.CategoryID,
+                Discription = transaction.Discription
+            };
+            db.Transactions.Add(newTransaction);
             db.SaveChanges();
             return Ok();
         }
@@ -222,7 +231,7 @@ namespace FinancialAccounting.Controllers
         [HttpPost]
         [Route("EditTransaction")]
         [Authorize]
-        public IActionResult EditTransaction(Transactions transaction)
+        public IActionResult EditTransaction(EditTransactions transaction)
         {
             if (!ModelState.IsValid)
             {
@@ -235,10 +244,10 @@ namespace FinancialAccounting.Controllers
             var trans = db.Transactions.FirstOrDefault(a => a.Id == transaction.Id);
             if (trans != null)
             {
+                trans.isPositive = transaction.isPositive;
                 trans.Amount = transaction.Amount;
                 trans.CategoryID = transaction.CategoryID;
                 trans.Discription = transaction.Discription;
-                //trans.TransactionType = transaction.TransactionType;
             }
             db.SaveChanges();
             return Ok();

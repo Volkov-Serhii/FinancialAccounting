@@ -66,11 +66,10 @@ const MySlider = (props) => {
             <ButtonBack>Back</ButtonBack>
             <ButtonNext>Next</ButtonNext>
             <MyModal active={modalActive} setActive={setModalActive}>
-                                <MyEditAccountForm modalActive={modalActive} setActive={setModalActive} setIsReload = {setIsReload} id ={id} billName={billName} 
-                                billTypeId={billTypeId} isActiv={isActiv} balance={balance}>
-
-                                </MyEditAccountForm>
-                            </MyModal>
+                <MyEditAccountForm modalActive={modalActive} setActive={setModalActive} setIsReload = {setIsReload} id ={id} billName={billName} 
+                    billTypeId={billTypeId} isActiv={isActiv} balance={balance}>
+                </MyEditAccountForm>
+            </MyModal>
         </CarouselProvider>
 
     );
