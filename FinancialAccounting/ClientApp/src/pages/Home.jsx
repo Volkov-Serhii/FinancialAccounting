@@ -9,6 +9,7 @@ import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
 import MyAddTransactionForm from "../components/UI/modalForms/MyAddTransactionForm";
 import Cookies from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
+import './Home.css';
 
 const Home = (props) => {
     const [loading, setLoading] = useState(true)
@@ -57,8 +58,8 @@ const Home = (props) => {
     }
 
     return (
-        <div className={'page'}>
-            <div style={{width: "220px"}}>
+        <div className={'home'}>
+            <div className={'item'} style={{width: "220px"}}>
                 <MySlider array={billsArray}/>
                 <MyButton
                     style={{width: "140px", height: "40px"}}
@@ -84,8 +85,9 @@ const Home = (props) => {
                     </MyAddAccountForm>
                 </MyModal>
             </div>
+            <div className={'item'}>
+            </div>
         </div>
-
 
     )
 }

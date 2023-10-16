@@ -41,7 +41,7 @@ const MyTransactionList = (props) => {
             <Col sm={35}>
             <ListGroup as="ul">
                 {props.array.map((item, index) => (  
-                    <ListGroup.Item as="li" key={index} title={item.Discription} action variant="dark">
+                    <ListGroup.Item key={index} title={item.Discription}  variant="dark">
                         {item.amount}
                         {item.dateTime}
                         <MyButton
