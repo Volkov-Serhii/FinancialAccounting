@@ -136,7 +136,8 @@ const Registration = (props) => {
     }
 
     return (
-        <div className={"page"} style={{width: "800px"}}>
+        <div className={"page"}>
+            <div className={'LogRegColumn'}>
             <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
 
             {(statusCode === 401) && <div style={{
@@ -299,7 +300,7 @@ const Registration = (props) => {
             </MyButton>
 
             </div>
-
+            </div>
         </div>
     );
 };

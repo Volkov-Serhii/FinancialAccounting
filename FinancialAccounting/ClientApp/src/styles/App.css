@@ -4,10 +4,10 @@
     box-sizing: border-box;
 }
 
-#root {
-    display: flex;
-    justify-content: center;
-}
+/* #root {
+    display: flex; 
+    justify-content: center; 
+} */
 
 .App {
     width: 100%;
@@ -15,8 +15,19 @@
 }
 
 .page {
-
+    /* display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center; */
+    display: grid;
+    grid-template-areas:". LogRegColumn .";
+    grid-template-columns: 20% 60% 20%;
     text-align: center;
     padding-top: 96px;
     padding-bottom: 26px;
+}
+
+.LogRegColumn{
+    grid-area: LogRegColumn
 }

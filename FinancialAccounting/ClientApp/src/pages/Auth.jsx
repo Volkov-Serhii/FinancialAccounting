@@ -95,7 +95,8 @@ const Auth = (props) => {
 
     return (
        // <form>
-        <div className={"page"} style={{width: "800px"}}>
+        <div className={"page"}>
+            <div className={'LogRegColumn'}>
             <div>
                 <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
 
@@ -179,6 +180,7 @@ const Auth = (props) => {
                     {t('general.registration')}
                 </MyButton>
                 </div>
+            </div>
         </div>
        //</form>
     );
