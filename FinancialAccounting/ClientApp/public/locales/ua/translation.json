@@ -15,7 +15,15 @@
     "header": {
         "select_language": "Оберіть мову:",
         "exit": "Вихід",
-        "login": "Увійти до облікового запису"
+        "login": "Увійти до облікового запису",
+        "home": "Домашня"
+    },
+    "home":{
+        "transactions": "Транзакції",
+        "categoris": "Категорії",
+        "addaccount": "Додати рахунок",
+        "addtransaction": "Додати транзакцію",
+        "addcategory": "Додати категорію"
     },
     "auth":{
         "entrance": "Вхід",
@@ -37,5 +45,15 @@
         "field_filled": "Поле має бути заповнено!",
         "statusCode404": "Некоректні дані",
         "statusCode401": "Email вже зайнятий"
+    },
+    "addAccount": {
+        "create": "Створити рахунок",
+        "account_name": "Назва рахунку",
+        "name_input": "Введіть назву рахунку",
+        "account_type": "Введіть тип рахунку",
+        "balance": "Введіть баланс рахунку",
+        "isActive": "Рахунок це актив?",
+        "create_account": "Створити",
+        "cancel_creating": "Відмінити"
     }
 }

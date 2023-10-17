@@ -25,9 +25,15 @@ const { t, i18n } = useTranslation();
         <div className={"App"}>
 
             <BrowserRouter>
-                <MyHeader/>
-                <AppRouter/>
-                <MyFooter/>
+                <div>
+                    <MyHeader/>
+                </div>
+                <div className = {"content"}>
+                    <AppRouter/>
+                </div>
+                <div className = {"footer"}>
+                    <MyFooter className = {"footer"}/>
+                </div>
             </BrowserRouter>
         </div>
         </div>

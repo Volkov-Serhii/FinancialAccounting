@@ -73,9 +73,9 @@ const Home = (props) => {
                     style={{width: "140px", height: "40px"}}
                     onClick={() => setModalActive(true)}
                 >
-                    Add account
+                    {t('home.addaccount')}
                 </MyButton>
-                <h1>Transactions</h1>
+                <h1>{t('home.transactions')}</h1>
                 <div style={{ height: '150px', overflowY: 'auto' }}>
                     <MyList array ={transactionsArray}>
                         <MyTransactionslistitem></MyTransactionslistitem>
@@ -85,7 +85,7 @@ const Home = (props) => {
                     style={{width: "140px", height: "60px"}}
                     onClick={() => setTransactionModalActive(true)}
                 >
-                    Add transaction
+                    {t('home.addtransaction')}
                 </MyButton>
                 <MyModal active={transactionModalActive} setActive={setTransactionModalActive}>
                     <MyAddTransactionForm setActive={setTransactionModalActive} setIsReload={setIsReload} billsArray = {billsArray}>
@@ -99,7 +99,7 @@ const Home = (props) => {
                 </MyModal>
             </div>
             <div className={'item'}>
-                <h1>Categoris</h1>
+                <h1>{t('home.categoris')}</h1>
                 <div style={{ height: '50%', overflowY: 'auto' }}>
                     <MyList array ={categorisArray}>
                         <MyCategorisListItem></MyCategorisListItem>
@@ -109,7 +109,7 @@ const Home = (props) => {
                     style={{width: "140px", height: "60px"}}
                     onClick={() => setCategoryModalActive(true)}
                 >
-                    Add category
+                    {t('home.addcategory')}
                 </MyButton>
                 <MyModal active={categoryModalActive} setActive={setCategoryModalActive}>
                     <MyAddCategoryForm setActive={setCategoryModalActive} setIsReload={setIsReload} >
