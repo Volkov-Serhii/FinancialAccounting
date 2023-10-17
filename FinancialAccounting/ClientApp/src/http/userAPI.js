@@ -68,7 +68,6 @@ export const GetUserEmail = async(token) =>{
 export const GetBills = async() => {
     try {
         const response = await axiosAuth.get('/api/Bills/GetBills')
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -83,7 +82,6 @@ export const CreateBill = async(billName,billTypeId,isActiv,balance) => {
             isActiv: isActiv,
             Balance: balance
         })
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -100,7 +98,6 @@ export const EditBill = async(id,billName,billTypeId,isActiv,balance) => {
             isActiv: isActiv,
             Balance: balance
         })
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -115,7 +112,6 @@ export const DeleteBill = async(id) => {
             id: id
             }
         })
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -141,7 +137,6 @@ export const CreateTransaction = async(billId,isPositive,amount,categoryId,discr
             CategoryID: categoryId,
             Discription: discription
         })
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -158,7 +153,6 @@ export const EditTransaction = async(id,isPositive,amount,categoryId,discription
             CategoryID: categoryId,
             Discription: discription
         })
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -173,7 +167,53 @@ export const DeleteTransaction = async(id) => {
             id: id
             }
         })
-        console.log("req api done " + response)
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const GetCategories = async() => {
+    try {
+        const response = await axiosAuth.get('/api/Bills/GetCategories')
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const CreateCategori = async(categoryName) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/CreateCategori', {
+                CategoryName: categoryName
+          });
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const EditCategory = async(id,categoryName) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/EditCategory',
+        {
+            id: id,
+            CategoryName: categoryName,
+        })
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const DeleteCategori = async(id) => {
+    try {
+        const response = await axiosAuth.delete('/api/Bills/DeleteCategori',
+        {   
+            params: {
+            id: id
+            }
+        })
         return response;
     } catch (err) {
         return err.response.status

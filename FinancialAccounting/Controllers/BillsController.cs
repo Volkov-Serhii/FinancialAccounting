@@ -93,7 +93,7 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
-            var transactionCategories = db.Categories.Where(c => c.UserID == null && c.UserID == userId).ToList();
+            var transactionCategories = db.Categories.Where(c => c.UserID == null || c.UserID == userId).ToList();
             return Ok(transactionCategories);
         }
 
@@ -223,6 +223,8 @@ namespace FinancialAccounting.Controllers
                 CategoryID = transaction.CategoryID,
                 Discription = transaction.Discription
             };
+            var account = db.Accounts.FirstOrDefault(a => a.Id == transaction.AccountID);
+            account.Balance = account.Balance + transaction.Amount;
             db.Transactions.Add(newTransaction);
             db.SaveChanges();
             return Ok();
@@ -241,7 +243,10 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
+
             var trans = db.Transactions.FirstOrDefault(a => a.Id == transaction.Id);
+            var account = db.Accounts.FirstOrDefault(a => a.Id == trans.AccountID);
+            account.Balance = account.Balance - trans.Amount + transaction.Amount;
             if (trans != null)
             {
                 trans.isPositive = transaction.isPositive;
@@ -275,7 +280,7 @@ namespace FinancialAccounting.Controllers
         [HttpPost]
         [Route("CreateCategori")]
         [Authorize]
-        public IActionResult CreateCategori(Categories categori)
+        public IActionResult CreateCategori(CreateCategory createCategory)
         {
             if (!ModelState.IsValid)
             {
@@ -289,16 +294,20 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
-            categori.UserID = userId;
-            db.Categories.Add(categori);
+            Categories category = new Categories()
+            {
+                UserID = userId,
+                CategoryName = createCategory.CategoryName
+            };
+            db.Categories.Add(category);
             db.SaveChanges();
             return Ok();
         }
 
         [HttpPost]
-        [Route("EditCategori")]
+        [Route("EditCategory")]
         [Authorize]
-        public IActionResult EditCategori(Categories categori)
+        public IActionResult EditCategory(EditCategory editCategori)
         {
             if (!ModelState.IsValid)
             {
@@ -308,10 +317,10 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
-            var cat = db.Categories.FirstOrDefault(c  => c.Id == categori.Id);
-            if(cat == null)
+            var cat = db.Categories.FirstOrDefault(c  => c.Id == editCategori.Id);
+            if(cat != null)
             {
-                cat.CategoryName = categori.CategoryName;
+                cat.CategoryName = editCategori.CategoryName;
             }
             db.SaveChanges();
             return Ok();
