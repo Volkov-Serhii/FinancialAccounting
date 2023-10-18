@@ -26,15 +26,23 @@ export const login = async (email, password, checked) => {
             password: password,
             RememberMe: checked,
         }).then(result => {
-            if(checked){
-                Cookies.set('AuthenticationToken', result.data.token,{expires: 14})
-            }else{
+            if (checked) {
+                Cookies.set('AuthenticationToken', result.data.token, {expires: 14})
+            } else {
                 Cookies.set('AuthenticationToken', result.data.token)
             }
         });
         return 200;
     } catch (err) {
-           return err.response.status
+        return err.response.status
+    }
+}
+
+export const checkUser =  () => {
+    if (Cookies.get("AuthenticationToken")) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -47,10 +55,10 @@ export const logout = async () => {
     }
 }
 
-export const GetUserEmail = async(token) =>{
+export const GetUserEmail = async (token) => {
     let resultData = null
-        try {
-            const response = await axiosAuth.get('/api/Account/GetUserEmail',
+    try {
+        const response = await axiosAuth.get('/api/Account/GetUserEmail',
             {
                 params: {
                     token: token
@@ -58,14 +66,14 @@ export const GetUserEmail = async(token) =>{
             })
             .then((response) => {
                 console.log(response.data)
-                resultData= response.data;
+                resultData = response.data;
             })
-            return resultData
-        } catch (err) {
-            console.log("error", err);
-        }
+        return resultData
+    } catch (err) {
+        console.log("error", err);
+    }
 }
-export const GetBills = async() => {
+export const GetBills = async () => {
     try {
         const response = await axiosAuth.get('/api/Bills/GetBills')
         return response;
@@ -73,7 +81,7 @@ export const GetBills = async() => {
         return err.response.status
     }
 }
-export const CreateBill = async(billName,billTypeId,isActiv,balance) => {
+export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateBill',
         {
@@ -88,7 +96,7 @@ export const CreateBill = async(billName,billTypeId,isActiv,balance) => {
     }
 }
 
-export const EditBill = async(id,billName,billTypeId,isActiv,balance) => {
+export const EditBill = async (id, billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditBill',
         {
@@ -104,7 +112,7 @@ export const EditBill = async(id,billName,billTypeId,isActiv,balance) => {
     }
 }
 
-export const DeleteBill = async(id) => {
+export const DeleteBill = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteBill',
         {   
@@ -118,7 +126,7 @@ export const DeleteBill = async(id) => {
     }
 }
 
-export const GetAllTransactions = async() => {
+export const GetAllTransactions = async () => {
     try {
         const response = await axiosAuth.get('/api/Bills/GetAllTransactions')
         return response;
@@ -127,7 +135,7 @@ export const GetAllTransactions = async() => {
     }
 }
 
-export const CreateTransaction = async(billId,isPositive,amount,categoryId,discription) => {
+export const CreateTransaction = async (billId, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateTransaction',
         {
@@ -143,7 +151,7 @@ export const CreateTransaction = async(billId,isPositive,amount,categoryId,discr
     }
 }
 
-export const EditTransaction = async(id,isPositive,amount,categoryId,discription) => {
+export const EditTransaction = async (id, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditTransaction',
         {
@@ -159,7 +167,7 @@ export const EditTransaction = async(id,isPositive,amount,categoryId,discription
     }
 }
 
-export const DeleteTransaction = async(id) => {
+export const DeleteTransaction = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteTransaction',
         {   

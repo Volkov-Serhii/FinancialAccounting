@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withTranslation} from 'react-i18next';
 import MySlider from "../components/UI/slider/MySlider";
 import MyList from "../components/UI/list/MyList";
@@ -14,8 +14,11 @@ import Cookies from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
 import MyLoader from '../components/UI/loader/MyLoader';
 import './Home.css';
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Home = (props) => {
+const Home = observer((props) => {
+    const {user} = useContext(Context)
     const [loading, setLoading] = useState(true)
     const [billsArray, setBillsArray] = useState([])
     const [modalActive, setModalActive] = useState(false)
@@ -118,5 +121,5 @@ const Home = (props) => {
         </div>
 
     )
-}
+})
 export default withTranslation()(Home);

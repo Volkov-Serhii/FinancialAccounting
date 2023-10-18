@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
 import {registration} from "../http/userAPI";
 import {LOGIN_ROUTE} from "../utils/consts";
 import {useNavigate} from "react-router-dom";
 import {withTranslation} from 'react-i18next';
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Registration = (props) => {
+const Registration = observer((props) => {
     const {t} = props;
-
+    const {user} = useContext(Context)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)
@@ -28,6 +30,8 @@ const Registration = (props) => {
     const [statusCode, setStatusCode] = useState(200);
 
     const history = useNavigate()
+
+    console.log("reg page user is " + user.isAuth)
 
     useEffect(() => {
         if (emailError || passwordError || repasswordError || firstNameError || lastNameError) {
@@ -129,8 +133,10 @@ const Registration = (props) => {
         const response = await registration(email, password, repasword, firstName, lastName);
         if (response === 200) {
             window.location.reload();
+            user.setIsAuth(true);
         } else {
             setStatusCode(response);
+            user.setIsAuth(false);
             return null;
         }
     }
@@ -138,171 +144,171 @@ const Registration = (props) => {
     return (
         <div className={"page"}>
             <div className={'LogRegColumn'}>
-            <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+                <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
 
-            {(statusCode === 401) && <div style={{
-                color: "red", textAlign: "center",
-                marginTop: "0px", marginBottom: "8px", fontSize: "18px"
-            }}>{t('registration.statusCode401')}</div>}
+                {(statusCode === 401) && <div style={{
+                    color: "red", textAlign: "center",
+                    marginTop: "0px", marginBottom: "8px", fontSize: "18px"
+                }}>{t('registration.statusCode401')}</div>}
 
-            {(statusCode === 409) && <div style={{
-                color: "red", textAlign: "center",
-                marginTop: "0px", marginBottom: "8px", fontSize: "18px"
-            }}>{t('registration.statusCode409')}</div>}
+                {(statusCode === 409) && <div style={{
+                    color: "red", textAlign: "center",
+                    marginTop: "0px", marginBottom: "8px", fontSize: "18px"
+                }}>{t('registration.statusCode409')}</div>}
 
-            <div>
-                <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
-                    <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('registration.last_name')}</h3>
+                <div>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
+                        <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('registration.last_name')}</h3>
+                    </div>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        {(firstNameDirty && firstNameError) &&
+                            <div style={{color: "red", marginRight: "auto"}}>{t('registration.field_filled')}</div>}
+                        {(lastNameDirty && lastNameError) &&
+                            <div style={{color: "red", marginLeft: "auto"}}>{t('registration.field_filled')}</div>}
+                    </div>
+                    <div style={{display: "flex"}}>
+
+                        <MyInput
+                            style={{
+                                marginBottom: "8px",
+                                marginTop: "8px",
+                                marginRight: "16px",
+                            }}
+                            onChange={e => firstNameHandler(e)}
+                            value={firstName}
+                            onBlur={e => blurHandler(e)}
+                            name="firstName"
+                            type="text"
+                            placeholder={t('registration.enter_name')}
+                        />
+
+                        <MyInput
+                            style={{
+                                marginBottom: "8px",
+                                marginTop: "8px",
+                                marginLeft: "16px",
+                            }}
+                            onChange={e => lastNameHandler(e)}
+                            value={lastName}
+                            onBlur={e => blurHandler(e)}
+                            name="lastName"
+                            type="text"
+                            placeholder={t('registration.enter_last_name')}
+                        />
+                    </div>
                 </div>
-                <div style={{display: "flex", justifyContent: "space-between"}}>
-                    {(firstNameDirty && firstNameError) &&
-                        <div style={{color: "red", marginRight: "auto"}}>{t('registration.field_filled')}</div>}
-                    {(lastNameDirty && lastNameError) &&
-                        <div style={{color: "red", marginLeft: "auto"}}>{t('registration.field_filled')}</div>}
-                </div>
-                <div style={{display: "flex"}}>
 
+                <div>
+                    <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
+                    <div style={(emailDirty) ? (emailError === "emailIncorrectError") ? {
+                        color: "red", textAlign: "center",
+                        marginTop: "8px"
+                    } : {
+                        display: "none",
+                        color: "red",
+                        textAlign: "center",
+                        marginTop: "8px"
+                    } : {display: "none"}}>{t('general.incorrect_email')}</div>
+
+                    <div style={(emailDirty) ? (emailError === "emailIsEmpty") ? {
+                        color: "red", textAlign: "center",
+                        marginTop: "8px"
+                    } : {
+                        display: "none",
+                        color: "red",
+                        textAlign: "center",
+                        marginTop: "8px"
+                    } : {display: "none"}}>{t('general.email_cannot_be_empty')}</div>
                     <MyInput
                         style={{
                             marginBottom: "8px",
-                            marginTop: "8px",
-                            marginRight: "16px",
+                            marginTop: "8px"
                         }}
-                        onChange={e => firstNameHandler(e)}
-                        value={firstName}
+                        //ФРОНТЕНД ЭТО ДЛЯ УМСТВЕННО ОТСТАЛЫХ!
+                        onChange={e => emailHandler(e)}
+                        value={email}
                         onBlur={e => blurHandler(e)}
-                        name="firstName"
-                        type="text"
-                        placeholder={t('registration.enter_name')}
+                        name="email"
+                        type="email"
+                        placeholder={t('general.enter_email')}
                     />
+                </div>
+                <div>
+                    <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
+                    {(passwordDirty && passwordError === "passIsTooShort") && <div style={{
+                        color: "red", textAlign: "center",
+                        marginTop: "8px"
+                    }}>{t('general.password_length')}</div>}
 
+                    {(passwordDirty && passwordError === "passIsEmpty") && <div style={{
+                        color: "red", textAlign: "center",
+                        marginTop: "8px"
+                    }}>{t('general.password_cannot_be_empty')}</div>}
                     <MyInput
                         style={{
                             marginBottom: "8px",
-                            marginTop: "8px",
-                            marginLeft: "16px",
+                            marginTop: "8px"
                         }}
-                        onChange={e => lastNameHandler(e)}
-                        value={lastName}
+                        onChange={e => passwordHandler(e)}
+                        value={password}
                         onBlur={e => blurHandler(e)}
-                        name="lastName"
-                        type="text"
-                        placeholder={t('registration.enter_last_name')}
+                        name="password"
+                        type="password"
+                        placeholder={t('general.enter_password')}
                     />
                 </div>
-            </div>
 
-            <div>
-                <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
-                <div style={(emailDirty) ? (emailError === "emailIncorrectError") ? {
-                    color: "red", textAlign: "center",
-                    marginTop: "8px"
-                } : {
-                    display: "none",
-                    color: "red",
-                    textAlign: "center",
-                    marginTop: "8px"
-                } : {display: "none"}}>{t('general.incorrect_email')}</div>
-
-                <div style={(emailDirty) ? (emailError === "emailIsEmpty") ? {
-                    color: "red", textAlign: "center",
-                    marginTop: "8px"
-                } : {
-                    display: "none",
-                    color: "red",
-                    textAlign: "center",
-                    marginTop: "8px"
-                } : {display: "none"}}>{t('general.email_cannot_be_empty')}</div>
-                <MyInput
-                    style={{
-                        marginBottom: "8px",
+                <div>
+                    <h3 style={{textAlign: "center",}}>{t('registration.repeat_password')}</h3>
+                    {(repasswordDirty && repasswordError) && <div style={{
+                        color: "red", textAlign: "center",
                         marginTop: "8px"
-                    }}
-                    //ФРОНТЕНД ЭТО ДЛЯ УМСТВЕННО ОТСТАЛЫХ!
-                    onChange={e => emailHandler(e)}
-                    value={email}
-                    onBlur={e => blurHandler(e)}
-                    name="email"
-                    type="email"
-                    placeholder={t('general.enter_email')}
-                />
-            </div>
-            <div>
-                <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
-                {(passwordDirty && passwordError === "passIsTooShort") && <div style={{
-                    color: "red", textAlign: "center",
-                    marginTop: "8px"
-                }}>{t('general.password_length')}</div>}
+                    }}>{t('registration.passwords_match')}</div>}
+                    <MyInput
+                        style={{
+                            marginBottom: "8px",
+                            marginTop: "8px"
+                        }}
+                        onChange={e => repasswordHandler(e)}
+                        value={repasword}
+                        onBlur={e => blurHandler(e)}
+                        name="repassword"
+                        type="password"
+                        placeholder={t('registration.enter_repeat_password')}
+                    />
+                </div>
 
-                {(passwordDirty && passwordError === "passIsEmpty") && <div style={{
-                    color: "red", textAlign: "center",
-                    marginTop: "8px"
-                }}>{t('general.password_cannot_be_empty')}</div>}
-                <MyInput
-                    style={{
-                        marginBottom: "8px",
-                        marginTop: "8px"
-                    }}
-                    onChange={e => passwordHandler(e)}
-                    value={password}
-                    onBlur={e => blurHandler(e)}
-                    name="password"
-                    type="password"
-                    placeholder={t('general.enter_password')}
-                />
-            </div>
+                <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
 
-            <div>
-                <h3 style={{textAlign: "center",}}>{t('registration.repeat_password')}</h3>
-                {(repasswordDirty && repasswordError) && <div style={{
-                    color: "red", textAlign: "center",
-                    marginTop: "8px"
-                }}>{t('registration.passwords_match')}</div>}
-                <MyInput
-                    style={{
-                        marginBottom: "8px",
-                        marginTop: "8px"
-                    }}
-                    onChange={e => repasswordHandler(e)}
-                    value={repasword}
-                    onBlur={e => blurHandler(e)}
-                    name="repassword"
-                    type="password"
-                    placeholder={t('registration.enter_repeat_password')}
-                />
-            </div>
+                    <MyButton
+                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                        disabled={!formValid}
+                        onClick={regClick}
 
-            <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
+                    >
 
-                <MyButton
-                    style={{width: "220px", height: "60px", marginBottom: "12px"}}
-                    disabled={!formValid}
-                    onClick={regClick}
+                        {t('registration.register')}
+                    </MyButton>
+                </div>
+
+                <hr style={{marginBottom: "12px"}}/>
+
+                <div>
+                    <h3 style={{textAlign: "right"}}>{t('registration.have_account')}</h3>
+                </div>
+                <div style={{textAlign: "right"}}><MyButton
+                    style={{height: "40px", outline: "none !important", border: "0 !important"}}
+                    onClick={() => history(LOGIN_ROUTE)}
 
                 >
-
-                    {t('registration.register')}
+                    {t('registration.sign_in')}
                 </MyButton>
-            </div>
 
-            <hr style={{marginBottom: "12px"}}/>
-
-            <div>
-                <h3 style={{textAlign: "right"}}>{t('registration.have_account')}</h3>
-            </div>
-            <div style={{textAlign: "right"}}><MyButton
-                style={{height: "40px", outline: "none !important", border: "0 !important"}}
-                onClick={() => history(LOGIN_ROUTE)}
-
-            >
-                {t('registration.sign_in')}
-            </MyButton>
-
-            </div>
+                </div>
             </div>
         </div>
     );
-};
+});
 
 export default withTranslation()(Registration);
