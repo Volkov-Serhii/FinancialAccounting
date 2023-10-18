@@ -6,7 +6,7 @@ import classes from "../header/MyHeader.module.css";
 import {EditTransaction} from "../../../http/userAPI";
 
 const MyEditTransactionForm = (props) => {
-    const {t, modalActive, setActive, setIsReload, id, isPositive, amount, categoryID, discription} = props;
+    const {t, modalActive, setActive, setIsReload, categorisArray, id, isPositive, amount, categoryID, discription} = props;
 
     const[ispositive, setIsPositive] = useState(isPositive);
     const[amounts, setAmounts] = useState(amount);
@@ -54,8 +54,11 @@ const MyEditTransactionForm = (props) => {
                 <div className="account_type_switcher">
                     <select id="category-select" style={{width: "160px", height: "20px"}}
                     onChange={(e) => categoryIdHandler(e)} value = {categoryid}>
-                        <option value={1}>Home</option>
-                        <option value={2}>Work</option>
+                        {categorisArray.map(
+                            (item, index) => (
+                                <option key={index} value={item.id}>{item.categoryName}</option>
+                            )
+                        )}
                     </select >
                 </div>
 

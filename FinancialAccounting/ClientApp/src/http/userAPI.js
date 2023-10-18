@@ -76,7 +76,6 @@ export const GetUserEmail = async (token) => {
 export const GetBills = async () => {
     try {
         const response = await axiosAuth.get('/api/Bills/GetBills')
-        console.log("req api done " + response)
         return response;
     } catch (err) {
         return err.response.status
@@ -85,13 +84,12 @@ export const GetBills = async () => {
 export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateBill',
-            {
-                AccountName: billName,
-                AccountTypeId: billTypeId,
-                isActiv: isActiv,
-                Balance: balance
-            })
-        console.log("req api done " + response)
+        {
+            AccountName: billName,
+            AccountTypeId: billTypeId,
+            isActiv: isActiv,
+            Balance: balance
+        })
         return response;
     } catch (err) {
         return err.response.status
@@ -101,14 +99,13 @@ export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
 export const EditBill = async (id, billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditBill',
-            {
-                id: id,
-                AccountName: billName,
-                AccountTypeId: billTypeId,
-                isActiv: isActiv,
-                Balance: balance
-            })
-        console.log("req api done " + response)
+        {
+            id: id,
+            AccountName: billName,
+            AccountTypeId: billTypeId,
+            isActiv: isActiv,
+            Balance: balance
+        })
         return response;
     } catch (err) {
         return err.response.status
@@ -118,12 +115,11 @@ export const EditBill = async (id, billName, billTypeId, isActiv, balance) => {
 export const DeleteBill = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteBill',
-            {
-                params: {
-                    id: id
-                }
-            })
-        console.log("req api done " + response)
+        {   
+            params: {
+            id: id
+            }
+        })
         return response;
     } catch (err) {
         return err.response.status
@@ -142,14 +138,13 @@ export const GetAllTransactions = async () => {
 export const CreateTransaction = async (billId, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateTransaction',
-            {
-                AccountID: billId,
-                isPositive: isPositive,
-                Amount: amount,
-                CategoryID: categoryId,
-                Discription: discription
-            })
-        console.log("req api done " + response)
+        {
+            AccountID: billId,
+            isPositive: isPositive,
+            Amount: amount,
+            CategoryID: categoryId,
+            Discription: discription
+        })
         return response;
     } catch (err) {
         return err.response.status
@@ -159,14 +154,13 @@ export const CreateTransaction = async (billId, isPositive, amount, categoryId, 
 export const EditTransaction = async (id, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditTransaction',
-            {
-                id: id,
-                isPositive: isPositive,
-                Amount: amount,
-                CategoryID: categoryId,
-                Discription: discription
-            })
-        console.log("req api done " + response)
+        {
+            id: id,
+            isPositive: isPositive,
+            Amount: amount,
+            CategoryID: categoryId,
+            Discription: discription
+        })
         return response;
     } catch (err) {
         return err.response.status
@@ -176,12 +170,58 @@ export const EditTransaction = async (id, isPositive, amount, categoryId, discri
 export const DeleteTransaction = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteTransaction',
-            {
-                params: {
-                    id: id
-                }
-            })
-        console.log("req api done " + response)
+        {   
+            params: {
+            id: id
+            }
+        })
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const GetCategories = async() => {
+    try {
+        const response = await axiosAuth.get('/api/Bills/GetCategories')
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const CreateCategori = async(categoryName) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/CreateCategori', {
+                CategoryName: categoryName
+          });
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const EditCategory = async(id,categoryName) => {
+    try {
+        const response = await axiosAuth.post('/api/Bills/EditCategory',
+        {
+            id: id,
+            CategoryName: categoryName,
+        })
+        return response;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+export const DeleteCategori = async(id) => {
+    try {
+        const response = await axiosAuth.delete('/api/Bills/DeleteCategori',
+        {   
+            params: {
+            id: id
+            }
+        })
         return response;
     } catch (err) {
         return err.response.status

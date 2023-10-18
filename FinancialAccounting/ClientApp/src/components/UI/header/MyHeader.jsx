@@ -43,27 +43,26 @@ const MyHeader = observer(() => {
     }
 
     return (
-        <header>
-            <div className={classes.logo}>
-                <img src={Logo} alt='Logo'></img>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-            <div className={classes.language_switcher}>
-                <label htmlFor="language-select">{t('header.select_language')}</label>
-                <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)}
-                        value={i18n.language}>
-                    {Object.keys(locales).map((locale) => (
-                        <option
-                            key={locale}
-                            value={locale}
-                            style={{fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal'}}>
+      <header>
+        <div className={classes.logo}>
+          <img src={Logo} alt='Logo'></img>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/home">{t('header.home')}</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div className={classes.language_switcher}>
+            <label htmlFor="language-select">{t('header.select_language')}</label>
+            <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)} value={i18n.language}>
+                {Object.keys(locales).map((locale) => (
+                    <option  
+                    key={locale} 
+                    value={locale} 
+                    style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
                             {locales[locale].title}
                         </option>
                     ))}

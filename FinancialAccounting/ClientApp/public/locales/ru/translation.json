@@ -15,7 +15,15 @@
     "header": {
         "select_language": "Выберите язык:",
         "exit": "Выход",
-        "login": "Войти в аккаунт"
+        "login": "Войти в аккаунт",
+        "home": "Домашняя"
+    },
+    "home":{
+        "transactions": "Транзакции",
+        "categoris": "Категории",
+        "addaccount": "Добавить счёт",
+        "addtransaction": "Добавить транзакцию",
+        "addcategory": "Добавить категорию"
     },
     "auth":{
         "entrance": "Вход",
@@ -37,5 +45,15 @@
         "field_filled": "Поле должно быть заполнено!",
         "statusCode404": "Некорректные данные",
         "statusCode401": "Email уже занят"
+    },
+    "addAccount": {
+        "create": "Создать счёт",
+        "account_name": "Имя счёта",
+        "name_input": "Введите имя счёта",
+        "account_type": "Введите тип счёта",
+        "balance": "Введите баланс счёта",
+        "isActive": "Счёт это актив?",
+        "create_account": "Создать",
+        "cancel_creating": "Отменить"
     }
 }

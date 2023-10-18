@@ -9,11 +9,12 @@ import MyFooter from "./components/UI/footer/MyFooter";
 import {Context} from "./index";
 import {checkUser} from "./http/userAPI";
 import {observer} from "mobx-react-lite";
+import MyLoader from "./components/UI/loader/MyLoader";
+
 
 const App = observer(()  => {
 
     const {user} = useContext(Context)
-
 /*
     useEffect(() => {
         checkUser().then(data =>{
@@ -29,9 +30,15 @@ const { t, i18n } = useTranslation();
         <div>
         <div className={"App"}>
             <BrowserRouter>
-                <MyHeader/>
-                <AppRouter/>
-                <MyFooter/>
+                <div>
+                    <MyHeader/>
+                </div>
+                <div className = {"content"}>
+                    <AppRouter/>
+                </div>
+                <div className = {"footer"}>
+                    <MyFooter className = {"footer"}/>
+                </div>
             </BrowserRouter>
         </div>
         </div>
@@ -40,7 +47,7 @@ const { t, i18n } = useTranslation();
 
 export default function WrappedApp(){
     return (
-      <Suspense fallback="...loading">
+      <Suspense fallback={<MyLoader/>}>
         <App />
       </Suspense>
     )
