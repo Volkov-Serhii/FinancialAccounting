@@ -51,7 +51,7 @@ const MyHeader = () => {
         </div>
         <nav>
             <ul>
-                <li><a href="/home">Home</a></li>
+                <li><a href="/home">{t('header.home')}</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Services</a></li>
                 <li><a href="#">Contact</a></li>

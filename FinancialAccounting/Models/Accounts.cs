@@ -10,7 +10,7 @@ namespace FinancialAccounting.Models
         public int AccountTypeId { get; set; }
         public bool isActiv { get; set; }
         public DateTime DateTime { get; set; }
-        public long Balance { get; set; }
+        public double Balance { get; set; }
 
         public User User { get; set; }
         public AccountType AccountType { get; set; }
