@@ -76,6 +76,36 @@ namespace FinancialAccounting.Models
                     {
                         Id = 2,
                         CategoryName = "Work"
+                    },
+                    new Categories
+                    {
+                        Id = 3,
+                        CategoryName = "Health"
+                    },
+                    new Categories
+                    {
+                        Id = 4,
+                        CategoryName = "Products"
+                    },
+                    new Categories
+                    {
+                        Id = 5,
+                        CategoryName = "Education"
+                    },
+                    new Categories
+                    {
+                        Id = 6,
+                        CategoryName = "Pets"
+                    },
+                    new Categories
+                    {
+                        Id = 7,
+                        CategoryName = "Hobby"
+                    },
+                    new Categories
+                    {
+                        Id = 8,
+                        CategoryName = "Leisure"
                     }
                 );
 

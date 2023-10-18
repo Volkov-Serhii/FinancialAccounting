@@ -9,6 +9,7 @@ import { Suspense } from 'react';
 import { useTranslation} from 'react-i18next';
 import MyHeader from "../src/components/UI/header/MyHeader";
 import MyFooter from "./components/UI/footer/MyFooter";
+import MyLoader from "./components/UI/loader/MyLoader";
 
 function App() {
 /*
@@ -42,7 +43,7 @@ const { t, i18n } = useTranslation();
 
 export default function WrappedApp(){
     return (
-      <Suspense fallback="...loading">
+      <Suspense fallback={<MyLoader/>}>
         <App />
       </Suspense>
     )

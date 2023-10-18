@@ -5,7 +5,7 @@ import MyModal from "../modal/MyModal";
 import MyEditTransactionForm from "../modalForms/MyEditTransactionForm"
 import {DeleteTransaction} from "../../../http/userAPI";
 
-const MyTransactionslistitem = ({ item, setIsReload }) => {
+const MyTransactionslistitem = ({ item, setIsReload ,categorisArray}) => {
 
     const [id, setId] = useState(0);
     const [isPositive, setIsPositive] = useState(true);
@@ -41,7 +41,7 @@ const MyTransactionslistitem = ({ item, setIsReload }) => {
                 Delete
         </MyButton>
         <MyModal active={modalActive} setActive={setModalActive}>
-                <MyEditTransactionForm modalActive={modalActive} setActive={setModalActive} setIsReload = {setIsReload} id ={id} isPositive={isPositive} 
+                <MyEditTransactionForm modalActive={modalActive} setActive={setModalActive} setIsReload = {setIsReload} categorisArray = {categorisArray} id ={id} isPositive={isPositive} 
                     amount={amount} categoryID={categoryID} discription={discription}>
                 </MyEditTransactionForm>
         </MyModal>

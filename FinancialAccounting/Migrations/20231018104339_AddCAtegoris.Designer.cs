@@ -3,6 +3,7 @@ using System;
 using FinancialAccounting.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinancialAccounting.Migrations
 {
     [DbContext(typeof(FinancialAccountingContext))]
-    partial class FinancialAccountingContextModelSnapshot : ModelSnapshot
+    [Migration("20231018104339_AddCAtegoris")]
+    partial class AddCAtegoris
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +34,8 @@ namespace FinancialAccounting.Migrations
                     b.Property<int>("AccountTypeId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Balance")
-                        .HasColumnType("double");
+                    b.Property<long>("Balance")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime(6)");
@@ -177,8 +179,8 @@ namespace FinancialAccounting.Migrations
                     b.Property<long>("AccountID")
                         .HasColumnType("bigint");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double");
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("CategoryID")
                         .HasColumnType("bigint");

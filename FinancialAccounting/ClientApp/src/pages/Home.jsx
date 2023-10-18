@@ -12,11 +12,12 @@ import MyAddTransactionForm from "../components/UI/modalForms/MyAddTransactionFo
 import MyAddCategoryForm from "../components/UI/modalForms/MyAddCategoryForm";
 import Cookies from 'js-cookie';
 import Spinner from 'react-bootstrap/Spinner';
+import MyLoader from '../components/UI/loader/MyLoader';
 import './Home.css';
 
 const Home = (props) => {
     const [loading, setLoading] = useState(true)
-    const [billsArray, setBillsArray] = useState([null])
+    const [billsArray, setBillsArray] = useState([])
     const [modalActive, setModalActive] = useState(false)
     const [transactionModalActive, setTransactionModalActive] = useState(false);
     const [categoryModalActive, setCategoryModalActive] = useState(false);
@@ -50,13 +51,10 @@ const Home = (props) => {
     if (loading) {
 
         return (
-            <div className={'page'} style={{justifyContent:"center", alignItems:"center", width: "100vw", height: "100vh"}}>
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            </div>
+            <MyLoader/>
         ) // Показать индикатор загрузки, пока данные загружаются
     }
+    
     if (!Cookies.get("AuthenticationToken")) {
         return (
             <div className={'page'}>
@@ -78,7 +76,7 @@ const Home = (props) => {
                 <h1>{t('home.transactions')}</h1>
                 <div style={{ height: '150px', overflowY: 'auto' }}>
                     <MyList array ={transactionsArray}>
-                        <MyTransactionslistitem></MyTransactionslistitem>
+                        <MyTransactionslistitem categorisArray = {categorisArray}></MyTransactionslistitem>
                     </MyList>
                 </div>
                 <MyButton
@@ -88,7 +86,7 @@ const Home = (props) => {
                     {t('home.addtransaction')}
                 </MyButton>
                 <MyModal active={transactionModalActive} setActive={setTransactionModalActive}>
-                    <MyAddTransactionForm setActive={setTransactionModalActive} setIsReload={setIsReload} billsArray = {billsArray}>
+                    <MyAddTransactionForm setActive={setTransactionModalActive} setIsReload={setIsReload} billsArray = {billsArray} categorisArray = {categorisArray}>
 
                     </MyAddTransactionForm>
                 </MyModal>

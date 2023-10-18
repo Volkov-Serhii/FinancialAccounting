@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import MyInput from "../input/MyInput";
 import MyButton from "../button/MyButton";
 import {withTranslation} from "react-i18next";
-import classes from "../header/MyHeader.module.css";
 import {CreateTransaction} from "../../../http/userAPI";
 
 const MyAddTransactionForm = (props) => {
-    
+    const initialBillId = props.billsArray.length > 0 ? props.billsArray[0].id : 0;
+    const initialCategoryId = props.categorisArray.length > 0 ? props.categorisArray[0].id : 0;
+
     const[amount, setAmount] = useState(0);
-    const[billId, setBillId] = useState(props.billsArray[0].id);
-    const[categoryId, setCategoryId] = useState(1);
+    const[billId, setBillId] = useState(initialBillId);
+    const[categoryId, setCategoryId] = useState(initialCategoryId);
     const[isPositive, setIsPositive] = useState(true);
     const[discription, setDiscription] = useState("");
 
@@ -64,8 +65,11 @@ const MyAddTransactionForm = (props) => {
                     <div >
                         <select id="category-select" style={{width: "160px", height: "20px"}}
                         onChange={(e) => categoryIdHandler(e)}>
-                            <option value={1}>Home</option>
-                            <option value={2}>Work</option>
+                            {props.categorisArray.map(
+                                (item, index) => (
+                                    <option key={index} value={item.id}>{item.categoryName}</option>
+                                )
+                            )}
                         </select >
                     </div>
 

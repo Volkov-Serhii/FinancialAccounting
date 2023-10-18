@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace FinancialAccounting.Controllers
 {
@@ -272,6 +273,8 @@ namespace FinancialAccounting.Controllers
                 return new StatusCodeResult(401);
             }
             var transaction = db.Transactions.FirstOrDefault(t => t.Id == id);
+            var account = db.Accounts.FirstOrDefault(a => a.Id == transaction.AccountID);
+            account.Balance = account.Balance - transaction.Amount;
             db.Transactions.Remove(transaction);
             db.SaveChanges();
             return Ok();
