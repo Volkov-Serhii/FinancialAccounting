@@ -1,17 +1,17 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import MyInput from "../input/MyInput";
 import MyButton from "../button/MyButton";
-import {withTranslation} from "react-i18next";
+import { withTranslation } from "react-i18next";
 import classes from "../header/MyHeader.module.css";
-import {EditBill} from "../../../http/userAPI";
+import { EditBill } from "../../../http/userAPI";
 
 const MyEditAccountForm = (props) => {
-    const {t, modalActive, setActive, setIsReload, id, billName, billTypeId, isActiv,balance} = props;
+    const { t, modalActive, setActive, setIsReload, id, billName, billTypeId, isActiv, balance } = props;
 
-    const[billsName, setBillsName] = useState(billName);
-    const[billsTypeId, setBillTypeId] = useState(billTypeId);
-    const[isactiv, setIsActiv] = useState(isActiv);
-    const[Balance, setBalance] = useState(balance);
+    const [billsName, setBillsName] = useState(billName);
+    const [billsTypeId, setBillTypeId] = useState(billTypeId);
+    const [isactiv, setIsActiv] = useState(isActiv);
+    const [Balance, setBalance] = useState(balance);
 
     useEffect(() => {
         setBillsName(billName);
@@ -33,18 +33,18 @@ const MyEditAccountForm = (props) => {
         setBalance(e.target.value);
     }
 
-    const EditBillClick = async() => {
-        await EditBill(id,billsName,billsTypeId,isactiv,Balance);
+    const EditBillClick = async () => {
+        await EditBill(id, billsName, billsTypeId, isactiv, Balance);
         setActive(false);
         setIsReload(true);
     }
 
     return (
         <div>
-            <h1 style={{textAlign: "center", paddingBottom: "26px"}}>Edit Bill</h1>
+            <h1 style={{ textAlign: "center", paddingBottom: "26px" }}>Edit Bill</h1>
 
             <div>
-                <h3 style={{textAlign: "center"}}>{t('addAccount.account_name')}</h3>
+                <h3 style={{ textAlign: "center" }}>{t('addAccount.account_name')}</h3>
 
                 <MyInput
                     style={{
@@ -62,16 +62,16 @@ const MyEditAccountForm = (props) => {
 
 
             <div>
-                <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('addAccount.account_type')}</h3>
-                    <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('addAccount.isActive')}</h3>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <h3 style={{ textAlign: "left", paddingBottom: '8px' }}>{t('addAccount.account_type')}</h3>
+                    <h3 style={{ textAlign: "right", paddingBottom: '8px' }}>{t('addAccount.isActive')}</h3>
                 </div>
 
-                <div style={{display: "flex", justifyContent:"space-between"}}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
 
                     <div className="account_type_switcher">
-                        <select id="account-type-select" value={billsTypeId} style={{width: "160px", height: "20px"}}
-                        onChange={(e) => billTypeIdHandler(e)}>
+                        <select id="account-type-select" value={billsTypeId} style={{ width: "160px", height: "20px" }}
+                            onChange={(e) => billTypeIdHandler(e)}>
                             <option value={1}>Bill</option>
                             <option value={2}>Deposit</option>
                         </select >
@@ -79,7 +79,7 @@ const MyEditAccountForm = (props) => {
 
 
                     <div className="account_active_switcher">
-                        <input type="checkbox" id="account-active-select" name="isActiv" checked={isActiv} onChange={isActivHandler}/>
+                        <input type="checkbox" id="account-active-select" name="isActiv" checked={isActiv} onChange={isActivHandler} />
                         {/* <select id="account-active-select" value={isactiv} style={{width: "160px", height: "20px"}}
                         onChange={(e) => isActivHandler(e)}>
                             <option value={true}>Active</option>
@@ -90,7 +90,7 @@ const MyEditAccountForm = (props) => {
             </div>
 
             <div>
-                <h3 style={{textAlign: "center"}}>{t('addAccount.balance')}</h3>
+                <h3 style={{ textAlign: "center" }}>{t('addAccount.balance')}</h3>
 
                 <MyInput
                     style={{
@@ -107,10 +107,10 @@ const MyEditAccountForm = (props) => {
             </div>
 
 
-            <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
+            <div style={{ display: "flex", justifyContent: "center", position: 'relative' }}>
 
                 <MyButton
-                    style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                    style={{ width: "220px", height: "60px", marginBottom: "12px" }}
                     //disabled={!formValid}
                     onClick={EditBillClick}
 
@@ -120,9 +120,9 @@ const MyEditAccountForm = (props) => {
                 </MyButton>
             </div>
 
-            <div style={{textAlign: "right"}}>
+            <div style={{ textAlign: "right" }}>
                 <MyButton
-                    style={{height: "40px", outline: "none !important", border: "1px solid red", color: "red"}}
+                    style={{ height: "40px", outline: "none !important", border: "1px solid red", color: "red" }}
                     onClick={() => setActive(false)}
                 >
                     {t('addAccount.cancel_creating')}

@@ -1,8 +1,8 @@
 {
-    "general":{
+    "general": {
         "registration": "Реєстрація",
         "enter_email": "Введіть ваш email...",
-        "enter_password":"Введіть Ваш пароль...",
+        "enter_password": "Введіть Ваш пароль...",
         "email": "Введіть email.",
         "password": "Введіть пароль.",
         "email_cannot_be_empty": "Email не може бути порожнім",
@@ -16,22 +16,22 @@
         "select_language": "Оберіть мову:",
         "exit": "Вихід",
         "login": "Увійти до облікового запису",
-        "home": "Домашня"
+        "home": "Головна"
     },
-    "home":{
+    "home": {
         "transactions": "Транзакції",
         "categoris": "Категорії",
         "addaccount": "Додати рахунок",
         "addtransaction": "Додати транзакцію",
         "addcategory": "Додати категорію"
     },
-    "auth":{
+    "auth": {
         "entrance": "Вхід",
         "rememberme": "Запам'ятати мене",
         "enter": "Ввійти на сайт",
-        "forgot_email_password":"Забули email чи пароль?"
+        "forgot_email_password": "Забули email чи пароль?"
     },
-    "registration":{
+    "registration": {
         "name": "Введіть ім'я.",
         "last_name": "Введіть прізвище.",
         "enter_name": "Введіть ваше ім'я...",
@@ -41,7 +41,7 @@
         "register": "Зареєструватись",
         "have_account": "Вже є обліковий запис?",
         "sign_in": "Увійдіть!",
-        "passwords_match" : "Паролі мають збігатися!",
+        "passwords_match": "Паролі мають збігатися!",
         "field_filled": "Поле має бути заповнено!",
         "statusCode404": "Некоректні дані",
         "statusCode401": "Email вже зайнятий"

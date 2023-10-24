@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie';
-import {axiosAuth} from "./axiosSettings";
+import { axiosAuth } from "./axiosSettings";
 
 export const registration = async (email, password, repasword, firstName, lastName) => {
     try {
@@ -27,7 +27,7 @@ export const login = async (email, password, checked) => {
             RememberMe: checked,
         }).then(result => {
             if (checked) {
-                Cookies.set('AuthenticationToken', result.data.token, {expires: 14})
+                Cookies.set('AuthenticationToken', result.data.token, { expires: 14 })
             } else {
                 Cookies.set('AuthenticationToken', result.data.token)
             }
@@ -38,7 +38,7 @@ export const login = async (email, password, checked) => {
     }
 }
 
-export const checkUser =  () => {
+export const checkUser = () => {
     if (Cookies.get("AuthenticationToken")) {
         return true;
     } else {
@@ -84,12 +84,12 @@ export const GetBills = async () => {
 export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateBill',
-        {
-            AccountName: billName,
-            AccountTypeId: billTypeId,
-            isActiv: isActiv,
-            Balance: balance
-        })
+            {
+                AccountName: billName,
+                AccountTypeId: billTypeId,
+                isActiv: isActiv,
+                Balance: balance
+            })
         return response;
     } catch (err) {
         return err.response.status
@@ -99,13 +99,13 @@ export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
 export const EditBill = async (id, billName, billTypeId, isActiv, balance) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditBill',
-        {
-            id: id,
-            AccountName: billName,
-            AccountTypeId: billTypeId,
-            isActiv: isActiv,
-            Balance: balance
-        })
+            {
+                id: id,
+                AccountName: billName,
+                AccountTypeId: billTypeId,
+                isActiv: isActiv,
+                Balance: balance
+            })
         return response;
     } catch (err) {
         return err.response.status
@@ -115,11 +115,11 @@ export const EditBill = async (id, billName, billTypeId, isActiv, balance) => {
 export const DeleteBill = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteBill',
-        {   
-            params: {
-            id: id
-            }
-        })
+            {
+                params: {
+                    id: id
+                }
+            })
         return response;
     } catch (err) {
         return err.response.status
@@ -138,13 +138,13 @@ export const GetAllTransactions = async () => {
 export const CreateTransaction = async (billId, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateTransaction',
-        {
-            AccountID: billId,
-            isPositive: isPositive,
-            Amount: amount,
-            CategoryID: categoryId,
-            Discription: discription
-        })
+            {
+                AccountID: billId,
+                isPositive: isPositive,
+                Amount: amount,
+                CategoryID: categoryId,
+                Discription: discription
+            })
         return response;
     } catch (err) {
         return err.response.status
@@ -154,13 +154,13 @@ export const CreateTransaction = async (billId, isPositive, amount, categoryId, 
 export const EditTransaction = async (id, isPositive, amount, categoryId, discription) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditTransaction',
-        {
-            id: id,
-            isPositive: isPositive,
-            Amount: amount,
-            CategoryID: categoryId,
-            Discription: discription
-        })
+            {
+                id: id,
+                isPositive: isPositive,
+                Amount: amount,
+                CategoryID: categoryId,
+                Discription: discription
+            })
         return response;
     } catch (err) {
         return err.response.status
@@ -170,18 +170,18 @@ export const EditTransaction = async (id, isPositive, amount, categoryId, discri
 export const DeleteTransaction = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteTransaction',
-        {   
-            params: {
-            id: id
-            }
-        })
+            {
+                params: {
+                    id: id
+                }
+            })
         return response;
     } catch (err) {
         return err.response.status
     }
 }
 
-export const GetCategories = async() => {
+export const GetCategories = async () => {
     try {
         const response = await axiosAuth.get('/api/Bills/GetCategories')
         return response;
@@ -190,38 +190,38 @@ export const GetCategories = async() => {
     }
 }
 
-export const CreateCategori = async(categoryName) => {
+export const CreateCategori = async (categoryName) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateCategori', {
-                CategoryName: categoryName
-          });
+            CategoryName: categoryName
+        });
         return response;
     } catch (err) {
         console.log(err);
     }
 }
 
-export const EditCategory = async(id,categoryName) => {
+export const EditCategory = async (id, categoryName) => {
     try {
         const response = await axiosAuth.post('/api/Bills/EditCategory',
-        {
-            id: id,
-            CategoryName: categoryName,
-        })
+            {
+                id: id,
+                CategoryName: categoryName,
+            })
         return response;
     } catch (err) {
         return err.response.status
     }
 }
 
-export const DeleteCategori = async(id) => {
+export const DeleteCategori = async (id) => {
     try {
         const response = await axiosAuth.delete('/api/Bills/DeleteCategori',
-        {   
-            params: {
-            id: id
-            }
-        })
+            {
+                params: {
+                    id: id
+                }
+            })
         return response;
     } catch (err) {
         return err.response.status

@@ -1,25 +1,25 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classes from "./MyHeader.module.css";
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Logo from '../../../images/Logo.jpg';
-import {logout, GetUserEmail} from "../../../http/userAPI";
+import { logout, GetUserEmail } from "../../../http/userAPI";
 import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
-import {LOGIN_ROUTE} from "../../../utils/consts";
-import {useNavigate} from "react-router-dom";
-import {Context} from "../../../index";
-import {observer} from "mobx-react-lite";
+import { LOGIN_ROUTE } from "../../../utils/consts";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../../index";
+import { observer } from "mobx-react-lite";
 
 const MyHeader = observer(() => {
-    const {user} = useContext(Context)
+    const { user } = useContext(Context)
     const [userLogin, setUserLogin] = useState('');
 
     const locales = {
-        en: {title: 'English'},
-        ua: {title: 'Українська'},
-        ru: {title: 'Русский'}
+        en: { title: 'English' },
+        ua: { title: 'Українська' },
+        ru: { title: 'Русский' }
     };
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
     const history = useNavigate()
 
 
@@ -43,26 +43,26 @@ const MyHeader = observer(() => {
     }
 
     return (
-      <header>
-        <div className={classes.logo}>
-          <img src={Logo} alt='Logo'></img>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/home">{t('header.home')}</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div className={classes.language_switcher}>
-            <label htmlFor="language-select">{t('header.select_language')}</label>
-            <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)} value={i18n.language}>
-                {Object.keys(locales).map((locale) => (
-                    <option  
-                    key={locale} 
-                    value={locale} 
-                    style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
+        <header>
+            <div className={classes.logo}>
+                <img src={Logo} alt='Logo'></img>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/home">{t('header.home')}</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div className={classes.language_switcher}>
+                <label htmlFor="language-select">{t('header.select_language')}</label>
+                <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)} value={i18n.language}>
+                    {Object.keys(locales).map((locale) => (
+                        <option
+                            key={locale}
+                            value={locale}
+                            style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
                             {locales[locale].title}
                         </option>
                     ))}
@@ -71,14 +71,14 @@ const MyHeader = observer(() => {
             <div>{userLogin}</div>
             {(user.isAuth) ? (
                 <MyButton
-                    style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                    style={{ width: "220px", height: "60px", marginBottom: "12px" }}
                     onClick={logoutClick}
                 >
                     {t("header.exit")}
                 </MyButton>
             ) : (
                 <MyButton
-                    style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                    style={{ width: "220px", height: "60px", marginBottom: "12px" }}
                     onClick={() => history(LOGIN_ROUTE)}>
                     {t('header.login')}
                 </MyButton>

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {withTranslation} from "react-i18next";
+import React, { useEffect, useState } from 'react';
+import { withTranslation } from "react-i18next";
 import MyButton from '../button/MyButton';
 import MyModal from "../modal/MyModal";
 import MyEditTransactionForm from "../modalForms/MyEditTransactionForm"
-import {DeleteTransaction} from "../../../http/userAPI";
+import { DeleteTransaction } from "../../../http/userAPI";
 
-const MyTransactionslistitem = ({ item, setIsReload ,categorisArray}) => {
+const MyTransactionslistitem = ({ item, setIsReload, categorisArray }) => {
 
     const [id, setId] = useState(0);
     const [isPositive, setIsPositive] = useState(true);
@@ -14,7 +14,7 @@ const MyTransactionslistitem = ({ item, setIsReload ,categorisArray}) => {
     const [discription, setDiscription] = useState("");
     const [modalActive, setModalActive] = useState(false)
 
-    const Edit = (id,isPositive,amount,categoryID,discription) =>{
+    const Edit = (id, isPositive, amount, categoryID, discription) => {
         setId(id);
         setIsPositive(isPositive);
         setAmount(amount);
@@ -23,30 +23,30 @@ const MyTransactionslistitem = ({ item, setIsReload ,categorisArray}) => {
         setModalActive(true);
     }
 
-    const Delete = async(id) =>{
+    const Delete = async (id) => {
         await DeleteTransaction(id);
         window.location.reload();
     }
 
-  return (
-    <div>
-        {item.amount}
-        {item.dateTime}
-        <MyButton
-            onClick={() => Edit(item.id,item.isPositive,item.amount,item.categoryID,item.discription)}>
+    return (
+        <div>
+            {item.amount}
+            {item.dateTime}
+            <MyButton
+                onClick={() => Edit(item.id, item.isPositive, item.amount, item.categoryID, item.discription)}>
                 Edit
-        </MyButton>
-        <MyButton
-            onClick={() => Delete(item.id)}>
+            </MyButton>
+            <MyButton
+                onClick={() => Delete(item.id)}>
                 Delete
-        </MyButton>
-        <MyModal active={modalActive} setActive={setModalActive}>
-                <MyEditTransactionForm modalActive={modalActive} setActive={setModalActive} setIsReload = {setIsReload} categorisArray = {categorisArray} id ={id} isPositive={isPositive} 
+            </MyButton>
+            <MyModal active={modalActive} setActive={setModalActive}>
+                <MyEditTransactionForm modalActive={modalActive} setActive={setModalActive} setIsReload={setIsReload} categorisArray={categorisArray} id={id} isPositive={isPositive}
                     amount={amount} categoryID={categoryID} discription={discription}>
                 </MyEditTransactionForm>
-        </MyModal>
-    </div>
-  );
+            </MyModal>
+        </div>
+    );
 };
 
 export default withTranslation()(MyTransactionslistitem);
