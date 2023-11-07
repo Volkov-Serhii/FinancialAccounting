@@ -81,14 +81,15 @@ export const GetBills = async () => {
         return err.response.status
     }
 }
-export const CreateBill = async (billName, billTypeId, isActiv, balance) => {
+export const CreateBill = async (billName, billTypeId, isActiv, balance, currency) => {
     try {
         const response = await axiosAuth.post('/api/Bills/CreateBill',
             {
                 AccountName: billName,
                 AccountTypeId: billTypeId,
                 isActiv: isActiv,
-                Balance: balance
+                Balance: balance,
+                Currency: currency
             })
         return response;
     } catch (err) {
@@ -226,4 +227,27 @@ export const DeleteCategori = async (id) => {
     } catch (err) {
         return err.response.status
     }
+}
+
+export const getExchangeRates = async () => {
+    var data;
+    const storedData = JSON.parse(localStorage.getItem('exchangeRates')) || { data: [], lastUpdated: null };
+
+    const currentTime = new Date().getTime();
+    const lastUpdatedTime = storedData.lastUpdated;
+    const oneDayInMilliseconds = 86400000;
+
+    if (!lastUpdatedTime || currentTime - lastUpdatedTime > oneDayInMilliseconds) {
+        try {
+            const response = await axios.get('NBUStatService/v1/statdirectory/exchangenew?json');
+            data = response.data;
+            const updatedData = { data, lastUpdated: currentTime };
+            localStorage.setItem('exchangeRates', JSON.stringify(updatedData));
+        } catch (err) {
+            console.log(err);
+        }
+    }else{
+        data = storedData.data;
+    }
+    return data;
 }

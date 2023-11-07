@@ -11,8 +11,9 @@ const MyAddAccountForm = (props) => {
     const [billTypeId, setBillTypeId] = useState(1);
     const [isActiv, setIsActiv] = useState(true);
     const [balance, setBalance] = useState(0);
+    const [currency, setCurrency] = useState("UAH");
 
-    const { t, setActive, setIsReload } = props;
+    const { t, setActive, setIsReload, currencyArray } = props;
 
     const nameHandler = (e) => {
         setBillsName(e.target.value);
@@ -26,9 +27,13 @@ const MyAddAccountForm = (props) => {
     const balanceHandler = (e) => {
         setBalance(e.target.value);
     }
+    const CurrencyHandler = async(e,target) => {
+        const value = e.target.value;
+        setCurrency(value);
+    }
 
     const CreateBillClick = async () => {
-        await CreateBill(billName, billTypeId, isActiv, balance);
+        await CreateBill(billName, billTypeId, isActiv, balance, currency);
         setActive(false);
         setIsReload(true);
     }
@@ -98,6 +103,12 @@ const MyAddAccountForm = (props) => {
                     type="number"
                     placeholder={t('addAccount.balance')}
                 />
+                <select value={currency} onChange={CurrencyHandler}>
+                    <option title = "Українська гривня" value="UAH">UAH</option>
+                    {currencyArray.map((item, index) => (
+                        <option key = {index} title = {item.txt} value={item.cc}>{item.cc}</option>
+                    ))}
+                </select>
             </div>
 
 

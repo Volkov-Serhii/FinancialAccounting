@@ -31,7 +31,19 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
-            var bills = db.Accounts.Where(a => a.UserID == userId).ToList();
+            var bills = (from account in db.Accounts
+                         join currency in db.Currencies on account.CurrencyId equals currency.Id
+                         where account.UserID == userId
+                         select new
+                         {
+                             account.Id,
+                             account.AccountName,
+                             account.AccountTypeId,
+                             account.isActiv,
+                             account.DateTime,
+                             account.Balance,
+                             CurrencyName = currency.Currency
+                         }).ToList();
             return Ok(bills);
         }
 
@@ -60,12 +72,26 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
-
-            var transactions = db.Accounts
-                .Where(a => a.UserID == userId)
-                .SelectMany(a => a.Transactions)
-                .ToList();
-            return Ok(transactions);
+            var transactionsWithCurrency = (from t in db.Transactions
+                                            join a in db.Accounts on t.AccountID equals a.Id
+                                            join c in db.Currencies on a.CurrencyId equals c.Id
+                                            where a.UserID == userId
+                                            select new
+                                            {
+                                                TransactionID = t.Id,
+                                                AccountID = t.AccountID,
+                                                isPositive = t.isPositive,
+                                                Amount = t.Amount,
+                                                DateTime = t.DateTime,
+                                                CategoryID = t.CategoryID,
+                                                Discription = t.Discription,
+                                                Currency = c.Currency
+                                            }).ToList();
+            //var transactions = db.Accounts
+            //    .Where(a => a.UserID == userId)
+            //    .SelectMany(a => a.Transactions)
+            //    .ToList();
+            return Ok(transactionsWithCurrency);
         }
 
         [HttpGet]
@@ -77,8 +103,23 @@ namespace FinancialAccounting.Controllers
             {
                 return new StatusCodeResult(401);
             }
-            var transactions = db.Transactions.Where(t=> t.AccountID == billId).ToList();
-            return Ok(transactions);
+            var transactionsWithCurrency = (from t in db.Transactions
+                                            join a in db.Accounts on t.AccountID equals a.Id
+                                            join c in db.Currencies on a.CurrencyId equals c.Id
+                                            where t.AccountID == billId
+                                            select new
+                                            {
+                                                TransactionID = t.Id,
+                                                AccountID = t.AccountID,
+                                                isPositive = t.isPositive,
+                                                Amount = t.Amount,
+                                                DateTime = t.DateTime,
+                                                CategoryID = t.CategoryID,
+                                                Discription = t.Discription,
+                                                Currency = c.Currency
+                                            }).ToList();
+            //var transactions = db.Transactions.Where(t=> t.AccountID == billId).ToList();
+            return Ok(transactionsWithCurrency);
         }
 
         [HttpGet]
@@ -115,6 +156,16 @@ namespace FinancialAccounting.Controllers
             var token = jwtHeader.Split(' ')[1];
             JWTService jwt = new JWTService();
             var userId = jwt.ReadIdFromToken(token);
+            var currancy = db.Currencies.FirstOrDefault(c => c.Currency == bill.Currency);
+            if (currancy == null)
+            {
+                currancy = new Currencies()
+                {
+                    Currency = bill.Currency
+                };
+                db.Currencies.Add(currancy);
+                db.SaveChanges();
+            }
             Accounts account = new Accounts()
             {
                 UserID = userId,
@@ -122,7 +173,8 @@ namespace FinancialAccounting.Controllers
                 AccountTypeId = bill.AccountTypeId,
                 isActiv = bill.isActiv,
                 DateTime = DateTime.Today,
-                Balance = bill.Balance
+                Balance = bill.Balance,
+                CurrencyId = currancy.Id
             };
             db.Accounts.Add(account);
             if(bill.Interest != null)

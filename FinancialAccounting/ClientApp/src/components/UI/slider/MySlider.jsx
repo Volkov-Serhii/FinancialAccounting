@@ -49,6 +49,7 @@ const MySlider = (props) => {
                         </div>
                         <div>
                             {item.balance.toFixed(2)}
+                            {item.currencyName}
                         </div>
                         <div>
                             <MyButton

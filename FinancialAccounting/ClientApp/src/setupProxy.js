@@ -8,6 +8,10 @@ const context = [
   "/weatherforecast",
   "/api"
 ];
+const contextNBU =  [
+  '/NBU_Exchange',
+  '/NBUStatService'
+];
 
 module.exports = function (app) {
   const appProxy = createProxyMiddleware(context, {
@@ -19,5 +23,11 @@ module.exports = function (app) {
     }
   });
 
+  const appProxyNBU = createProxyMiddleware(contextNBU, {
+        target: 'https://bank.gov.ua',
+        changeOrigin: true,
+    });
+
   app.use(appProxy);
+  app.use(appProxyNBU);
 };

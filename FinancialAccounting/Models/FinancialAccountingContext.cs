@@ -20,7 +20,7 @@ namespace FinancialAccounting.Models
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<InterestAccount> InterestAccounts { get; set; }
-
+        public DbSet<Currencies> Currencies { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
                 base.OnModelCreating(modelBuilder);
@@ -36,6 +36,11 @@ namespace FinancialAccounting.Models
                 .WithMany(i => i.Accounts)
                 .HasForeignKey(a => a.AccountTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Accounts>()
+                .HasOne(a => a.Currency)
+                .WithMany(c => c.Accounts)
+                .HasForeignKey(a => a.CurrencyId);
 
             modelBuilder.Entity<InterestAccount>()
                 .HasOne(i => i.Accounts)

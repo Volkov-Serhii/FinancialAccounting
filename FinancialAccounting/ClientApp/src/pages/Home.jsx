@@ -4,7 +4,7 @@ import MySlider from "../components/UI/slider/MySlider";
 import MyList from "../components/UI/list/MyList";
 import MyCategorisListItem from "../components/UI/listItems/MyCategorisListItem";
 import MyTransactionslistitem from "../components/UI/listItems/MyTransactionslistitem";
-import { GetBills, GetAllTransactions, GetCategories } from "../http/userAPI";
+import { GetBills, GetAllTransactions, GetCategories, getExchangeRates } from "../http/userAPI";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
@@ -25,6 +25,7 @@ const Home = observer((props) => {
     const [isReload, setIsReload] = useState(false);
     const [transactionsArray, setTransactionsArray] = useState([]);
     const [categorisArray, setCategorisArray] = useState([]);
+    const [currencyArray, setCurrencyArray] = useState([]);
 
     if (isReload) {
         window.location.reload();
@@ -33,14 +34,17 @@ const Home = observer((props) => {
         const fetchData = async () => {
 
             const response = await GetBills();
-            console.log(response.data);
+            console.log("Bills:",response.data);
             const responseTrans = await GetAllTransactions();
-            console.log(responseTrans.data);
+            console.log("responseTrans:",responseTrans.data);
             const responseCateg = await GetCategories();
-            console.log(responseCateg.data);
+            console.log("responseCateg:",responseCateg.data);
+            const responseExchangeRates = await getExchangeRates();
+            console.log("responseExchangeRates:",responseExchangeRates);
             setBillsArray(response.data);
             setTransactionsArray(responseTrans.data);
             setCategorisArray(responseCateg.data);
+            setCurrencyArray(responseExchangeRates);
             setLoading(false);
         };
 
@@ -84,7 +88,7 @@ const Home = observer((props) => {
                     </MyAddTransactionForm>
                 </MyModal>
                 <MyModal active={modalActive} setActive={setModalActive}>
-                    <MyAddAccountForm setActive={setModalActive} setIsReload={setIsReload}>
+                    <MyAddAccountForm setActive={setModalActive} setIsReload={setIsReload} currencyArray={currencyArray}>
 
                     </MyAddAccountForm>
                 </MyModal>
