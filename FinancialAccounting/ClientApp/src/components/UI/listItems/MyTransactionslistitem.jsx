@@ -13,13 +13,16 @@ const MyTransactionslistitem = ({ item, setIsReload, categorisArray }) => {
     const [categoryID, setCategoryID] = useState(true);
     const [discription, setDiscription] = useState("");
     const [modalActive, setModalActive] = useState(false)
+    const [currencyName, setCurrencyName] = useState("UAH");
 
-    const Edit = (id, isPositive, amount, categoryID, discription) => {
+
+    const Edit = (id, isPositive, amount, categoryID, discription, currency) => {
         setId(id);
         setIsPositive(isPositive);
         setAmount(amount);
         setCategoryID(categoryID);
         setDiscription(discription);
+        setCurrencyName(currency);
         setModalActive(true);
     }
 
@@ -34,16 +37,16 @@ const MyTransactionslistitem = ({ item, setIsReload, categorisArray }) => {
             {item.currency}
             {item.dateTime}
             <MyButton
-                onClick={() => Edit(item.id, item.isPositive, item.amount, item.categoryID, item.discription)}>
+                onClick={() => Edit(item.transactionID, item.isPositive, item.amount, item.categoryID, item.discription, item.currency)}>
                 Edit
             </MyButton>
             <MyButton
-                onClick={() => Delete(item.id)}>
+                onClick={() => Delete(item.transactionID)}>
                 Delete
             </MyButton>
             <MyModal active={modalActive} setActive={setModalActive}>
                 <MyEditTransactionForm modalActive={modalActive} setActive={setModalActive} setIsReload={setIsReload} categorisArray={categorisArray} id={id} isPositive={isPositive}
-                    amount={amount} categoryID={categoryID} discription={discription}>
+                    amount={amount} categoryID={categoryID} discription={discription} currencyName={currencyName}>
                 </MyEditTransactionForm>
             </MyModal>
         </div>

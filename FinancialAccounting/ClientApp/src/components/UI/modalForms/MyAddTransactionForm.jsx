@@ -7,12 +7,14 @@ import { CreateTransaction } from "../../../http/userAPI";
 const MyAddTransactionForm = (props) => {
     const initialBillId = props.billsArray.length > 0 ? props.billsArray[0].id : 0;
     const initialCategoryId = props.categorisArray.length > 0 ? props.categorisArray[0].id : 0;
+    const initialCurrencyName = props.billsArray.length > 0 ? props.billsArray[0].currencyName : "UAH";
 
     const [amount, setAmount] = useState(0);
     const [billId, setBillId] = useState(initialBillId);
     const [categoryId, setCategoryId] = useState(initialCategoryId);
     const [isPositive, setIsPositive] = useState(true);
     const [discription, setDiscription] = useState("");
+    const [currencyName, setCurrencyName] = useState(initialCurrencyName);
 
     const { t, setActive, setIsReload } = props;
 
@@ -20,6 +22,10 @@ const MyAddTransactionForm = (props) => {
         setAmount(e.target.value);
     }
     const billIdHandler = (e) => {
+        const findBill = props.billsArray.find(function(element) {
+            return element.id === Number(e.target.value);
+          });
+        setCurrencyName(findBill.currencyName);
         setBillId(e.target.value);
     }
     const categoryIdHandler = (e) => {
@@ -98,6 +104,8 @@ const MyAddTransactionForm = (props) => {
                     placeholder="Amount"
                 />
             </div>
+
+            <div>{currencyName}</div>
 
             <div>
                 <h3 style={{ textAlign: "center" }}>Description</h3>

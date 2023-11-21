@@ -6,7 +6,7 @@ import classes from "../header/MyHeader.module.css";
 import { EditTransaction } from "../../../http/userAPI";
 
 const MyEditTransactionForm = (props) => {
-    const { t, modalActive, setActive, setIsReload, categorisArray, id, isPositive, amount, categoryID, discription } = props;
+    const { t, modalActive, setActive, setIsReload, categorisArray, id, isPositive, amount, categoryID, discription ,currencyName } = props;
 
     const [ispositive, setIsPositive] = useState(isPositive);
     const [amounts, setAmounts] = useState(amount);
@@ -88,6 +88,8 @@ const MyEditTransactionForm = (props) => {
                     placeholder="Amount"
                 />
             </div>
+
+            <div>{currencyName}</div>
 
             <div>
                 <h3 style={{ textAlign: "center" }}>Description</h3>
