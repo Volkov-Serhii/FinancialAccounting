@@ -23,9 +23,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0; /* Уберите горизонтальный отступ для растяжения на всю ширину */
+    padding: 0;
+    /* Уберите горизонтальный отступ для растяжения на всю ширину */
     margin-bottom: 4px;
-    width: 100%; /* Занимайте всю доступную ширину */
+    width: 100%;
+    /* Занимайте всю доступную ширину */
     height: 82px;
     position: absolute;
     z-index: 100;

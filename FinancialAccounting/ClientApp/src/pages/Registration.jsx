@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
-import {registration} from "../http/userAPI";
-import {LOGIN_ROUTE} from "../utils/consts";
-import {useNavigate} from "react-router-dom";
-import {withTranslation} from 'react-i18next';
-import {observer} from "mobx-react-lite";
-import {Context} from "../index";
+import { registration } from "../http/userAPI";
+import { LOGIN_ROUTE } from "../utils/consts";
+import { useNavigate } from "react-router-dom";
+import { withTranslation } from 'react-i18next';
+import { observer } from "mobx-react-lite";
+import { Context } from "../index";
 
 const Registration = observer((props) => {
-    const {t} = props;
-    const {user} = useContext(Context)
+    const { t } = props;
+    const { user } = useContext(Context)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState(false)
@@ -51,7 +51,7 @@ const Registration = observer((props) => {
                 setPasswordDirty(true)
                 break
 
-            case  'repassword':
+            case 'repassword':
                 setRepasswordDirty(true)
                 break
 
@@ -144,7 +144,7 @@ const Registration = observer((props) => {
     return (
         <div className={"page"}>
             <div className={'LogRegColumn'}>
-                <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('general.registration')}</h1>
+                <h1 style={{ textAlign: "center", paddingBottom: "26px" }}>{t('general.registration')}</h1>
 
                 {(statusCode === 401) && <div style={{
                     color: "red", textAlign: "center",
@@ -157,17 +157,17 @@ const Registration = observer((props) => {
                 }}>{t('registration.statusCode409')}</div>}
 
                 <div>
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <h3 style={{textAlign: "left", paddingBottom: '8px'}}>{t('registration.name')}</h3>
-                        <h3 style={{textAlign: "right", paddingBottom: '8px'}}>{t('registration.last_name')}</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h3 style={{ textAlign: "left", paddingBottom: '8px' }}>{t('registration.name')}</h3>
+                        <h3 style={{ textAlign: "right", paddingBottom: '8px' }}>{t('registration.last_name')}</h3>
                     </div>
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                         {(firstNameDirty && firstNameError) &&
-                            <div style={{color: "red", marginRight: "auto"}}>{t('registration.field_filled')}</div>}
+                            <div style={{ color: "red", marginRight: "auto" }}>{t('registration.field_filled')}</div>}
                         {(lastNameDirty && lastNameError) &&
-                            <div style={{color: "red", marginLeft: "auto"}}>{t('registration.field_filled')}</div>}
+                            <div style={{ color: "red", marginLeft: "auto" }}>{t('registration.field_filled')}</div>}
                     </div>
-                    <div style={{display: "flex"}}>
+                    <div style={{ display: "flex" }}>
 
                         <MyInput
                             style={{
@@ -200,7 +200,7 @@ const Registration = observer((props) => {
                 </div>
 
                 <div>
-                    <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
+                    <h3 style={{ textAlign: "center" }}>{t('general.email')}</h3>
                     <div style={(emailDirty) ? (emailError === "emailIncorrectError") ? {
                         color: "red", textAlign: "center",
                         marginTop: "8px"
@@ -209,7 +209,7 @@ const Registration = observer((props) => {
                         color: "red",
                         textAlign: "center",
                         marginTop: "8px"
-                    } : {display: "none"}}>{t('general.incorrect_email')}</div>
+                    } : { display: "none" }}>{t('general.incorrect_email')}</div>
 
                     <div style={(emailDirty) ? (emailError === "emailIsEmpty") ? {
                         color: "red", textAlign: "center",
@@ -219,7 +219,7 @@ const Registration = observer((props) => {
                         color: "red",
                         textAlign: "center",
                         marginTop: "8px"
-                    } : {display: "none"}}>{t('general.email_cannot_be_empty')}</div>
+                    } : { display: "none" }}>{t('general.email_cannot_be_empty')}</div>
                     <MyInput
                         style={{
                             marginBottom: "8px",
@@ -235,7 +235,7 @@ const Registration = observer((props) => {
                     />
                 </div>
                 <div>
-                    <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
+                    <h3 style={{ textAlign: "center", }}>{t('general.password')}</h3>
                     {(passwordDirty && passwordError === "passIsTooShort") && <div style={{
                         color: "red", textAlign: "center",
                         marginTop: "8px"
@@ -260,7 +260,7 @@ const Registration = observer((props) => {
                 </div>
 
                 <div>
-                    <h3 style={{textAlign: "center",}}>{t('registration.repeat_password')}</h3>
+                    <h3 style={{ textAlign: "center", }}>{t('registration.repeat_password')}</h3>
                     {(repasswordDirty && repasswordError) && <div style={{
                         color: "red", textAlign: "center",
                         marginTop: "8px"
@@ -279,10 +279,10 @@ const Registration = observer((props) => {
                     />
                 </div>
 
-                <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
+                <div style={{ display: "flex", justifyContent: "center", position: 'relative' }}>
 
                     <MyButton
-                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                        style={{ width: "220px", height: "60px", marginBottom: "12px" }}
                         disabled={!formValid}
                         onClick={regClick}
 
@@ -292,13 +292,13 @@ const Registration = observer((props) => {
                     </MyButton>
                 </div>
 
-                <hr style={{marginBottom: "12px"}}/>
+                <hr style={{ marginBottom: "12px" }} />
 
                 <div>
-                    <h3 style={{textAlign: "right"}}>{t('registration.have_account')}</h3>
+                    <h3 style={{ textAlign: "right" }}>{t('registration.have_account')}</h3>
                 </div>
-                <div style={{textAlign: "right"}}><MyButton
-                    style={{height: "40px", outline: "none !important", border: "0 !important"}}
+                <div style={{ textAlign: "right" }}><MyButton
+                    style={{ height: "40px", outline: "none !important", border: "0 !important" }}
                     onClick={() => history(LOGIN_ROUTE)}
 
                 >

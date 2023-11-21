@@ -1,18 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MyInput from "../components/UI/input/MyInput";
 import MyButton from "../components/UI/button/MyButton";
-import {login} from "../http/userAPI";
-import {REGISTRATION_ROUTE} from "../utils/consts";
-import {useNavigate} from "react-router-dom";
-import {withTranslation} from 'react-i18next';
+import { login } from "../http/userAPI";
+import { REGISTRATION_ROUTE } from "../utils/consts";
+import { useNavigate } from "react-router-dom";
+import { withTranslation } from 'react-i18next';
 import Cookies from "js-cookie";
-import {Context} from "../index";
-import {observer} from "mobx-react-lite";
+import { Context } from "../index";
+import { observer } from "mobx-react-lite";
 
 
 const Auth = observer((props) => {
 
-    const {t} = props;
+    const { t } = props;
     const email_cannot_be_empty = t('general.email_cannot_be_empty')
     const password_cannot_be_empty = t('general.password_cannot_be_empty')
 
@@ -101,7 +101,7 @@ const Auth = observer((props) => {
         <div className={"page"}>
             <div className={'LogRegColumn'}>
                 <div>
-                    <h1 style={{textAlign: "center", paddingBottom: "26px"}}>{t('auth.entrance')}</h1>
+                    <h1 style={{ textAlign: "center", paddingBottom: "26px" }}>{t('auth.entrance')}</h1>
 
                     {(statusCode === 401) && <div style={{
                         color: "red", textAlign: "center",
@@ -113,7 +113,7 @@ const Auth = observer((props) => {
                         marginTop: "0px", marginBottom: "8px", fontSize: "18px"
                     }}>{t('general.statusCode409')}</div>}
 
-                    <h3 style={{textAlign: "center"}}>{t('general.email')}</h3>
+                    <h3 style={{ textAlign: "center" }}>{t('general.email')}</h3>
 
                     <div style={(emailDirty) ? (emailError === "emailIncorrectError") ? {
                         color: "red", textAlign: "center",
@@ -123,7 +123,7 @@ const Auth = observer((props) => {
                         color: "red",
                         textAlign: "center",
                         marginTop: "8px"
-                    } : {display: "none"}}>{t('general.incorrect_email')}</div>
+                    } : { display: "none" }}>{t('general.incorrect_email')}</div>
 
                     <div style={(emailDirty) ? (emailError === "emailIsEmpty") ? {
                         color: "red", textAlign: "center",
@@ -133,7 +133,7 @@ const Auth = observer((props) => {
                         color: "red",
                         textAlign: "center",
                         marginTop: "8px"
-                    } : {display: "none"}}>{t('general.email_cannot_be_empty')}</div>
+                    } : { display: "none" }}>{t('general.email_cannot_be_empty')}</div>
 
                     <MyInput
 
@@ -150,7 +150,7 @@ const Auth = observer((props) => {
                     />
                 </div>
                 <div>
-                    <h3 style={{textAlign: "center",}}>{t('general.password')}</h3>
+                    <h3 style={{ textAlign: "center", }}>{t('general.password')}</h3>
                     {(passwordDirty && passwordError === "passIsTooShort") && <div style={{
                         color: "red", textAlign: "center",
                         marginTop: "8px"
@@ -173,15 +173,15 @@ const Auth = observer((props) => {
                         placeholder={t('general.enter_password')}
                     />
                 </div>
-                <div style={{textAlign: "end"}}>
+                <div style={{ textAlign: "end" }}>
                     <input type="checkbox" id="rememberme" name="rememberMe" checked={checked}
-                           onChange={handleChange}/>
+                        onChange={handleChange} />
                     <label htmlFor="rememberme">{t('auth.rememberme')}</label>
                 </div>
-                <div style={{display: "flex", justifyContent: "center", position: 'relative'}}>
+                <div style={{ display: "flex", justifyContent: "center", position: 'relative' }}>
 
                     <MyButton
-                        style={{width: "220px", height: "60px", marginBottom: "12px"}}
+                        style={{ width: "220px", height: "60px", marginBottom: "12px" }}
                         disabled={!formValid}
                         onClick={loginClick}
                     >
@@ -190,17 +190,17 @@ const Auth = observer((props) => {
 
                 </div>
 
-                <hr style={{marginBottom: "12px"}}/>
+                <hr style={{ marginBottom: "12px" }} />
 
-                <div style={{display: "flex", justifyContent: "space-between"}}><MyButton
-                    style={{height: "40px", outline: "none !important", border: "0 !important"}}
+                <div style={{ display: "flex", justifyContent: "space-between" }}><MyButton
+                    style={{ height: "40px", outline: "none !important", border: "0 !important" }}
                 >
                     {t('auth.forgot_email_password')}
                 </MyButton>
 
 
                     <MyButton
-                        style={{width: "140px", height: "40px"}}
+                        style={{ width: "140px", height: "40px" }}
                         onClick={() => history(REGISTRATION_ROUTE)}
                     >
                         {t('general.registration')}
