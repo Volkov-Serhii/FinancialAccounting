@@ -98,14 +98,14 @@ namespace FinancialAccounting.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserEmail(string token)
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-                //var jwtHeader = Request.Headers["AuthenticationToken"].ToString();
+            if (User.Identity.IsAuthenticated)
+            {
+                var jwtHeader = Request.Headers["Authorization"].ToString();
                 if (token != null)
                 {
-                    //var token = token.Split(' ')[1];
+                    var Token = jwtHeader.Split(' ')[1];
                     JWTService jwt = new JWTService();
-                    var userId = jwt.ReadIdFromToken(token);
+                    var userId = jwt.ReadIdFromToken(Token);
                     var userInfo = await _userManager.FindByIdAsync(userId);
                     var userEmail = userInfo.Email;
                     return Ok(userEmail);
@@ -114,11 +114,11 @@ namespace FinancialAccounting.Controllers
                 {
                     return new StatusCodeResult(401);
                 }
-            //}
-            //else
-            //{
-            //    return new StatusCodeResult(409);
-            //}
+            }
+            else
+            {
+                return new StatusCodeResult(409);
+            }
         }
     }
 }

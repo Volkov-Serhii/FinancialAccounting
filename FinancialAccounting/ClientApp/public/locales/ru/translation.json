@@ -1,8 +1,8 @@
 {
-    "general":{
+    "general": {
         "registration": "Регистрация",
         "enter_email": "Введите ваш email...",
-        "enter_password":"Введите ваш пароль...",
+        "enter_password": "Введите ваш пароль...",
         "email": "Введите email.",
         "password": "Введите пароль.",
         "email_cannot_be_empty": "Email не может быть пустым",
@@ -15,15 +15,23 @@
     "header": {
         "select_language": "Выберите язык:",
         "exit": "Выход",
-        "login": "Войти в аккаунт"
+        "login": "Войти в аккаунт",
+        "home": "Главная"
     },
-    "auth":{
+    "home": {
+        "transactions": "Транзакции",
+        "categoris": "Категории",
+        "addaccount": "Добавить счёт",
+        "addtransaction": "Добавить транзакцию",
+        "addcategory": "Добавить категорию"
+    },
+    "auth": {
         "entrance": "Вход",
         "rememberme": "Запомнить меня",
         "enter": "Войти на сайт",
-        "forgot_email_password":"Забыли email или пароль?"
+        "forgot_email_password": "Забыли email или пароль?"
     },
-    "registration":{
+    "registration": {
         "name": "Введите имя.",
         "last_name": "Введите фамилию.",
         "enter_name": "Введите ваше имя...",
@@ -33,9 +41,19 @@
         "register": "Зарегистрироваться",
         "have_account": "Уже есть аккаунт?",
         "sign_in": "Войдите!",
-        "passwords_match" : "Пароли должны совпадать!",
+        "passwords_match": "Пароли должны совпадать!",
         "field_filled": "Поле должно быть заполнено!",
         "statusCode404": "Некорректные данные",
         "statusCode401": "Email уже занят"
+    },
+    "addAccount": {
+        "create": "Создать счёт",
+        "account_name": "Имя счёта",
+        "name_input": "Введите имя счёта",
+        "account_type": "Введите тип счёта",
+        "balance": "Введите баланс счёта",
+        "isActive": "Счёт это актив?",
+        "create_account": "Создать",
+        "cancel_creating": "Отменить"
     }
 }

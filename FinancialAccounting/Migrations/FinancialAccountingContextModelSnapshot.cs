@@ -19,6 +19,208 @@ namespace FinancialAccounting.Migrations
                 .HasAnnotation("ProductVersion", "6.0.19")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FinancialAccounting.Models.Accounts", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("AccountTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("double");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<bool>("isActiv")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountTypeId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.AccountType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Bill"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Deposit"
+                        });
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Categories", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CategoryName = "Home"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CategoryName = "Work"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CategoryName = "Health"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CategoryName = "Products"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CategoryName = "Education"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CategoryName = "Pets"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CategoryName = "Hobby"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CategoryName = "Leisure"
+                        });
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Currencies", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.InterestAccount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AccountID")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Interest")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime>("InterestAccrualDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("InterestInterval")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountID");
+
+                    b.ToTable("InterestAccounts");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Transactions", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AccountID")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double");
+
+                    b.Property<long>("CategoryID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Discription")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("isPositive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("FinancialAccounting.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -217,6 +419,74 @@ namespace FinancialAccounting.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FinancialAccounting.Models.Accounts", b =>
+                {
+                    b.HasOne("FinancialAccounting.Models.AccountType", "AccountType")
+                        .WithMany("Accounts")
+                        .HasForeignKey("AccountTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinancialAccounting.Models.Currencies", "Currency")
+                        .WithMany("Accounts")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinancialAccounting.Models.User", "User")
+                        .WithMany("Accounts")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccountType");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Categories", b =>
+                {
+                    b.HasOne("FinancialAccounting.Models.User", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.InterestAccount", b =>
+                {
+                    b.HasOne("FinancialAccounting.Models.Accounts", "Accounts")
+                        .WithMany("InterestAccounts")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Transactions", b =>
+                {
+                    b.HasOne("FinancialAccounting.Models.Accounts", "Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinancialAccounting.Models.Categories", "Categories")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Categories");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -266,6 +536,35 @@ namespace FinancialAccounting.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Accounts", b =>
+                {
+                    b.Navigation("InterestAccounts");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.AccountType", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Categories", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.Currencies", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("FinancialAccounting.Models.User", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

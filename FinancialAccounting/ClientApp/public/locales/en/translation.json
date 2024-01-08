@@ -1,8 +1,8 @@
 {
-    "general":{
+    "general": {
         "registration": "Registration",
         "enter_email": "Enter your email...",
-        "enter_password":"Enter your password...",
+        "enter_password": "Enter your password...",
         "email": "Enter your email.",
         "password": "Enter password.",
         "email_cannot_be_empty": "Email cannot be empty",
@@ -15,15 +15,23 @@
     "header": {
         "select_language": "Select Language:",
         "exit": "Exit",
-        "login": "Login to account"
+        "login": "Login to account",
+        "home": "Home"
     },
-    "auth":{
+    "home": {
+        "transactions": "Transactions",
+        "categoris": "Categoris",
+        "addaccount": "Add bill",
+        "addtransaction": "Add transaction",
+        "addcategory": "Add category"
+    },
+    "auth": {
         "entrance": "Entrance",
         "rememberme": "Remember me",
         "enter": "Sign in",
-        "forgot_email_password":"Forgot your email or password?"
+        "forgot_email_password": "Forgot your email or password?"
     },
-    "registration":{
+    "registration": {
         "name": "Enter your name.",
         "last_name": "Enter your last name.",
         "enter_name": "Enter your name...",
@@ -33,9 +41,19 @@
         "register": "Register",
         "have_account": "Already have an account?",
         "sign_in": "Sign in!",
-        "passwords_match" : "Passwords must match!",
+        "passwords_match": "Passwords must match!",
         "field_filled": "The field must be filled in!",
         "statusCode404": "Data is incorrect",
         "statusCode401": "This email is already used"
+    },
+    "addAccount": {
+        "create": "Create bill",
+        "account_name": "Bill name",
+        "name_input": "Enter an bill name",
+        "account_type": "Enter an bill type",
+        "balance": "Enter an bill balance",
+        "isActive": "Is bill an active?",
+        "create_account": "Create",
+        "cancel_creating": "Cancel"
     }
 }

@@ -1,94 +1,92 @@
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classes from "./MyHeader.module.css";
-import { useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Logo from '../../../images/Logo.jpg';
-import {logout,GetUserEmail} from "../../../http/userAPI";
+import { logout, GetUserEmail } from "../../../http/userAPI";
 import MyButton from "../button/MyButton";
 import Cookies from 'js-cookie';
-import {LOGIN_ROUTE} from "../../../utils/consts";
-import {useNavigate} from "react-router-dom";
+import { LOGIN_ROUTE } from "../../../utils/consts";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../../index";
+import { observer } from "mobx-react-lite";
 
-const MyHeader = () => {
-  const [userLogin, setUserLogin] = useState('');
-  const [isAuthenticated,setIsAuthenticated] = useState(false);
-  
-  const locales = {
-    en: { title: 'English' },
-    ua: { title: 'Українська' },
-    ru: { title: 'Русский'}
-  };
-  const { t, i18n } = useTranslation();
-  const history = useNavigate()
+const MyHeader = observer(() => {
+    const { user } = useContext(Context)
+    const [userLogin, setUserLogin] = useState('');
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (Cookies.get("AuthenticationToken")) {
-
-          const response = await GetUserEmail(Cookies.get("AuthenticationToken"))
-          setUserLogin(response);
-          setIsAuthenticated(true);
-
-      } else {
-        setIsAuthenticated(false);
-        setUserLogin("");
-      }
+    const locales = {
+        en: { title: 'English' },
+        ua: { title: 'Українська' },
+        ru: { title: 'Русский' }
     };
+    const { t, i18n } = useTranslation();
+    const history = useNavigate()
 
-    fetchData();
-  }, []);
 
-  const logoutClick = async () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user.isAuth) {
+                const response = await GetUserEmail(Cookies.get("AuthenticationToken"))
+                setUserLogin(response);
+            } else {
+                setUserLogin("");
+            }
+        };
 
-    const response = await logout();
-    window.location.reload();
-  }
+        fetchData();
+    }, []);
+
+    const logoutClick = async () => {
+
+        const response = await logout();
+        window.location.reload();
+    }
 
     return (
-      <header>
-        <div className={classes.logo}>
-          <img src={Logo} alt='Logo'></img>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div className={classes.language_switcher}>
-            <label htmlFor="language-select">{t('header.select_language')}</label>
-            <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)} value={i18n.language}>
-                {Object.keys(locales).map((locale) => (
-                    <option  
-                    key={locale} 
-                    value={locale} 
-                    style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
+        <header>
+            <div className={classes.logo}>
+                <img src={Logo} alt='Logo'></img>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/home">{t('header.home')}</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div className={classes.language_switcher}>
+                <label htmlFor="language-select">{t('header.select_language')}</label>
+                <select id="language-select" onChange={(e) => i18n.changeLanguage(e.target.value)} value={i18n.language}>
+                    {Object.keys(locales).map((locale) => (
+                        <option
+                            key={locale}
+                            value={locale}
+                            style={{ fontWeight: i18n.resolvedLanguage === locale ? 'bold' : 'normal' }}>
                             {locales[locale].title}
-                    </option >
-                ))}
-            </select >
-        </div>
-        <div>{userLogin}</div>
-        {(isAuthenticated) ? (
-            <MyButton
-                          style={{width: "220px", height: "60px", marginBottom: "12px"}}
-                          onClick={logoutClick}
-                      >
-                          {t("header.exit")}
-            </MyButton>
-        ):(
-            <MyButton
-            style={{width: "220px", height: "60px", marginBottom: "12px"}}
-            onClick={() => history(LOGIN_ROUTE)}>
-                {t('header.login')}
-            </MyButton>
-        )
-      }
-    </header>
-   
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div>{userLogin}</div>
+            {(user.isAuth) ? (
+                <MyButton
+                    style={{ width: "220px", height: "60px", marginBottom: "12px" }}
+                    onClick={logoutClick}
+                >
+                    {t("header.exit")}
+                </MyButton>
+            ) : (
+                <MyButton
+                    style={{ width: "220px", height: "60px", marginBottom: "12px" }}
+                    onClick={() => history(LOGIN_ROUTE)}>
+                    {t('header.login')}
+                </MyButton>
+            )
+            }
+        </header>
+
     );
-};
+});
 
 export default MyHeader;
