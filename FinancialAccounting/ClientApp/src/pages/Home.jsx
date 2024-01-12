@@ -14,6 +14,10 @@ import MyLoader from '../components/UI/loader/MyLoader';
 import './Home.css';
 import { observer } from "mobx-react-lite";
 import { Context } from "../index";
+import MyChart from "../components/UI/Charts/MyChart";
+import {Chart} from "react-chartjs-2";
+import PieChart from "../components/UI/Charts/PieChart";
+
 
 const Home = observer((props) => {
     const { user } = useContext(Context)
@@ -26,6 +30,7 @@ const Home = observer((props) => {
     const [transactionsArray, setTransactionsArray] = useState([]);
     const [categorisArray, setCategorisArray] = useState([]);
     const [currencyArray, setCurrencyArray] = useState([]);
+
 
     if (isReload) {
         window.location.reload();
@@ -60,6 +65,8 @@ const Home = observer((props) => {
         ) // Показать индикатор загрузки, пока данные загружаются
     }
 
+    const datachart = [2300, 1500, 2200, 1000, 1853];
+    const labelschart = ['Products', 'Fuel', 'Health', 'Education', 'Home'];
     return (
         <div className={'home'}>
             <div className={'item'}>
@@ -70,8 +77,9 @@ const Home = observer((props) => {
                 >
                     {t('home.addaccount')}
                 </MyButton>
-                <h1>{t('home.transactions')}</h1>
-                <div style={{ height: '150px', overflowY: 'auto' }}>
+
+                < h1  style={{paddingTop: "72px"}}>{t('home.transactions')}</h1>
+                <div style={{ height: '150px', overflowY: 'auto'}}>
                     <MyList array={transactionsArray}>
                         <MyTransactionslistitem categorisArray={categorisArray}></MyTransactionslistitem>
                     </MyList>
@@ -93,9 +101,9 @@ const Home = observer((props) => {
                     </MyAddAccountForm>
                 </MyModal>
             </div>
-            <div className={'item'}>
+            <div className={'item'} style={{paddingLeft: "72px"}}>
                 <h1>{t('home.categoris')}</h1>
-                <div style={{ height: '50%', overflowY: 'auto' }}>
+                <div style={{ height: '50%', overflowY: 'auto'}}>
                     <MyList array={categorisArray}>
                         <MyCategorisListItem></MyCategorisListItem>
                     </MyList>
@@ -112,7 +120,15 @@ const Home = observer((props) => {
                     </MyAddCategoryForm>
                 </MyModal>
             </div>
+
+<div style={{width: "540px", height: "540px", paddingLeft: "140px" }}>
+    <h5>Spending piechart (UAH)</h5>
+            <PieChart data={datachart} labels={labelschart} />
+    <h4>Next month spending prediction: 14370 UAH</h4>
+</div>
+
         </div>
+
 
     )
 })
