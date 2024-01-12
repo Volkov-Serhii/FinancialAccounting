@@ -20,7 +20,7 @@
     },
     "home": {
         "transactions": "Transactions",
-        "categoris": "Categoris",
+        "categoris": "Categories",
         "addaccount": "Add bill",
         "addtransaction": "Add transaction",
         "addcategory": "Add category"

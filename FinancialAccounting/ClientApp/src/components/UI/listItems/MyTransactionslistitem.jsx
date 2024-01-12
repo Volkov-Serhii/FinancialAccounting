@@ -34,8 +34,9 @@ const MyTransactionslistitem = ({ item, setIsReload, categorisArray }) => {
     return (
         <div>
             {item.amount}
-            {item.currency}
-            {item.dateTime}
+            {item.currency + ", "}
+            {item.discription}
+            {item.category}
             <MyButton
                 onClick={() => Edit(item.transactionID, item.isPositive, item.amount, item.categoryID, item.discription, item.currency)}>
                 Edit
