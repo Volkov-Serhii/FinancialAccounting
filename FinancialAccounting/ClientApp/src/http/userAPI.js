@@ -251,3 +251,123 @@ export const getExchangeRates = async () => {
     }
     return data;
 }
+
+export const getMonthStatistic = async () => {
+    try {
+        const response = await axiosAuth.get('/api/Statistical/GetMonthStatistic')
+        return response.data;
+    } catch (err) {
+        return err.response.status
+    }
+}
+
+// export const convertMonthCurrency = async() => {
+//     const responseExchangeRates = await getExchangeRates();
+//     const responseMonthStat = await getMonthStatistic();
+//     console.log(responseMonthStat);
+//     for (const element of responseMonthStat) {
+//         console.log(element)
+//         if(element.Currency === "UAH"){
+//             continue;
+//         }
+//         responseExchangeRates.forEach(elemt => {
+//             if(elemt.cc == element.Currency){
+//                 element.Amount = element.Amount * elemt.rate
+//             }
+//         })
+//     };
+// }
+// export const convertMonthCurrency = async () => {
+//     const responseExchangeRates = await getExchangeRates();
+//     const responseMonthStat = await getMonthStatistic();
+//     console.log(responseMonthStat);
+
+//     const categoryTotals = {};
+
+//     for (const element of responseMonthStat) {
+//         if (element.currency === "UAH") {
+//             const key = element.category;
+
+//             if (!categoryTotals[key]) {
+//                 categoryTotals[key] = {
+//                     totalAmount: 0,
+//                     category: element.category,
+//                 };
+//             }
+//             categoryTotals[key].totalAmount += element.amount;
+//         } else {
+//             for (const elemt of responseExchangeRates) {
+//                 if (elemt.cc === element.currency) {
+//                     const key = element.category;
+
+//                     if (!categoryTotals[key]) {
+//                         categoryTotals[key] = {
+//                             totalAmount: 0,
+//                             category: element.category,
+//                         };
+//                     }
+//                     categoryTotals[key].totalAmount += element.amount * elemt.rate;
+//                     break;
+//                 }
+//             }
+//         }
+//     }
+
+//     console.log(categoryTotals);
+//     return categoryTotals
+// }
+export const convertMonthCurrency = async () => {
+    const responseExchangeRates = await getExchangeRates();
+    const responseMonthStat = await getMonthStatistic();
+
+    const categoryTotals = {};
+    const categoryAmounts = {};
+
+    for (const element of responseMonthStat) {
+        if (element.currency === "UAH") {
+            const key = element.category;
+
+            if (!categoryTotals[key]) {
+                categoryTotals[key] = {
+                    totalAmount: 0,
+                    category: element.category,
+                };
+            }
+            categoryTotals[key].totalAmount += element.amount;
+
+            // Добавляем затраты на категорию
+            if (!categoryAmounts[key]) {
+                categoryAmounts[key] = [];
+            }
+            categoryAmounts[key].push(element.amount);
+        } else {
+            for (const elemt of responseExchangeRates) {
+                if (elemt.cc === element.currency) {
+                    const key = element.category;
+
+                    if (!categoryTotals[key]) {
+                        categoryTotals[key] = {
+                            totalAmount: 0,
+                            category: element.category,
+                        };
+                    }
+                    categoryTotals[key].totalAmount += element.amount * elemt.rate;
+
+                    // Добавляем затраты на категорию
+                    if (!categoryAmounts[key]) {
+                        categoryAmounts[key] = [];
+                    }
+                    categoryAmounts[key].push(element.amount * elemt.rate);
+                    break;
+                }
+            }
+        }
+    }
+
+    console.log(categoryTotals);
+    console.log(categoryAmounts);
+
+    // Возвращаем объект с двумя массивами
+    return { categoryTotals, categoryAmounts };
+}
+
