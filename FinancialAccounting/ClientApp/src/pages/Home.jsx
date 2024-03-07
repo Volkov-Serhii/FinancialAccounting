@@ -4,7 +4,7 @@ import MySlider from "../components/UI/slider/MySlider";
 import MyList from "../components/UI/list/MyList";
 import MyCategorisListItem from "../components/UI/listItems/MyCategorisListItem";
 import MyTransactionslistitem from "../components/UI/listItems/MyTransactionslistitem";
-import { GetBills, GetAllTransactions, GetCategories, getExchangeRates } from "../http/userAPI";
+import { GetBills, GetAllTransactions, GetCategories, getExchangeRates, getMonthStatistic, convertMonthCurrency } from "../http/userAPI";
 import MyButton from "../components/UI/button/MyButton";
 import MyModal from "../components/UI/modal/MyModal";
 import MyAddAccountForm from "../components/UI/modalForms/MyAddAccountForm";
@@ -39,13 +39,17 @@ const Home = observer((props) => {
         const fetchData = async () => {
 
             const response = await GetBills();
-            console.log("Bills:",response.data);
+            // console.log("Bills:",response.data);
             const responseTrans = await GetAllTransactions();
-            console.log("responseTrans:",responseTrans.data);
+            // console.log("responseTrans:",responseTrans.data);
             const responseCateg = await GetCategories();
-            console.log("responseCateg:",responseCateg.data);
+            // console.log("responseCateg:",responseCateg.data);
             const responseExchangeRates = await getExchangeRates();
-            console.log("responseExchangeRates:",responseExchangeRates);
+            // console.log("responseExchangeRates:",responseExchangeRates);
+
+            const responseMonthStatistic = convertMonthCurrency();
+            // console.log("responseMonthStatistic:",responseMonthStatistic);
+
             setBillsArray(response.data);
             setTransactionsArray(responseTrans.data);
             setCategorisArray(responseCateg.data);
@@ -121,15 +125,13 @@ const Home = observer((props) => {
                 </MyModal>
             </div>
 
-<div style={{width: "540px", height: "540px", paddingLeft: "140px" }}>
-    <h5>Spending piechart (UAH)</h5>
-            <PieChart data={datachart} labels={labelschart} />
-    <h4>Next month spending prediction: 14370 UAH</h4>
-</div>
+            <div className={'item'} style={{width: "540px", height: "540px", paddingLeft: "140px" }}>
+                <h5>Spending piechart (UAH)</h5>
+                <PieChart data={datachart} labels={labelschart} />
+                <h4>Next month spending prediction: 14370 UAH</h4>
+            </div>
 
         </div>
-
-
     )
 })
 export default withTranslation()(Home);
